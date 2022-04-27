@@ -1,0 +1,14 @@
+server:
+  port: 8912
+spring:
+  application:
+    name: product
+  cloud:
+    nacos:
+      discovery:
+        server-addr: http://localhost:8848
+  datasource:
+    url: mysql:jdbc://localhost:3306/firstDoc
+    username: bhz
+    password: Bhz123456
+    driver-class-name: com.mysql.cj.jdbc.Driver

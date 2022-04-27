@@ -1,0 +1,19 @@
+package com.cloud.sys.service;
+
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+/**
+ * @author haizhuangbu
+ * @date 2022/4/27 11:24
+ * @mark ProductService
+ */
+@FeignClient(name = "product")
+@RequestMapping("shop")
+public interface ProductService {
+
+    @RequestMapping(value = "show",method = RequestMethod.GET)
+    String show();
+
+}
