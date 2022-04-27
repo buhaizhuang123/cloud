@@ -1,8 +1,13 @@
 package com.cloud;
 
+import com.cloud.common.PageCommon;
+import org.apache.ibatis.session.Configuration;
+import org.mybatis.spring.annotation.MapperScan;
+import org.mybatis.spring.boot.autoconfigure.ConfigurationCustomizer;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.context.annotation.Bean;
 
 /**
  * @author haizhuangbu
@@ -11,11 +16,22 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  */
 @SpringBootApplication
 @EnableDiscoveryClient
+@MapperScan(basePackages = {"com/cloud/shop/shop"})
 public class ProductApp {
 
 
     public static void main(String[] args) {
         SpringApplication.run(ProductApp.class,args);
+    }
+
+    @Bean
+    public ConfigurationCustomizer configurationCustomizer(){
+        return  new ConfigurationCustomizer() {
+            @Override
+            public void customize(Configuration configuration) {
+                configuration.addInterceptor(new PageCommon());
+            }
+        };
     }
 
 }

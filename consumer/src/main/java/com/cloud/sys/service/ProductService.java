@@ -4,6 +4,8 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.util.List;
+
 /**
  * @author haizhuangbu
  * @date 2022/4/27 11:24
@@ -15,5 +17,8 @@ public interface ProductService {
 
     @RequestMapping(value = "show",method = RequestMethod.GET)
     String show();
+
+    @RequestMapping("list")
+    List<Object> listShops();
 
 }

@@ -8,7 +8,11 @@ spring:
       discovery:
         server-addr: http://localhost:8848
   datasource:
-    url: mysql:jdbc://localhost:3306/firstDoc
+    url: jdbc:mysql://localhost:3306/firstDoc?serverTimezone=UTC
     username: bhz
     password: Bhz123456
     driver-class-name: com.mysql.cj.jdbc.Driver
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations: classpath:/mapper/*.xml

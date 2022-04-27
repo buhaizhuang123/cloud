@@ -39,6 +39,10 @@
             <artifactId>spring-cloud-alibaba-nacos-discovery</artifactId>
             <version>2.2.0.RELEASE</version>
         </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
     </dependencies>
 
 </project>
