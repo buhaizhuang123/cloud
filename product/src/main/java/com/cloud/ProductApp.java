@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Bean;
  */
 @SpringBootApplication
 @EnableDiscoveryClient
-@MapperScan(basePackages = {"com/cloud/shop/shop"})
+@MapperScan(basePackages = {"com.cloud.shop.shop","com.cloud.usr.dao"})
 public class ProductApp {
 
 

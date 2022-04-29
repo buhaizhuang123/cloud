@@ -53,7 +53,7 @@ public class PageCommon implements Interceptor {
         }else if ("oracle".equalsIgnoreCase(databaseProductName)){
             sql = oracle(sql,rb);
         }
-        System.out.println("组装后的sql"+sql);
+        System.out.println("sql "+sql);
 
         StaticSqlSource staticSqlSource = new StaticSqlSource(ms.getConfiguration(), sql, boundSql.getParameterMappings());
         // 通过反射设置MapperStatment 的sqlSource字段

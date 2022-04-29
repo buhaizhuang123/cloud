@@ -30,4 +30,9 @@ public class SysController {
         return productService.listShops();
     }
 
+    @RequestMapping("str")
+    public String retStr(){
+        return "123";
+    }
+
 }

@@ -5,6 +5,15 @@ spring:
     nacos:
       discovery:
         server-addr: http://localhost:8848
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: bhz
+    password: Bhz123456
+    url: jdbc:mysql://localhost:3306/firstDoc?serverTimezone=UTC
+  #  security:
+#    user:
+#      name: spring
+#      password: spring_admin
 
   application:
     name: consumer
