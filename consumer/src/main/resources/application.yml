@@ -5,6 +5,8 @@ spring:
     nacos:
       discovery:
         server-addr: http://localhost:8848
+#      config:
+#        shared-configs: application.yaml
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: bhz
