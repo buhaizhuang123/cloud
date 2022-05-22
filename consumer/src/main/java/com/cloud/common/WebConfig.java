@@ -7,6 +7,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
+import java.math.BigDecimal;
+import java.util.HashMap;
 
 
 /**
@@ -49,4 +51,13 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         super.configure(http);
     }
+
+
+    public static void main(String[] args) {
+        BigDecimal bigDecimal = BigDecimal.valueOf(101);
+        HashMap<Object, Object> map = new HashMap<>();
+        map.put("123",bigDecimal.setScale(2));
+        System.out.println(bigDecimal.setScale(2));
+    }
+
 }

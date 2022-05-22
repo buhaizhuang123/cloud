@@ -1,9 +1,16 @@
 package com.cloud.common;
 
+import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.apache.kafka.clients.consumer.ConsumerRecords;
+import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
+import org.apache.kafka.common.serialization.StringDeserializer;
 import org.apache.kafka.common.serialization.StringSerializer;
 
+import java.time.Duration;
+import java.time.temporal.ChronoUnit;
+import java.util.Collections;
 import java.util.Properties;
 
 /**
@@ -14,27 +21,46 @@ import java.util.Properties;
 public class InfoUtils {
 
 
+    private static Properties properties;
 
-    private static   Properties properties;
 
-
-   static  {
+    static {
         properties = new Properties();
-        properties.setProperty("bootstrap.servers","localhost:9092");
+        properties.setProperty("bootstrap.servers", "localhost:9092");
+        properties.setProperty("group.id", "demo");
         properties.setProperty("key.serializer", StringSerializer.class.getName());
         properties.setProperty("value.serializer", StringSerializer.class.getName());
+        properties.setProperty("key.deserializer", StringDeserializer.class.getName());
+        properties.setProperty("value.deserializer", StringDeserializer.class.getName());
     }
 
     /**
      * @param jsonInfo 消息
-     * @param topic 主题
+     * @param topic    主题
      */
-    public static void send(String topic,String jsonInfo){
+    public static void send(String topic, String jsonInfo) {
         KafkaProducer producer = new KafkaProducer(properties);
-        ProducerRecord<String, String> record = new ProducerRecord<String, String>(topic,jsonInfo);
+        ProducerRecord<String, String> record = new ProducerRecord<String, String>(topic, jsonInfo);
         producer.send(record);
         // 关闭
         producer.close();
+    }
+
+    /**
+     * @param topic 主题
+     * @mark 拉去主题信息
+     */
+    public static String pull(String topic) {
+        KafkaConsumer<String, String> consumer = new KafkaConsumer<>(properties);
+        consumer.subscribe(Collections.singletonList(topic));
+        ConsumerRecords<String, String> datas = consumer.poll(Duration.of(1000, ChronoUnit.MILLIS));
+        StringBuffer stringBuffer = new StringBuffer();
+        // 消费数据
+        for (ConsumerRecord<String, String> data : datas) {
+            stringBuffer.append(data.value());
+        }
+        consumer.close();
+        return stringBuffer.toString();
     }
 
 
