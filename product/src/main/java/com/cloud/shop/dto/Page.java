@@ -10,8 +10,8 @@ import lombok.Data;
 @Data
 public class Page {
 
-    private Integer limit;
+    private Integer pageNum = 0;
 
-    private Integer offset;
+    private Integer size = 10;
 
 }

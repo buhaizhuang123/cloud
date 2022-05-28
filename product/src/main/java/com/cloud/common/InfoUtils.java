@@ -7,7 +7,13 @@ import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.apache.kafka.common.serialization.StringSerializer;
+import org.elasticsearch.action.get.GetRequest;
+import org.elasticsearch.action.get.GetResponse;
+import org.elasticsearch.client.RequestOptions;
+import org.elasticsearch.client.RestHighLevelClient;
+import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 import java.util.Collections;
@@ -63,5 +69,24 @@ public class InfoUtils {
         return stringBuffer.toString();
     }
 
+    public static void main(String[] args) throws IOException {
+        RestHighLevelClient builder = EsClient.builder();
+        GetRequest getRequest = new GetRequest("person");
+//        getRequest.type("_doc");
+        getRequest.id("1");
+        GetResponse response = builder.get(getRequest, RequestOptions.DEFAULT);
+        response.getSourceAsMap().forEach((k,v)-> System.out.println(k+":"+v));
+//        EsClient.colse();
+    }
+    @Test
+    public void ts1() throws IOException {
+        RestHighLevelClient builder = EsClient.builder();
+        GetRequest getRequest = new GetRequest("person");
+//        getRequest.type("_doc");
+        getRequest.id("0ZJZOoABZ_fWMzOtoB7-");
+        GetResponse response = builder.get(getRequest, RequestOptions.DEFAULT);
+        response.getSourceAsMap().forEach((k,v)-> System.out.println(k+":"+v));
+//        EsClient.colse();
+    }
 
 }
