@@ -1,6 +1,8 @@
 package com.cloud.person.dto;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import java.util.Date;
@@ -19,6 +21,7 @@ public class PersonDto {
 
     private String idCard;
 
+    @JsonProperty("pName")
     private String name;
 
     private Integer age;

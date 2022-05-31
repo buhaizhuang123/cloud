@@ -20,6 +20,7 @@ import org.elasticsearch.search.SearchHits;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.sort.SortOrder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.io.IOException;
 import java.util.*;
@@ -58,12 +59,17 @@ public class PsServiceImpl implements PsService {
     }
 
     @Override
-    public List<PersonDto> findPerson(PersonDto personDto,Page page) throws IOException {
+    public List<PersonDto> findPerson(PersonDto personDto, Page page) throws IOException {
         RestHighLevelClient restHighLevelClient = EsClient.builder();
-        SearchRequest searchRequest = new SearchRequest("person","person1");
+        SearchRequest searchRequest = new SearchRequest("person", "person1");
         SearchSourceBuilder searchSourceBuilder = SearchSourceBuilder.searchSource();
-        MatchQueryBuilder matchQueryBuilder = new MatchQueryBuilder("name", personDto.getName());
-        searchSourceBuilder.query(matchQueryBuilder).from(page.getPageNum()).size(page.getSize());
+        if (Objects.isNull(personDto) || !StringUtils.hasText(personDto.getName())) {
+            MatchAllQueryBuilder matchAllQueryBuilder = new MatchAllQueryBuilder();
+            searchSourceBuilder.query(matchAllQueryBuilder).from(page.getPageNum()).size(page.getSize());
+        } else {
+            MatchQueryBuilder matchQueryBuilder = new MatchQueryBuilder("name", personDto.getName());
+            searchSourceBuilder.query(matchQueryBuilder).from(page.getPageNum()).size(page.getSize());
+        }
         searchRequest.source(searchSourceBuilder);
         SearchResponse response = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
         SearchHit[] hits = response.getHits()
@@ -79,7 +85,7 @@ public class PsServiceImpl implements PsService {
     public DocWriteResponse.Result save(PersonDto personDto) throws IOException {
         personDto.setBirthday("2020-12-11");
         RestHighLevelClient restHighLevelClient = EsClient.builder();
-        IndexRequest index = new IndexRequest("person","_doc");
+        IndexRequest index = new IndexRequest("person", "_doc");
         JSONObject jsonObject = JSONObject.parseObject(JSON.toJSONString(personDto));
         index.source(jsonObject);
         IndexResponse response = restHighLevelClient.index(index, RequestOptions.DEFAULT);
