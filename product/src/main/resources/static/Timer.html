@@ -6,7 +6,8 @@
 
 <body>
 Welcome<br/>
-<input id="text" type="text" /><button onclick="send()">Send</button>    <button onclick="closeWebSocket()">Close</button>
+<input id="text" type="text" /><button onclick="send()">Send</button>
+<button onclick="closeWebSocket()">Close</button>
 <div id="message">
 </div>
 </body>
@@ -17,7 +18,7 @@ Welcome<br/>
 
     //判断当前浏览器是否支持WebSocket
     if('WebSocket' in window){
-        websocket = new WebSocket("ws://localhost:8912/connect/con1");
+        websocket = new WebSocket("ws://localhost:8912/connect/send");
     }else{
         alert('Not support websocket')
     }
@@ -60,6 +61,7 @@ Welcome<br/>
     //发送消息
     function send(){
         var message = document.getElementById('text').value;
+        console.log(message)
         websocket.send(message);
     }
 </script>

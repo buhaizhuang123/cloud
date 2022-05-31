@@ -20,6 +20,6 @@ public class WebSocketServerConfig implements WebSocketConfigurer {
 //        WebSocketHandlerRegistration registration = registry.addHandler(new TimerOne(),"pages/mess/gc/Timer");
 //        SockJsServiceRegistration sockJS = registration.withSockJS();
         // 添加拦截器
-        registry.addHandler(new TimerOne(),"/connect").setAllowedOrigins("*");
+        registry.addHandler(new TimerOne(),"/connect/send").setAllowedOrigins("*");
     }
 }
