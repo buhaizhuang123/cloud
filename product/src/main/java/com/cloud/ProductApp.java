@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.Bean;
+import org.springframework.web.socket.config.annotation.EnableWebSocket;
 
 /**
  * @author haizhuangbu
@@ -19,6 +20,7 @@ import org.springframework.context.annotation.Bean;
 @EnableDiscoveryClient
 @MapperScan(basePackages = {"com.cloud.shop.shop","com.cloud.usr.dao"})
 @EnableCircuitBreaker
+@EnableWebSocket
 public class ProductApp {
 
 

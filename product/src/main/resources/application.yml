@@ -1,6 +1,12 @@
 server:
   port: 8912
 spring:
+  resources:
+    static-locations: classpath:/static
+  mvc:
+    view:
+      suffix: .html
+      prefix: /
   kafka:
     bootstrap-servers: 127.0.0.1:9092
     producer: # producer 生产者
