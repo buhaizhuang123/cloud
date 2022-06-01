@@ -20,7 +20,6 @@ import org.springframework.web.socket.config.annotation.EnableWebSocket;
 @EnableDiscoveryClient
 @MapperScan(basePackages = {"com.cloud.shop.shop","com.cloud.usr.dao"})
 @EnableCircuitBreaker
-@EnableWebSocket
 public class ProductApp {
 
 

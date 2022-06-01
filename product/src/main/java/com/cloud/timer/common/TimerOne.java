@@ -28,6 +28,7 @@ public class TimerOne implements WebSocketHandler {
     // 连接成功时候，会触发UI上onopen方法
     @Override
     public void afterConnectionEstablished(WebSocketSession webSocketSession) throws Exception {
+        logger.info("链接就绪");
         String userName = (String) webSocketSession.getAttributes().get("HTTP.SESSION.userName");
         logger.info("userName:{}",userName);
         if (!map.isEmpty()) {
@@ -58,12 +59,13 @@ public class TimerOne implements WebSocketHandler {
     // 处理传输时异常
     @Override
     public void handleTransportError(WebSocketSession webSocketSession, Throwable throwable) throws Exception {
-
+        logger.error("错误信息:{}",throwable);
     }
 
     // 关闭 连接时
     @Override
     public void afterConnectionClosed(WebSocketSession webSocketSession, CloseStatus closeStatus) throws Exception {
+        logger.info("关闭");
         map.remove(webSocketSession.getAttributes().get("HTTP.SESSION.userName"));
     }
 

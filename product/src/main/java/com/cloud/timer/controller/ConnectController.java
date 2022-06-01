@@ -1,8 +1,17 @@
 package com.cloud.timer.controller;
 
+import com.cloud.timer.common.WebSocket;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.websocket.Session;
+import java.util.Collections;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author haizhuangbu
@@ -21,6 +30,13 @@ public class ConnectController {
     @RequestMapping("send")
     @ResponseBody
     public String send(){
+        ConcurrentHashMap<String, Session> webSocketSet = WebSocket.webSocketSet;
+        if (!CollectionUtils.isEmpty(webSocketSet)) {
+            for (Map.Entry<String, Session> session : webSocketSet.entrySet()) {
+                Session value = session.getValue();
+                value.getAsyncRemote().sendText("后台发送数据");
+            }
+        }
         return "发送完成";
     }
 

@@ -1,25 +1,64 @@
 package com.cloud.timer.common;
 
+import org.springframework.boot.web.servlet.ServletContextInitializer;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
-import org.springframework.web.socket.config.annotation.SockJsServiceRegistration;
+import org.springframework.web.socket.WebSocketHandler;
+import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
-import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistration;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
+import org.springframework.web.socket.server.standard.ServerEndpointExporter;
+import org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor;
+import org.springframework.web.util.WebAppRootListener;
+
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 
 /**
  * @author haizhuangbu
  * @date 2022/5/31 14:30
  * @mark WebSocketConfig
  */
-@Component
-public class WebSocketServerConfig implements WebSocketConfigurer {
+@Configuration
+@EnableWebSocket
+public class WebSocketServerConfig implements WebSocketConfigurer, ServletContextInitializer {
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        // 添加拦截地址以及相应的websocket消息处理器
-//        WebSocketHandlerRegistration registration = registry.addHandler(new TimerOne(),"pages/mess/gc/Timer");
-//        SockJsServiceRegistration sockJS = registration.withSockJS();
-        // 添加拦截器
-        registry.addHandler(new TimerOne(),"/connect/send").setAllowedOrigins("*");
+        registry.addHandler(getTimeOne(), "/connect/send")
+                .addInterceptors(getMyHandShakeInterceptor())
+                .setAllowedOrigins("*");
     }
+
+    @Override
+    public void onStartup(ServletContext servletContext) throws ServletException {
+        servletContext.addListener(WebAppRootListener.class);
+        servletContext.setInitParameter("org.apache.tomcat.websocket.textBufferSize","52428800");
+        servletContext.setInitParameter("org.apache.tomcat.websocket.binaryBufferSize","52428800");
+    }
+
+
+    /**
+     * ServerEndpointExporter 作用
+     *
+     * 这个Bean会自动注册使用@ServerEndpoint注解声明的websocket endpoint
+     *
+     * @return
+     */
+    @Bean
+    public ServerEndpointExporter serverEndpointExporter() {
+        return new ServerEndpointExporter();
+    }
+
+    @Bean
+    public WebSocketHandler getTimeOne(){
+        return new TimerOne();
+    }
+
+    @Bean
+    public HttpSessionHandshakeInterceptor getMyHandShakeInterceptor(){
+        return new MyHandshakeInterceptor();
+    }
+
 }
