@@ -45,7 +45,7 @@ public class JwtUtils {
         SignatureAlgorithm hs256 = SignatureAlgorithm.HS256;
         long startDate = System.currentTimeMillis();
         JwtBuilder jwtBuilder = Jwts.builder()
-                .setId(String.valueOf(user.getId()))
+                .setId(String.valueOf(user.getUserId()))
                 // 签发者
                 .setIssuer("mr.bu")
                 .setClaims(map)
@@ -81,7 +81,7 @@ public class JwtUtils {
     public static void main(String[] args) {
 
         User user = new User();
-        user.setId(UUID.randomUUID().toString());
+        user.setUserId(UUID.randomUUID().toString());
         String jwt = JwtUtils.createJwt(user);
         System.out.println("jwt = " + jwt);
 
