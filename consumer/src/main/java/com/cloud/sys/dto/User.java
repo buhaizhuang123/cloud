@@ -1,12 +1,13 @@
 package com.cloud.sys.dto;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author haizhuangbu
@@ -14,6 +15,7 @@ import java.util.List;
  * @mark User
  */
 @Data
+@NoArgsConstructor
 public class User implements UserDetails {
 
     private String userId;
@@ -27,6 +29,15 @@ public class User implements UserDetails {
     private String userAuth;
 
 
+    public void setAuth(Authentication authentication){
+        this.userName = authentication.getName();
+        this.userPass = (String) authentication.getCredentials();
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+        String authStr = authorities.stream().map(GrantedAuthority::getAuthority).collect(Collectors.joining(","));
+        this.userAuth = authStr;
+        this.userId = UUID.randomUUID().toString();
+    }
+
     public String getUserId() {
         return userId;
     }
@@ -37,17 +48,11 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<GrantedAuthority> authorities = Arrays.asList();
+        List<GrantedAuthority> authorities = new ArrayList<>();
         if (this.userAuth != null) {
             String[] auths = this.userAuth.split(",");
             for (String auth : auths) {
-                GrantedAuthority grantedAuthority = new GrantedAuthority() {
-                    @Override
-                    public String getAuthority() {
-                        return auth;
-                    }
-                };
-                authorities.add(grantedAuthority);
+                authorities.add(() -> auth);
             }
 
         }

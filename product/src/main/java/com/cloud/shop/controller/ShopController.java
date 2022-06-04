@@ -28,19 +28,19 @@ public class ShopController {
     @Autowired
     private ShopService shopService;
 
-    @RequestMapping(value = "show",method = RequestMethod.GET)
-    public String show(){
-        return serverProt+ "show";
+    @RequestMapping(value = "show", method = RequestMethod.POST)
+    public String show() {
+        return serverProt + "show";
     }
 
     @RequestMapping("list")
     @HystrixCommand(fallbackMethod = "defaultFail")
-    public List<Shop> listShop(){
+    public List<Shop> listShop() {
         int i = 1 / 0;
         return shopService.getShops();
     }
 
-    public List<Shop> defaultFail(){
+    public List<Shop> defaultFail() {
         ArrayList<Shop> list = new ArrayList<>();
         Shop shop = new Shop();
         shop.setShopName("默认");
@@ -49,8 +49,8 @@ public class ShopController {
     }
 
     @RequestMapping("send")
-    public String sendInfo(){
-        InfoUtils.send("usr","我是消息");
+    public String sendInfo() {
+        InfoUtils.send("usr", "我是消息");
         return "发送成功";
     }
 

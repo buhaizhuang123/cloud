@@ -1,21 +1,25 @@
 server:
   port: 8911
 spring:
+  redis:
+    port: 6379
+    database: 0
+
   cloud:
     nacos:
       discovery:
         server-addr: http://localhost:8848
-#      config:
-#        shared-configs: application.yaml
+  #      config:
+  #        shared-configs: application.yaml
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: bhz
     password: Bhz123456
     url: jdbc:mysql://localhost:3306/firstDoc?serverTimezone=UTC
   #  security:
-#    user:
-#      name: spring
-#      password: spring_admin
+  #    user:
+  #      name: spring
+  #      password: spring_admin
 
   application:
     name: consumer
@@ -23,3 +27,7 @@ mybatis:
   configuration:
     map-underscore-to-camel-case: true
   mapper-locations: classpath:/mapper/*.xml
+auth:
+  server:
+    base:
+      url: http://localhost:8912/shop/show
