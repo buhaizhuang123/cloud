@@ -32,20 +32,16 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
-        System.out.println("jwt");
-        String jwt = request.getHeader("authentication");
-        String username1 = request.getParameter("username");
-        System.out.println(username1);
-        if (StringUtils.isBlank(jwt)) {
+        String token = request.getHeader("authentication");
+        if (StringUtils.isBlank(token)) {
 //            chain.doFilter(request, response);
 //            response.sendRedirect("/login");
             UsernamePasswordAuth usernamePasswordAuth = new UsernamePasswordAuth(request.getParameter("username"), request.getParameter("password"));
             custAuthSuccHandler.onAuthenticationSuccess(request, response, usernamePasswordAuth);
-
             return;
         }
 
-        Claims claims = JwtUtils.parseJwt(jwt);
+        Claims claims = JwtUtils.parseJwt(token);
         String username = claims.get("username").toString();
         GrantedAuthority a = new SimpleGrantedAuthority("user");
         UsernamePasswordAuth auth = new UsernamePasswordAuth(username, null, Arrays.asList(a));
