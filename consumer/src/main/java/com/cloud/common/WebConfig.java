@@ -50,8 +50,6 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(optAuthProvider)
-                .authenticationProvider(usernamePasswordAuthProvider);
         // 数据库实现
         auth.jdbcAuthentication()
                 .dataSource(dataSource)
@@ -62,6 +60,9 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
                         "from S_AUTH where S_AUTH.USER_NAME = ?")
                 .passwordEncoder(new MyPasswordEncoder())
                 .rolePrefix("ADMIN");
+        auth.authenticationProvider(optAuthProvider)
+                .authenticationProvider(usernamePasswordAuthProvider);
+
     }
 
     @Override
@@ -73,7 +74,7 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest()
                 .authenticated()
                 .and()
-                .addFilterBefore(initialAuthenticationFilter, BasicAuthenticationFilter.class)
+                .addFilterAt(initialAuthenticationFilter, BasicAuthenticationFilter.class)
                 .addFilterAfter(jwtAuthenticationFilter, BasicAuthenticationFilter.class)
                 .formLogin()
                 .successHandler(authenticationSuccessHandler)

@@ -1,8 +1,10 @@
 package com.cloud.config.handler;
 
+import com.alibaba.fastjson.JSONObject;
 import com.cloud.common.JwtUtils;
 import com.cloud.sys.dto.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -14,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
 
 /**
  * @author haizhuangbu
@@ -34,7 +37,12 @@ public class CustAuthSuccHandler implements AuthenticationSuccessHandler {
         response.setHeader("authentication", jwt);
 //        response.sendRedirect("/sys/str");
         System.out.println("登录成功" + jwt);
-        response.sendRedirect("sys/str");
+        HashMap<Object, Object> map = new HashMap<>();
+        map.put("code", HttpStatus.OK);
+        map.put("success", true);
+        map.put("message", "loginSuccess");
+        outputStream.print(JSONObject.toJSONString(map));
+//        response.sendRedirect("sys/str");
         outputStream.flush();
         outputStream.close();
     }

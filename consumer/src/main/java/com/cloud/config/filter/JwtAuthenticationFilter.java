@@ -27,13 +27,21 @@ import java.util.List;
  */
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
+    @Autowired
+    private CustAuthSuccHandler custAuthSuccHandler;
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
         System.out.println("jwt");
         String jwt = request.getHeader("authentication");
+        String username1 = request.getParameter("username");
+        System.out.println(username1);
         if (StringUtils.isBlank(jwt)) {
 //            chain.doFilter(request, response);
-            response.sendRedirect("/login");
+//            response.sendRedirect("/login");
+            UsernamePasswordAuth usernamePasswordAuth = new UsernamePasswordAuth(request.getParameter("username"), request.getParameter("password"));
+            custAuthSuccHandler.onAuthenticationSuccess(request, response, usernamePasswordAuth);
+
             return;
         }
 
