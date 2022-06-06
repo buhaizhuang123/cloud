@@ -1,8 +1,10 @@
 package com.cloud.sys.controller;
 
+import com.cloud.common.Result;
 import com.cloud.sys.dao.UserMapper;
 import com.cloud.sys.dto.User;
 import com.cloud.sys.service.ProductService;
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
@@ -45,8 +47,11 @@ public class SysController {
     }
 
     @RequestMapping("listUsr")
-    public List<User> findUser() {
-        return userMapper.findUser();
+    public Result findUser(RowBounds rowBounds) {
+        List<User> user = userMapper.findUser(rowBounds);
+        Result<List<User>> userResult = new Result<>();
+        userResult.success(user);
+        return userResult;
     }
 
 }

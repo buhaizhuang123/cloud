@@ -2,6 +2,7 @@ package com.cloud.sys.dao;
 
 import com.cloud.sys.dto.User;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.List;
  */
 public interface UserMapper {
 
-    List<User> findUser();
+    List<User> findUser(RowBounds rowBounds);
 
     User loadUserByUsername(@Param("userName") String userName);
 }

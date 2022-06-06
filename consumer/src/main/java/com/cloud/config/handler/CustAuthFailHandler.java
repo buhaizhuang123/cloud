@@ -15,6 +15,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 
 /**
@@ -31,14 +32,15 @@ public class CustAuthFailHandler implements AuthenticationFailureHandler {
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) throws IOException, ServletException {
         response.setContentType("application/json;charset=UTF-8");
         response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
-        ServletOutputStream outputStream = response.getOutputStream();
+        PrintWriter writer = response.getWriter();
+//        ServletOutputStream outputStream = response.getOutputStream();
         HashMap<Object, Object> map = new HashMap<>();
         map.put("code", HttpStatus.INTERNAL_SERVER_ERROR);
         map.put("success", false);
         map.put("message", e.getMessage());
-        outputStream.print(JSONObject.toJSONString(map));
-//        response.sendRedirect("http://localhost:8081/login");
-        outputStream.flush();
-        outputStream.close();
+        writer.print(JSONObject.toJSONString(map));
+        response.sendRedirect("/login");
+        writer.flush();
+        writer.close();
     }
 }

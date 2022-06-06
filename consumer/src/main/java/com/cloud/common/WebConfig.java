@@ -2,6 +2,8 @@ package com.cloud.common;
 
 import com.cloud.config.filter.InitialAuthenticationFilter;
 import com.cloud.config.filter.JwtAuthenticationFilter;
+import com.cloud.config.handler.CustAuthFailHandler;
+import com.cloud.config.handler.CustAuthSuccHandler;
 import com.cloud.config.provider.OptAuthProvider;
 import com.cloud.config.provider.UsernamePasswordAuthProvider;
 import com.cloud.sys.dto.User;
@@ -40,9 +42,9 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
     private UsernamePasswordAuthProvider usernamePasswordAuthProvider;
 
     @Autowired
-    private AuthenticationSuccessHandler authenticationSuccessHandler;
+    private CustAuthSuccHandler authenticationSuccessHandler;
     @Autowired
-    private AuthenticationFailureHandler authenticationFailureHandler;
+    private CustAuthFailHandler authenticationFailureHandler;
     @Autowired
     private InitialAuthenticationFilter initialAuthenticationFilter;
     @Autowired
