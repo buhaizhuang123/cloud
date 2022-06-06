@@ -94,6 +94,7 @@ public class MybatisInterceptor implements Interceptor {
         String format = String.format("LIMIT %d,%d", offset, limit);
 
         if (sql.contains(format)) {
+//            sql = sql.replaceAll("select", "SELECT COUNT(1) total,");
             sql = sql.replaceAll(format, "");
         }
 

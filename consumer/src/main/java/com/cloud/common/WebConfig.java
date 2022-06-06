@@ -1,5 +1,6 @@
 package com.cloud.common;
 
+import com.cloud.config.filter.CkCodeAuthenticationFilter;
 import com.cloud.config.filter.InitialAuthenticationFilter;
 import com.cloud.config.filter.JwtAuthenticationFilter;
 import com.cloud.config.handler.CustAuthFailHandler;
@@ -49,6 +50,8 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
     private InitialAuthenticationFilter initialAuthenticationFilter;
     @Autowired
     private JwtAuthenticationFilter jwtAuthenticationFilter;
+    @Autowired
+    private CkCodeAuthenticationFilter ckCodeAuthenticationFilter;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -71,11 +74,12 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         // 表单验证
         http.authorizeRequests()
-                .mvcMatchers("image/**", "/error")
+                .mvcMatchers("image/**", "/error", "/image/generate")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
+                .addFilterBefore(ckCodeAuthenticationFilter, BasicAuthenticationFilter.class)
                 .addFilterAt(initialAuthenticationFilter, BasicAuthenticationFilter.class)
                 .addFilterAfter(jwtAuthenticationFilter, BasicAuthenticationFilter.class)
                 .formLogin()

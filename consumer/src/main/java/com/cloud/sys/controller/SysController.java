@@ -1,5 +1,6 @@
 package com.cloud.sys.controller;
 
+import com.cloud.common.Page;
 import com.cloud.common.Result;
 import com.cloud.sys.dao.UserMapper;
 import com.cloud.sys.dto.User;
@@ -47,7 +48,8 @@ public class SysController {
     }
 
     @RequestMapping("listUsr")
-    public Result findUser(RowBounds rowBounds) {
+    public Result findUser(Page page) {
+        RowBounds rowBounds = new RowBounds(page.getPageNum(), page.getPageSize());
         List<User> user = userMapper.findUser(rowBounds);
         Result<List<User>> userResult = new Result<>();
         userResult.success(user);

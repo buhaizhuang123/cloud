@@ -20,8 +20,13 @@ spring:
     password: Bhz123456
     url: jdbc:mysql://localhost:3306/firstDoc?serverTimezone=UTC
     hikari:
-      connection-timeout: 5000
-      maximum-pool-size: 10
+      connection-timeout: 600000
+      maximum-pool-size: 30
+      max-lifetime: 1800000
+      minimum-idle: 20
+      validation-timeout: 3000
+      idle-timeout: 60000
+      auto-commit: true
   #  security:
   #    user:
   #      name: spring
