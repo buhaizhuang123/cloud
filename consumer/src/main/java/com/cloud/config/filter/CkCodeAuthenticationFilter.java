@@ -1,6 +1,7 @@
 package com.cloud.config.filter;
 
 import com.cloud.config.handler.CkCodeFailHandler;
+import com.cloud.sys.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
@@ -26,6 +27,10 @@ public class CkCodeAuthenticationFilter extends OncePerRequestFilter {
     @Autowired
     private CkCodeFailHandler ckCodeFailHandler;
 
+    @Autowired
+    private ProductService webScoketService;
+
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
         logger.info("================== 执行验证码校验 =======================");
@@ -35,9 +40,11 @@ public class CkCodeAuthenticationFilter extends OncePerRequestFilter {
         String code = str.get(key);
         assert code != null;
         if (!code.equalsIgnoreCase(value)) {
+            webScoketService.sendAll(request.getParameter("username") + " : " + "验证码校验失败");
             ckCodeFailHandler.onAuthenticationFailure(request, response, new BadCredentialsException("验证码校验错误"));
             return;
         }
+        webScoketService.sendAll(request.getParameter("username") + " : " + "验证码校验成功");
         chain.doFilter(request, response);
     }
 

@@ -5,6 +5,7 @@ import com.cloud.config.handler.AuthenticationUnauthorizedHandler;
 import com.cloud.config.handler.CustAuthFailHandler;
 import com.cloud.config.handler.CustAuthSuccHandler;
 import com.cloud.config.impl.UsernamePasswordAuth;
+import com.cloud.sys.service.ProductService;
 import io.jsonwebtoken.Claims;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -47,6 +48,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private AuthenticationUnauthorizedHandler authenticationUnauthorizedHandler;
 
 
+    @Autowired
+    private ProductService webScoketService;
+
     private Logger logger = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
 
     @Override
@@ -70,6 +74,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         GrantedAuthority a = new SimpleGrantedAuthority("user");
         UsernamePasswordAuth auth = new UsernamePasswordAuth(username, null, Arrays.asList(a));
         SecurityContextHolder.getContext().setAuthentication(auth);
+        webScoketService.sendAll(username + " : " + "token校验成功!!!");
         chain.doFilter(request, response);
     }
 

@@ -26,7 +26,7 @@ public class CkCodeFailHandler implements AuthenticationFailureHandler {
         response.setContentType("application/json;charset=UTF-8");
         PrintWriter writer = response.getWriter();
         HashMap<Object, Object> map = new HashMap<>();
-        map.put("code", HttpStatus.UNAUTHORIZED.value());
+        map.put("code", HttpStatus.INTERNAL_SERVER_ERROR.value());
         map.put("message", e.getMessage());
         map.put("success", false);
         writer.print(JSONObject.toJSONString(map));

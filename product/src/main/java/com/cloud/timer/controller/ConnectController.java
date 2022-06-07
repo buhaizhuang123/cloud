@@ -6,6 +6,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.websocket.Session;
@@ -23,18 +24,18 @@ import java.util.concurrent.ConcurrentHashMap;
 public class ConnectController {
 
     @RequestMapping("getPage")
-    public String connect(){
+    public String connect() {
         return "Timer";
     }
 
-    @RequestMapping("send")
+    @RequestMapping("sendAll")
     @ResponseBody
-    public String send(){
+    public String send(@RequestParam("message") String message) {
         ConcurrentHashMap<String, Session> webSocketSet = WebSocket.webSocketSet;
         if (!CollectionUtils.isEmpty(webSocketSet)) {
             for (Map.Entry<String, Session> session : webSocketSet.entrySet()) {
                 Session value = session.getValue();
-                value.getAsyncRemote().sendText("后台发送数据");
+                value.getAsyncRemote().sendText(message);
             }
         }
         return "发送完成";

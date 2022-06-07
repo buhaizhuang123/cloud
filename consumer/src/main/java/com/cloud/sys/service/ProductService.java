@@ -4,6 +4,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ import java.util.List;
 @FeignClient(name = "product")
 public interface ProductService {
 
-    @RequestMapping(value = "/shop/show",method = RequestMethod.GET)
+    @RequestMapping(value = "/shop/show", method = RequestMethod.GET)
     String show();
 
     @RequestMapping("/shop/list")
@@ -24,5 +25,11 @@ public interface ProductService {
 
     @GetMapping("/usr/list")
     List listUsr();
+
+    /**
+     * 发送数据到全部
+     */
+    @RequestMapping(value = "connect/sendAll", method = RequestMethod.POST)
+    String sendAll(@RequestParam("message") String message);
 
 }
