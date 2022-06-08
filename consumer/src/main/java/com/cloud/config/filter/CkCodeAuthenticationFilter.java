@@ -38,8 +38,8 @@ public class CkCodeAuthenticationFilter extends OncePerRequestFilter {
         String value = request.getParameter("imgValue");
         ValueOperations<String, String> str = redisTemplate.opsForValue();
         String code = str.get(key);
-        assert code != null;
-        if (!code.equalsIgnoreCase(value)) {
+//        assert code != null;
+        if (code == null || !code.equalsIgnoreCase(value)) {
             webScoketService.sendAll(request.getParameter("username") + " : " + "验证码校验失败");
             ckCodeFailHandler.onAuthenticationFailure(request, response, new BadCredentialsException("验证码校验错误"));
             return;

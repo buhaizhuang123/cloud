@@ -4,8 +4,10 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.cloud.common.EsClient;
 import com.cloud.person.dto.PersonDto;
+import com.cloud.person.dto.PersonVo;
 import com.cloud.person.service.PsService;
 import com.cloud.shop.dto.Page;
+import org.apache.commons.lang3.StringUtils;
 import org.elasticsearch.action.DocWriteResponse;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.index.IndexResponse;
@@ -15,12 +17,12 @@ import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.index.query.MatchAllQueryBuilder;
 import org.elasticsearch.index.query.MatchQueryBuilder;
+import org.elasticsearch.index.query.RangeQueryBuilder;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.sort.SortOrder;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import java.io.IOException;
 import java.util.*;
@@ -59,15 +61,15 @@ public class PsServiceImpl implements PsService {
     }
 
     @Override
-    public List<PersonDto> findPerson(PersonDto personDto, Page page) throws IOException {
+    public List<PersonDto> findPerson(PersonVo personDto, Page page) throws IOException {
         RestHighLevelClient restHighLevelClient = EsClient.builder();
         SearchRequest searchRequest = new SearchRequest("person", "person1");
         SearchSourceBuilder searchSourceBuilder = SearchSourceBuilder.searchSource();
-        if (Objects.isNull(personDto) || !StringUtils.hasText(personDto.getName())) {
+        if (Objects.isNull(personDto) || StringUtils.isBlank(personDto.getType()) || StringUtils.isBlank(personDto.getValue())) {
             MatchAllQueryBuilder matchAllQueryBuilder = new MatchAllQueryBuilder();
             searchSourceBuilder.query(matchAllQueryBuilder).from(page.getPageNum()).size(page.getSize());
         } else {
-            MatchQueryBuilder matchQueryBuilder = new MatchQueryBuilder("name", personDto.getName());
+            MatchQueryBuilder matchQueryBuilder = new MatchQueryBuilder(personDto.getType(), personDto.getValue());
             searchSourceBuilder.query(matchQueryBuilder).from(page.getPageNum()).size(page.getSize());
         }
         searchRequest.source(searchSourceBuilder);

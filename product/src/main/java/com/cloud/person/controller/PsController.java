@@ -1,6 +1,7 @@
 package com.cloud.person.controller;
 
 import com.cloud.person.dto.PersonDto;
+import com.cloud.person.dto.PersonVo;
 import com.cloud.person.service.PsService;
 import com.cloud.shop.dto.Page;
 import org.elasticsearch.action.DocWriteResponse;
@@ -29,7 +30,7 @@ public class PsController {
     }
 
     @RequestMapping("search")
-    public List<PersonDto> findPersons(PersonDto personDto,Page page) throws IOException {
+    public List<PersonDto> findPersons(PersonVo personDto, Page page) throws IOException {
         List<PersonDto> person = psService.findPerson(personDto,page);
         return person;
     }

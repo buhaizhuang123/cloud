@@ -1,7 +1,5 @@
 server:
   port: 8911
-  servlet:
-    context-path: /doc
 spring:
   redis:
     port: 6379

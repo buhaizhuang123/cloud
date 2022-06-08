@@ -19,9 +19,9 @@ public class PersonDto {
 
     private String birthday;
 
+    @JSONField(name = "id_card")
     private String idCard;
 
-    @JsonProperty("pName")
     private String name;
 
     private Integer age;

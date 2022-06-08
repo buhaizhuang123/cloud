@@ -56,9 +56,6 @@ public class ImageController {
         BASE64Encoder base64Encoder = new BASE64Encoder();
         String str = "data:image/jpeg;base64,";
         String base64Image = str + base64Encoder.encode(outputStream.toByteArray());
-//        response.setContentType("application/jpeg");
-        System.out.println(base64Image);
-
         HashMap<Object, Object> map = new HashMap<>();
         map.put("key", key);
         map.put("value", base64Image);
