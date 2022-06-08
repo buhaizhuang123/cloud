@@ -60,7 +60,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String token = request.getHeader("authentication");
         if (StringUtils.isBlank(token)) {
             UsernamePasswordAuth usernamePasswordAuth = new UsernamePasswordAuth(request.getParameter("username"), request.getParameter("password"));
-            custAuthSuccHandler.onAuthenticationSuccess(request, response, usernamePasswordAuth);
+            authenticationUnauthorizedHandler.onAuthenticationFailure(request, response, new BadCredentialsException("请登录"));
             return;
         }
         ValueOperations<String, String> str = redisTemplate.opsForValue();

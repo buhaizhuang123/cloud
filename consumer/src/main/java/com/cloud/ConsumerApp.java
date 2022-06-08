@@ -2,6 +2,7 @@ package com.cloud;
 
 
 import com.cloud.common.MybatisInterceptor;
+import org.apache.ibatis.jdbc.ScriptRunner;
 import org.apache.ibatis.session.Configuration;
 import org.mybatis.spring.annotation.MapperScan;
 import org.mybatis.spring.boot.autoconfigure.ConfigurationCustomizer;
@@ -12,6 +13,9 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
 
 /**
  * @author haizhuangbu

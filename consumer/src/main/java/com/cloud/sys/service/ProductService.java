@@ -1,5 +1,6 @@
 package com.cloud.sys.service;
 
+import com.cloud.common.Page;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,7 +30,14 @@ public interface ProductService {
     /**
      * 发送数据到全部
      */
-    @RequestMapping(value = "connect/sendAll", method = RequestMethod.POST)
+    @RequestMapping(value = "connect/sendAll", method = RequestMethod.GET)
     String sendAll(@RequestParam("message") String message);
+
+    @RequestMapping("/ps/search")
+    Object searchPs(Object object);
+
+    @RequestMapping("/ps/list")
+    Object listPs(Page page);
+
 
 }
