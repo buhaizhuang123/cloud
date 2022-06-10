@@ -9,6 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="consumer" />
         <module name="product" />
+        <module name="Hadoop" />
       </profile>
     </annotationProcessing>
   </component>
