@@ -1,9 +1,7 @@
 package com.cloud;
 
 import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.fs.FileStatus;
-import org.apache.hadoop.fs.FileSystem;
-import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.fs.*;
 
 import java.io.IOException;
 
@@ -38,6 +36,18 @@ public class HpUtils {
 
     public static Configuration getConf() {
         return conf;
+    }
+
+    public static void main(String[] args) throws IOException {
+        FileSystem fileSystem = HpUtils.getFileSystem();
+        RemoteIterator<LocatedFileStatus> listFiles = fileSystem.listFiles(new Path("/"), true);
+        while (listFiles.hasNext()) {
+            LocatedFileStatus fileStatus = listFiles.next();
+            Path path = fileStatus.getPath();
+            System.out.println("fileStatus.isDirectory() = " + fileStatus.isDirectory());
+            System.out.println("path.getName() = " + path.getName());
+        }
+        fileSystem.close();
     }
 
 }
