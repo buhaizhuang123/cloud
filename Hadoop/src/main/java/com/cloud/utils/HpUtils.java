@@ -1,4 +1,4 @@
-package com.cloud;
+package com.cloud.utils;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.*;

@@ -3,6 +3,15 @@
 <mapper namespace="com.cloud.shop.shop.ShopDao">
 
     <select id="listShop" resultType="com.cloud.shop.dto.Shop">
+        select *
+        from shop
+    </select>
+    <select id="search" resultType="com.cloud.shop.dto.Shop">
         select * from shop
+        where id in
+        (<foreach collection="s1" item="s" separator=",">
+        #{s}
+    </foreach>)
+
     </select>
 </mapper>

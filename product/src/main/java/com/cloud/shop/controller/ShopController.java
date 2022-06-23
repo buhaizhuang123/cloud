@@ -3,11 +3,13 @@ package com.cloud.shop.controller;
 import com.cloud.common.InfoUtils;
 import com.cloud.shop.dto.Shop;
 import com.cloud.shop.service.ShopService;
+import com.cloud.shop.shop.ShopDao;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -27,6 +29,8 @@ public class ShopController {
 
     @Autowired
     private ShopService shopService;
+    @Autowired
+    private ShopDao shopDao;
 
     @RequestMapping(value = "show", method = RequestMethod.POST)
     public String show() {
@@ -52,6 +56,11 @@ public class ShopController {
     public String sendInfo() {
         InfoUtils.send("usr", "我是消息");
         return "发送成功";
+    }
+
+    @RequestMapping("search")
+    public Object search(@RequestParam("a") String a, @RequestParam("b") String b) {
+        return shopDao.search(a, b);
     }
 
 
