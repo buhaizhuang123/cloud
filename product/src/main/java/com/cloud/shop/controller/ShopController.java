@@ -1,5 +1,7 @@
 package com.cloud.shop.controller;
 
+import com.alibaba.nacos.api.config.annotation.NacosValue;
+import com.alibaba.nacos.spring.context.annotation.config.NacosPropertySource;
 import com.cloud.common.InfoUtils;
 import com.cloud.shop.dto.Shop;
 import com.cloud.shop.service.ShopService;
@@ -22,10 +24,14 @@ import java.util.List;
  */
 @RequestMapping("shop")
 @RestController
+@NacosPropertySource(dataId = "1", autoRefreshed = true)
 public class ShopController {
 
     @Value("${server.port}")
     private String serverProt;
+
+    @NacosValue("${nacosName}")
+    private String nacosName;
 
     @Autowired
     private ShopService shopService;
@@ -44,10 +50,12 @@ public class ShopController {
         return shopService.getShops();
     }
 
+    @RequestMapping("default")
     public List<Shop> defaultFail() {
         ArrayList<Shop> list = new ArrayList<>();
         Shop shop = new Shop();
         shop.setShopName("默认");
+        shop.setShopAddr(nacosName);
         list.add(shop);
         return list;
     }
