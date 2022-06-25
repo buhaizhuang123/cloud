@@ -32,6 +32,8 @@ public class ShopController {
 
     @NacosValue("${nacosName}")
     private String nacosName;
+    @Value("${nacosName}")
+    private String ncName;
 
     @Autowired
     private ShopService shopService;
@@ -56,6 +58,7 @@ public class ShopController {
         Shop shop = new Shop();
         shop.setShopName("默认");
         shop.setShopAddr(nacosName);
+        shop.setShopType(ncName);
         list.add(shop);
         return list;
     }
