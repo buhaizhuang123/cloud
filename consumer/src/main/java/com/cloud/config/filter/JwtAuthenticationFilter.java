@@ -16,6 +16,7 @@ import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -81,15 +82,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
-        return request.getServletPath().equals("/login") || request.getServletPath().matches("^/image.*$");
+
+        return request.getServletPath().equals("/login") || request.getServletPath().matches("^/image.*$") || request.getServletPath().matches("^/file.*$");
     }
 
-
-    public static void main(String[] args) {
-        for (int i = 0; i < 10; i++) {
-            if (i == 5) {
-                return;
-            }
-        }
-    }
 }

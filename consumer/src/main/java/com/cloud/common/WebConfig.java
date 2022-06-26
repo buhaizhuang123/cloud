@@ -74,7 +74,7 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         // 表单验证
         http.authorizeRequests()
-                .mvcMatchers("image/**", "/error", "/image/**")
+                .mvcMatchers("image/**", "/error", "/image/**", "/file/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
