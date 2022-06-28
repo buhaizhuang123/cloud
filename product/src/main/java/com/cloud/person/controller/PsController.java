@@ -6,10 +6,12 @@ import com.cloud.person.dto.PersonVo;
 import com.cloud.person.service.PsService;
 import com.cloud.shop.dto.Page;
 import org.elasticsearch.action.DocWriteResponse;
+import org.elasticsearch.action.delete.DeleteResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
@@ -23,19 +25,23 @@ import java.util.List;
 @RequestMapping("/ps")
 public class PsController {
 
+
     @Autowired
     private PsService psService;
 
     @Autowired
     private ApplicationContext applicationContext;
 
+
+    private Logger logger = LoggerFactory.getLogger(PsController.class);
+
     @RequestMapping("list")
     public Object listPerson(Page page) throws IOException {
         return psService.listPs(page);
     }
 
-    @RequestMapping("search")
-    public List<PersonDto> findPersons(PersonVo personDto, Page page) throws IOException {
+    @RequestMapping(value = "search", method = RequestMethod.POST)
+    public List<PersonDto> findPersons(@RequestBody PersonVo personDto,Page page) throws IOException {
         List<PersonDto> person = psService.findPerson(personDto, page);
         return person;
     }
@@ -46,10 +52,11 @@ public class PsController {
         return save;
     }
 
-    @RequestMapping("sendEvent")
-    public void sendEvent(String message) {
-        MessageEvent messageEvent = new MessageEvent(message, applicationContext);
-        applicationContext.publishEvent(messageEvent);
+    @RequestMapping("del")
+    public DeleteResponse del(@RequestParam("id")String id){
+        logger.info("======== 删除 ============");
+        return psService.delToPerson(id);
     }
+
 
 }

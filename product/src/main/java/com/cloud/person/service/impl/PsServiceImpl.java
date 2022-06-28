@@ -7,19 +7,22 @@ import com.cloud.person.dto.PersonDto;
 import com.cloud.person.dto.PersonVo;
 import com.cloud.person.service.PsService;
 import com.cloud.shop.dto.Page;
+import com.google.common.base.Supplier;
 import org.apache.commons.lang3.StringUtils;
 import org.elasticsearch.action.DocWriteResponse;
+import org.elasticsearch.action.bulk.BulkRequest;
+import org.elasticsearch.action.delete.DeleteRequest;
+import org.elasticsearch.action.delete.DeleteResponse;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.index.IndexResponse;
+import org.elasticsearch.action.search.SearchAction;
 import org.elasticsearch.action.search.SearchRequest;
+import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.common.text.Text;
-import org.elasticsearch.index.query.MatchAllQueryBuilder;
-import org.elasticsearch.index.query.MatchQueryBuilder;
-import org.elasticsearch.index.query.RangeQueryBuilder;
-import org.elasticsearch.index.query.TermQueryBuilder;
+import org.elasticsearch.index.query.*;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
@@ -74,41 +77,83 @@ public class PsServiceImpl implements PsService {
         RestHighLevelClient restHighLevelClient = EsClient.builder();
         SearchRequest searchRequest = new SearchRequest("person", "person1");
         SearchSourceBuilder searchSourceBuilder = SearchSourceBuilder.searchSource();
-        if (Objects.isNull(personDto) || StringUtils.isBlank(personDto.getType()) || StringUtils.isBlank(personDto.getValue())) {
+        if (Objects.isNull(personDto)|| StringUtils.isBlank(personDto.getValue())) {
             MatchAllQueryBuilder matchAllQueryBuilder = new MatchAllQueryBuilder();
             searchSourceBuilder.query(matchAllQueryBuilder).from(page.getPageNum()).size(page.getSize());
-        } else {
+        } else if (Objects.nonNull(personDto.getTypes())) {
+            MultiMatchQueryBuilder multiMatchQueryBuilder = QueryBuilders.multiMatchQuery(personDto.getValue(), personDto.getTypes());
+            HighlightBuilder highlightBuilder = new HighlightBuilder();
+            List<HighlightBuilder.Field> fields = highlightBuilder.fields();
+            List<HighlightBuilder.Field> list = Arrays.stream(personDto.getTypes()).map(HighlightBuilder.Field::new).collect(Collectors.toList());
+            fields.addAll(list);
+            highlightBuilder.preTags("<span style='color:red'>").postTags("</span>");
+            searchSourceBuilder.query(multiMatchQueryBuilder).from(page.getPageNum()).size(page.getSize())
+                    .highlighter(highlightBuilder);
+        } else if (StringUtils.isNotBlank(personDto.getType())) {
             HighlightBuilder highlightBuilder = new HighlightBuilder();
             highlightBuilder.field(personDto.getType()).preTags("<span style='color:red'>").postTags("</span>");
             MatchQueryBuilder matchQueryBuilder = new MatchQueryBuilder(personDto.getType(), personDto.getValue());
-//            TermQueryBuilder termQueryBuilder = new TermQueryBuilder("","");
             searchSourceBuilder.query(matchQueryBuilder).highlighter(highlightBuilder).from(page.getPageNum()).size(page.getSize());
         }
+
+
+
         searchRequest.source(searchSourceBuilder);
         SearchResponse response = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
+
+        return getResult(response,personDto);
+
+    }
+
+    private List<PersonDto> getResult(SearchResponse response, PersonVo personDto) {
+
         SearchHit[] hits = response.getHits()
                 .getHits();
-        List<PersonDto> personDtos = Arrays.stream(hits)
-                .map(search -> {
-                    String sourceAsString = search.getSourceAsString();
-                    Map<String, HighlightField> highlightFields = search.getHighlightFields();
-                    // 拼接颜色字符
-                    String value = Optional.ofNullable(highlightFields)
-                            .map(map -> map.get(personDto.getType()))
-                            .map(HighlightField::getFragments)
-                            .map(tx -> Arrays.stream(tx).map(Text::toString).collect(Collectors.joining()))
-                            .orElse("");
-                    Map map1 = JSONObject.parseObject(sourceAsString, Map.class);
-                    if (StringUtils.isNotBlank(value)) {
-                        HashMap<Object, Object> map = new HashMap<>();
-                        map.put(personDto.getType(), value);
-                        map1.putAll(map);
+        if (Objects.nonNull( personDto.getTypes())) {
+            ArrayList<PersonDto> personDtos = new ArrayList<>();
+            for (SearchHit hit : hits) {
+
+                // 获取资源
+                Map<String, Object> sourceAsMap = hit.getSourceAsMap();
+
+                Map<String, HighlightField> highlightFields = hit.getHighlightFields();
+
+                for (String type : personDto.getTypes()) {
+                    HighlightField highlightField = highlightFields.get(type);
+                    if (highlightField != null){
+                        String value = Arrays.stream(highlightField.getFragments()).map(Text::toString).collect(Collectors.joining());
+                        sourceAsMap.put(type,value);
                     }
-                    PersonDto personDto1 = JSONObject.parseObject(JSONObject.toJSONString(map1), PersonDto.class);
-                    return personDto1;
-                })
-                .collect(Collectors.toList());
-        return personDtos;
+                }
+                PersonDto result = JSONObject.parseObject(JSONObject.toJSONString(sourceAsMap), PersonDto.class);
+                result.setId(hit.getId());
+                personDtos.add(result);
+            }
+            return personDtos;
+        } else {
+            List<PersonDto> personDtos = Arrays.stream(hits)
+                    .map(search -> {
+                        String sourceAsString = search.getSourceAsString();
+                        Map<String, HighlightField> highlightFields = search.getHighlightFields();
+                        // 拼接颜色字符
+                        String value = Optional.ofNullable(highlightFields)
+                                .map(map -> map.get(personDto.getType()))
+                                .map(HighlightField::getFragments)
+                                .map(tx -> Arrays.stream(tx).map(Text::toString).collect(Collectors.joining()))
+                                .orElse("");
+                        Map map1 = JSONObject.parseObject(sourceAsString, Map.class);
+                        if (StringUtils.isNotBlank(value)) {
+                            HashMap<Object, Object> map = new HashMap<>();
+                            map.put(personDto.getType(), value);
+                            map1.putAll(map);
+                        }
+                        PersonDto personDto1 = JSONObject.parseObject(JSONObject.toJSONString(map1), PersonDto.class);
+                        personDto1.setId(search.getId());
+                        return personDto1;
+                    })
+                    .collect(Collectors.toList());
+            return personDtos;
+        }
     }
 
     @Override
@@ -121,4 +166,21 @@ public class PsServiceImpl implements PsService {
         DocWriteResponse.Result result = response.getResult();
         return result;
     }
+
+
+    @Override
+    public DeleteResponse delToPerson(String id){
+
+        DeleteRequest deleteRequest = new DeleteRequest("person","_doc",id);
+        RestHighLevelClient builder = EsClient.builder();
+        // 删除
+        try {
+            DeleteResponse delete = builder.delete(deleteRequest, RequestOptions.DEFAULT);
+            return delete;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }

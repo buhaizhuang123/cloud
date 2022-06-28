@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -13,7 +14,12 @@ import java.util.Date;
  * @mark PersonDto
  */
 @Data
-public class PersonDto {
+public class PersonDto implements Serializable {
+
+
+    private static final long serialVersionUID = -8110455352964605377L;
+    @JSONField(name = "_id")
+    private String id;
 
     private String address;
 

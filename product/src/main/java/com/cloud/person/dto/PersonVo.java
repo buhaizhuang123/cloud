@@ -15,4 +15,6 @@ public class PersonVo extends PersonDto {
 
     private String value;
 
+    private String[] types;
+
 }
