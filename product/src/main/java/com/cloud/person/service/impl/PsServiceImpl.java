@@ -77,10 +77,10 @@ public class PsServiceImpl implements PsService {
         RestHighLevelClient restHighLevelClient = EsClient.builder();
         SearchRequest searchRequest = new SearchRequest("person", "person1");
         SearchSourceBuilder searchSourceBuilder = SearchSourceBuilder.searchSource();
-        if (Objects.isNull(personDto)|| StringUtils.isBlank(personDto.getValue())) {
+        if (Objects.isNull(personDto) && StringUtils.isBlank(personDto.getValue())) {
             MatchAllQueryBuilder matchAllQueryBuilder = new MatchAllQueryBuilder();
             searchSourceBuilder.query(matchAllQueryBuilder).from(page.getPageNum()).size(page.getSize());
-        } else if (Objects.nonNull(personDto.getTypes())) {
+        } else if (Objects.nonNull(personDto.getTypes()) && personDto.getTypes().length > 1 ) {
             MultiMatchQueryBuilder multiMatchQueryBuilder = QueryBuilders.multiMatchQuery(personDto.getValue(), personDto.getTypes());
             HighlightBuilder highlightBuilder = new HighlightBuilder();
             List<HighlightBuilder.Field> fields = highlightBuilder.fields();
@@ -109,7 +109,7 @@ public class PsServiceImpl implements PsService {
 
         SearchHit[] hits = response.getHits()
                 .getHits();
-        if (Objects.nonNull( personDto.getTypes())) {
+        if (Objects.nonNull(personDto.getTypes()) && personDto.getTypes().length > 1) {
             ArrayList<PersonDto> personDtos = new ArrayList<>();
             for (SearchHit hit : hits) {
 
