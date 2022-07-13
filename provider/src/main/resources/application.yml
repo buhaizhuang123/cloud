@@ -1,0 +1,36 @@
+server:
+  port: 8913
+spring:
+  resources:
+    static-locations: classpath:/static
+  mvc:
+    view:
+      suffix: .html
+      prefix: /
+  application:
+    name: provider
+  cloud:
+    nacos:
+      discovery:
+        server-addr: http://localhost:8848
+      config:
+        #       配置服务地址
+        server-addr: http://localhost:8848
+        #       配置服务的dataId前缀
+        prefix: 1
+    sentinel:
+      transport:
+        port: 8720
+        dashboard: localhost:8211
+  datasource:
+    url: jdbc:mysql://localhost:3306/firstDoc?serverTimezone=UTC
+    username: bhz
+    password: Bhz123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations: classpath:/mapper/*.xml
+nacos:
+  config:
+    server-addr: 127.0.0.1:8848

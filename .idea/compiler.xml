@@ -7,8 +7,9 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="consumer" />
         <module name="product" />
+        <module name="provider" />
+        <module name="consumer" />
         <module name="Hadoop" />
       </profile>
     </annotationProcessing>

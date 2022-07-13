@@ -45,6 +45,10 @@ spring:
         server-addr: http://localhost:8848
 #       配置服务的dataId前缀
         prefix: 1
+    sentinel:
+      transport:
+        port: 8719
+        dashboard: localhost:8211
   datasource:
     url: jdbc:mysql://localhost:3306/firstDoc?serverTimezone=UTC
     username: bhz

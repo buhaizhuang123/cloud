@@ -47,11 +47,4 @@ public class FuncEvent {
     }
 
 
-    public static void main(String[] args) {
-        FuncEvent funcEvent = new FuncEvent();
-        Person person = new Person();
-        person.setName("buhaizhuang");
-        System.out.println("funcEvent.exe(person) = " + funcEvent.exe(person));
-    }
-
 }

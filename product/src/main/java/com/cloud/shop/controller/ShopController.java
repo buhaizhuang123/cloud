@@ -1,5 +1,6 @@
 package com.cloud.shop.controller;
 
+import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.alibaba.nacos.api.config.annotation.NacosValue;
 import com.alibaba.nacos.spring.context.annotation.config.NacosPropertySource;
 import com.cloud.common.InfoUtils;
@@ -53,6 +54,7 @@ public class ShopController {
     }
 
     @RequestMapping("default")
+    @SentinelResource("default")
     public List<Shop> defaultFail() {
         ArrayList<Shop> list = new ArrayList<>();
         Shop shop = new Shop();

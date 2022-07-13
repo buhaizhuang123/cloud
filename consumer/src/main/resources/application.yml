@@ -12,6 +12,10 @@ spring:
         server-addr: http://localhost:8848
   #      config:
   #        shared-configs: application.yaml
+    sentinel:
+      transport:
+        port: 8943
+        dashboard: localhost:8211
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: bhz

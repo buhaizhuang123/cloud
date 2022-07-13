@@ -12,6 +12,7 @@
         <module>consumer</module>
         <module>product</module>
         <module>Hadoop</module>
+        <module>provider</module>
     </modules>
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
