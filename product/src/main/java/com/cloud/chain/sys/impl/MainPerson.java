@@ -4,12 +4,16 @@ import com.cloud.chain.sys.PersonChain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.concurrent.Semaphore;
+
 /**
  * @author haizhuangbu
  * @date 2022/6/20 15:44
  * @mark MainPerson
  */
 public class MainPerson extends PersonChain {
+
+
 
     private Logger logger = LoggerFactory.getLogger(MainPerson.class);
 

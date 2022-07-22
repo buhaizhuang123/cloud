@@ -5,6 +5,7 @@ import com.alibaba.csp.sentinel.slots.block.BlockException;
 import com.bu.common.Page;
 import com.bu.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,6 +22,7 @@ import java.util.List;
 public class FsController {
     @Autowired
     private ProductService productService;
+
 
     @RequestMapping("list")
     @SentinelResource(value = "fs-list", blockHandler = "exceptionHandler", fallback = "rollback")
@@ -40,6 +42,11 @@ public class FsController {
         ArrayList<Object> objects = new ArrayList<>();
         objects.add("系统繁忙,稍后重试！！！");
         return objects;
+    }
+
+    @RequestMapping("ts")
+    public Object ts(@RequestBody String str){
+        return str;
     }
 
 }

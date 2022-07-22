@@ -18,8 +18,8 @@ public class SpousePerson extends PersonChain {
     @Override
     public void doExecute() {
         logger.info("配偶校验");
-        if (super.personChain != null) {
-            super.personChain.doExecute();
+        if (this.personChain != null) {
+            this.personChain.doExecute();
         }
     }
 }

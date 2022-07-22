@@ -14,4 +14,9 @@ public class Page {
 
     private Integer size = 10;
 
+    public Page(){
+        System.out.println("page1232");
+    }
+
+
 }

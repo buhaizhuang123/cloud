@@ -41,7 +41,7 @@ public abstract class PersonChain {
                 this.head = this.tail = personChain;
                 return this;
             }
-            this.head.next(personChain);
+            this.tail.next(personChain);
             this.tail = personChain;
             return this;
         }
