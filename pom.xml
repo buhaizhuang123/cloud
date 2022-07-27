@@ -13,6 +13,7 @@
         <module>product</module>
         <module>Hadoop</module>
         <module>provider</module>
+        <module>Remote</module>
     </modules>
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
