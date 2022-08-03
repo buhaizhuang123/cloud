@@ -1,6 +1,7 @@
 package com.cloud.sys.dao;
 
 import com.cloud.sys.dto.User;
+import org.apache.ibatis.annotations.CacheNamespace;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.security.core.userdetails.UserDetails;

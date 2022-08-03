@@ -69,24 +69,5 @@ public class InfoUtils {
         return stringBuffer.toString();
     }
 
-    public static void main(String[] args) throws IOException {
-        RestHighLevelClient builder = EsClient.builder();
-        GetRequest getRequest = new GetRequest("person");
-//        getRequest.type("_doc");
-        getRequest.id("1");
-        GetResponse response = builder.get(getRequest, RequestOptions.DEFAULT);
-        response.getSourceAsMap().forEach((k,v)-> System.out.println(k+":"+v));
-//        EsClient.colse();
-    }
-    @Test
-    public void ts1() throws IOException {
-        RestHighLevelClient builder = EsClient.builder();
-        GetRequest getRequest = new GetRequest("person");
-//        getRequest.type("_doc");
-        getRequest.id("0ZJZOoABZ_fWMzOtoB7-");
-        GetResponse response = builder.get(getRequest, RequestOptions.DEFAULT);
-        response.getSourceAsMap().forEach((k,v)-> System.out.println(k+":"+v));
-//        EsClient.colse();
-    }
 
 }

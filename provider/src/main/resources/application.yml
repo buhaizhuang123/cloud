@@ -13,11 +13,11 @@ spring:
     nacos:
       discovery:
         server-addr: http://localhost:8848
-      config:
-        #       配置服务地址
-        server-addr: http://localhost:8848
-        #       配置服务的dataId前缀
-        prefix: 1
+#      config:
+#        #       配置服务地址
+#        server-addr: http://localhost:8848
+#        #       配置服务的dataId前缀
+#        prefix: 1
     sentinel:
       transport:
         port: 8720

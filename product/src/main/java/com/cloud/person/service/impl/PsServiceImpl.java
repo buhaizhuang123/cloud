@@ -80,12 +80,17 @@ public class PsServiceImpl implements PsService {
         if (Objects.isNull(personDto) && StringUtils.isBlank(personDto.getValue())) {
             MatchAllQueryBuilder matchAllQueryBuilder = new MatchAllQueryBuilder();
             searchSourceBuilder.query(matchAllQueryBuilder).from(page.getPageNum()).size(page.getSize());
-        } else if (Objects.nonNull(personDto.getTypes()) && personDto.getTypes().length > 1 ) {
+        } else if (Objects.nonNull(personDto.getTypes()) && personDto.getTypes().length >= 1) {
             MultiMatchQueryBuilder multiMatchQueryBuilder = QueryBuilders.multiMatchQuery(personDto.getValue(), personDto.getTypes());
             HighlightBuilder highlightBuilder = new HighlightBuilder();
-            List<HighlightBuilder.Field> fields = highlightBuilder.fields();
-            List<HighlightBuilder.Field> list = Arrays.stream(personDto.getTypes()).map(HighlightBuilder.Field::new).collect(Collectors.toList());
-            fields.addAll(list);
+            if (personDto.getTypes().length > 1) {
+                List<HighlightBuilder.Field> fields = highlightBuilder.fields();
+                List<HighlightBuilder.Field> list = Arrays.stream(personDto.getTypes()).map(HighlightBuilder.Field::new).collect(Collectors.toList());
+                fields.addAll(list);
+            } else {
+                String type = personDto.getTypes()[0];
+                highlightBuilder.field(type);
+            }
             highlightBuilder.preTags("<span style='color:red'>").postTags("</span>");
             searchSourceBuilder.query(multiMatchQueryBuilder).from(page.getPageNum()).size(page.getSize())
                     .highlighter(highlightBuilder);
@@ -97,11 +102,10 @@ public class PsServiceImpl implements PsService {
         }
 
 
-
         searchRequest.source(searchSourceBuilder);
         SearchResponse response = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
 
-        return getResult(response,personDto);
+        return getResult(response, personDto);
 
     }
 
@@ -120,9 +124,9 @@ public class PsServiceImpl implements PsService {
 
                 for (String type : personDto.getTypes()) {
                     HighlightField highlightField = highlightFields.get(type);
-                    if (highlightField != null){
+                    if (highlightField != null) {
                         String value = Arrays.stream(highlightField.getFragments()).map(Text::toString).collect(Collectors.joining());
-                        sourceAsMap.put(type,value);
+                        sourceAsMap.put(type, value);
                     }
                 }
                 PersonDto result = JSONObject.parseObject(JSONObject.toJSONString(sourceAsMap), PersonDto.class);
@@ -169,9 +173,9 @@ public class PsServiceImpl implements PsService {
 
 
     @Override
-    public DeleteResponse delToPerson(String id){
+    public DeleteResponse delToPerson(String id) {
 
-        DeleteRequest deleteRequest = new DeleteRequest("person","_doc",id);
+        DeleteRequest deleteRequest = new DeleteRequest("person", "_doc", id);
         RestHighLevelClient builder = EsClient.builder();
         // 删除
         try {

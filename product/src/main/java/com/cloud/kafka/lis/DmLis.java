@@ -22,4 +22,12 @@ public class DmLis {
         System.out.println("value = " + value);
         ack.acknowledge();
     }
+
+    @KafkaListener(topics = "kafka_temp", groupId = "demo")
+    public void listen01(ConsumerRecord<String, String> record, Acknowledgment ack) {
+        String value = record.value();
+        System.out.println("value01" + value);
+        ack.acknowledge();
+    }
+
 }
