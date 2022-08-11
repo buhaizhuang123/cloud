@@ -19,6 +19,7 @@ public class CrSf {
 
         for (int i = 0; i < arr.length; i++) {
             for (int j = i + 1; j < arr.length; j++) {
+                // 当前元素 与 后面所有元素做比较
                 if (arr[j] < arr[i]) {
                     int temp = arr[i];
                     arr[i] = arr[j];
