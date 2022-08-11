@@ -15,9 +15,9 @@ public class MpSf {
 
 
     public static void mp(int[] arr) {
-
-
+        // 冒泡
         for (int i = 1; i < arr.length; i++) {
+            // 每一轮排序下来最大的数会到右边。 可以少进行一次比较
             for (int j = 0; j < arr.length - i; j++) {
                 if (arr[j] > arr[j + 1]) {
                     int temp = arr[j];

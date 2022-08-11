@@ -45,10 +45,11 @@ public class GbSf {
                 temp[i++] = arr[s2++];
             }
         }
-
+        // 若是存在左多 右少
         while (s1 <= mid) {
             temp[i++] = arr[s1++];
         }
+        // 若是存在左少 右多
         while (s2 <= height) {
             temp[i++] = arr[s2++];
         }
