@@ -30,7 +30,6 @@ public class RpcRegister {
 
 
     public void start() {
-
         NioEventLoopGroup boss = new NioEventLoopGroup();
         NioEventLoopGroup worker = new NioEventLoopGroup();
 

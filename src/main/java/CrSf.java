@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.HashMap;
 
 /**
  * @author haizhuangbu
@@ -12,20 +13,26 @@ public class CrSf {
         int[] array = new int[]{1, 8, 9, 5, 3, 8};
         sort(array);
         System.out.println(Arrays.toString(array));
+
+
+        HashMap<Object, Object> map = new HashMap<>();
+        System.out.println(map);
+
     }
 
     public static void sort(int[] arr) {
 
-
-        for (int i = 0; i < arr.length; i++) {
-            for (int j = i + 1; j < arr.length; j++) {
-                // 当前元素 与 后面所有元素做比较
-                if (arr[j] < arr[i]) {
-                    int temp = arr[i];
-                    arr[i] = arr[j];
-                    arr[j] = temp;
-                }
+        for (int i = 1; i < arr.length; i++) {
+            int t = arr[i]; // 当前
+            int j = i - 1;
+            // 前数字大于当前数字。前数字值改变。
+            while (j >= 0 && t < arr[j]) {
+                arr[j + 1] = arr[j];
+                j--;
             }
+            // 排在j+1当期的位置
+            arr[j + 1] = t;
+
         }
 
     }

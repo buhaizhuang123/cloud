@@ -71,3 +71,6 @@ auth:
   server:
     base:
       url: http://localhost:8912/shop/show
+
+
+ribbon

@@ -74,7 +74,7 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         // 表单验证
         http.authorizeRequests()
-                .mvcMatchers("image/**", "/error", "/image/**", "/file/**")
+                .mvcMatchers("image/**", "/error", "/file/**","sys/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
@@ -85,7 +85,6 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .successHandler(authenticationSuccessHandler)
                 .failureHandler(authenticationFailureHandler);
-//                .and().csrf().disable();
     }
 
 

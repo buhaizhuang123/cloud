@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -45,6 +46,8 @@ public class CustAuthSuccHandler implements AuthenticationSuccessHandler {
         User user = new User();
         user.setAuth(authentication);
         String jwt = JwtUtils.createJwt(user);
+        Cookie cookie = new Cookie("authentication", jwt);
+        response.addCookie(cookie);
         response.setHeader("authentication", jwt);
         logger.info("============== 存储token =======================");
         ValueOperations<String, String> string = redisTemplate.opsForValue();

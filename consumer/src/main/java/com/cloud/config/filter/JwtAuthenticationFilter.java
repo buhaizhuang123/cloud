@@ -64,6 +64,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
 
         logger.info("=============== 执行非login身份验证 ======================");
+
         String token = request.getHeader("authentication");
         if (StringUtils.isBlank(token)) {
             UsernamePasswordAuth usernamePasswordAuth = new UsernamePasswordAuth(request.getParameter("username"), request.getParameter("password"));
@@ -89,7 +90,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
 
-        return request.getServletPath().equals("/login") || request.getServletPath().matches("^/image.*$") || request.getServletPath().matches("^/file.*$");
+        return request.getServletPath().equals("/login") || request.getServletPath().matches("^/image.*$") || request.getServletPath().matches("^/file.*$") || request.getServletPath().matches("^/sys.*$");
     }
 
 }

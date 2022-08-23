@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,8 +42,8 @@ public class ShopController {
     @Autowired
     private ShopDao shopDao;
 
-    @RequestMapping(value = "show", method = RequestMethod.POST)
-    public String show() {
+    @RequestMapping(value = "show", method = RequestMethod.GET)
+    public String show(HttpServletRequest request) {
         return serverProt + "show";
     }
 
