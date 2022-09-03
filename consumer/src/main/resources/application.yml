@@ -62,6 +62,8 @@ spring:
 
   application:
     name: consumer
+  jackson:
+    time-zone: GMT+8
 mybatis:
   configuration:
     map-underscore-to-camel-case: true
@@ -71,6 +73,3 @@ auth:
   server:
     base:
       url: http://localhost:8912/shop/show
-
-
-ribbon

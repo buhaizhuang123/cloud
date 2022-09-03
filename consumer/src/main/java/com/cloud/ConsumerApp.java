@@ -28,7 +28,7 @@ import java.sql.DriverManager;
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableFeignClients
-@MapperScan(basePackages = "com.cloud.sys.dao")
+@MapperScan(basePackages = {"com.cloud.sys.dao","com.cloud.person.dao"})
 public class ConsumerApp {
 
     public static void main(String[] args) {

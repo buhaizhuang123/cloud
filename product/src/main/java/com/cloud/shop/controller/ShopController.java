@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author haizhuangbu
@@ -77,5 +77,18 @@ public class ShopController {
         return shopDao.search(a, b);
     }
 
+
+    public static void main(String[] args) {
+        LinkedList<Object> objects = new LinkedList<>();
+
+        objects.add("123");
+        objects.add("1231");
+        objects.add("12311");
+        objects.add("123111");
+        Object pop = objects.pollLast();
+        for (Object object : objects) {
+            System.out.println(object);
+        }
+    }
 
 }

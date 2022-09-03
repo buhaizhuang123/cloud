@@ -1,5 +1,6 @@
 package com.cloud.image.controller;
 
+import com.cloud.person.dao.PersonMapper;
 import com.cloud.person.dto.Person;
 import com.google.code.kaptcha.Producer;
 import org.slf4j.Logger;
@@ -7,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,6 +22,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.UUID;
@@ -40,6 +43,8 @@ public class ImageController {
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
 
+    @Autowired
+    private PersonMapper personMapper;
 
     private Logger log = LoggerFactory.getLogger(ImageController.class);
 
@@ -66,8 +71,19 @@ public class ImageController {
     }
 
     @RequestMapping("check")
-    public Object check(@Valid @RequestBody Person person){
-        return null;
+    public Object check(@Valid() @RequestBody Person person) {
+        Person person1 = new Person();
+        person1.setName("123");
+        person1.setDate(new Date());
+        return person1;
+    }
+
+
+    @RequestMapping("back")
+    public Object back(@Valid() @RequestBody Person person) {
+        person.setId(1);
+        Person person1 = personMapper.getPerson(person);
+        return person1;
     }
 
 }
