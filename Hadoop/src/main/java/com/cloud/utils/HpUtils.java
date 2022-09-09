@@ -4,6 +4,8 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.*;
 
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 /**
  * @author haizhuangbu
@@ -17,17 +19,23 @@ public class HpUtils {
 
     static {
         conf = new Configuration();
+        System.setProperty("HADOOP_USER_NAME", "root");
         System.setProperty("hadoop.home.dir", "/usr/local/Cellar/hadoop/3.3.2/");
         conf.set("fs.hdfs.impl", "org.apache.hadoop.hdfs.DistributedFileSystem");
-        conf.set("fs.default.name", "hdfs://localhost:9000");
-        getFileSystem();
+        conf.set("fs.default.name", "hdfs://hadoop01:9000");
+        conf.set("dfs.client.use.datanode.hostname", "true");
     }
 
     public static FileSystem getFileSystem() {
         try {
-            fileSystem = FileSystem.get(conf);
+            URI uri = new URI("hdfs://hadoop01:9000");
+            fileSystem = FileSystem.get(uri,conf,"root");
             return fileSystem;
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
         return fileSystem;
