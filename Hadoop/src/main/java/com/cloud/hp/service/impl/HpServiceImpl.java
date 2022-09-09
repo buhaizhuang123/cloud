@@ -124,10 +124,27 @@ public class HpServiceImpl implements HpFileService {
         logger.info("================ 文件上传结束hadoopPath: {} =================", hadoopPath);
     }
 
+    @Override
+    public void createDir(String dirPath) throws IOException {
 
-    public static void main(String[] args) {
+        logger.info("创建目录{}", dirPath);
+        fileSystem.create(new Path(dirPath));
+        logger.info("目录创建成功");
+    }
+
+    @Override
+    public void delDir(String dirPath) throws IOException {
+        if (fileSystem.exists(new Path(dirPath))) {
+            fileSystem.delete(new Path(dirPath), true);
+        }
+
+        logger.info("目录删除成功");
+
+    }
+
+    public static void main(String[] args) throws IOException {
         HpServiceImpl hpService = new HpServiceImpl();
-        hpService.readFile("/123.txt");
+        /*hpService.readFile("/123.txt");
         List<String> list = hpService.listDir("/");
         System.out.println("list = " + list);
         List<String> file = hpService.listFile("/");
@@ -135,6 +152,9 @@ public class HpServiceImpl implements HpFileService {
         hpService.downloadFromHp("/123.txt", "/txt");
 
         hpService.uploadFile("/Applications/tools/wd/cloud/Hadoop/target/classes//txt", "/tx");
+
+*/
+        hpService.delDir("/ts");
 
     }
 }

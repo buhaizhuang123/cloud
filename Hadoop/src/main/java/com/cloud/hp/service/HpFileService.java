@@ -1,5 +1,6 @@
 package com.cloud.hp.service;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -20,5 +21,9 @@ public interface HpFileService {
 
     void uploadFile(String localPath, String hadoopPath);
 
+
+    void createDir(String dirPath) throws IOException;
+
+    void delDir(String dirPath) throws IOException;
 
 }
