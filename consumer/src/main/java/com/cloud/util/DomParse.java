@@ -1,5 +1,6 @@
 package com.cloud.util;
 
+import com.cloud.sys.dto.Person;
 import com.sun.istack.internal.NotNull;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -11,6 +12,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
+import java.lang.reflect.Field;
 
 /**
  * @author haizhuangbu
@@ -46,17 +48,59 @@ public class DomParse<T> {
         NodeList elementsByTagName = null;
         for (String dom : doms) {
             Element documentElement = parse.getDocumentElement();
-            elementsByTagName = documentElement.getElementsByTagName(dom);
+            elementsByTagName = documentElement.getChildNodes();
         }
 
-        for (int i = 0; i < elementsByTagName.getLength(); i++) {
+
+        Class<?> aClass = clazz.getClass();
+        Field[] fields = aClass.getDeclaredFields();
+        // 获取对象实例
+        Object o = null;
+        try {
+            o = aClass.newInstance();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
+
+        for (int i = 1; i < elementsByTagName.getLength(); i++) {
 
             Node item = elementsByTagName.item(i);
-            String nodeValue = item.getNodeValue();
-        }
-        return clazz;
+            for (Field field : fields) {
+                String name = field.getName();
+                if (item.getNodeName().equals(name)) {
+                    try {
+                        field.setAccessible(true);
+                        // 属性赋值
+                        field.set(o, item.getTextContent());
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+//
+//            for (int j = 0; j < childNodes.getLength(); j++) {
+//                Node node = childNodes.item(j);
+//                String nodeValue = node.getNodeValue();
+//                System.out.println("node.getOwnerDocument().getDocumentElement().getTagName() = " + node.getOwnerDocument().getDocumentElement().getTagName());
+//
+//            }
 
+        }
+        return (T) o;
     }
 
+    public static void main(String[] args) {
+
+        DomParse<Person> personDomParse = new DomParse<>();
+
+        String path = DomParse.class.getResource("/").getPath();
+        Person person = personDomParse.getData(path + "Person.xml", "person", new Person());
+
+        System.out.println(person);
+
+    }
 
 }
