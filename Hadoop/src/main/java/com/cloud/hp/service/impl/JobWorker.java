@@ -1,5 +1,6 @@
 package com.cloud.hp.service.impl;
 
+import com.cloud.hp.service.HpFileService;
 import com.cloud.hp.service.mapper.WorldMapper;
 import com.cloud.hp.service.reducer.WorldReducer;
 import org.apache.hadoop.conf.Configuration;
@@ -51,6 +52,11 @@ public class JobWorker {
         FileInputFormat.setInputPaths(jobConf, new Path(inputStr));
         // 设置输出文件路径
         FileOutputFormat.setOutputPath(jobConf, new Path(outputStr));
+
+        HpFileService hpService = new HpServiceImpl();
+        // 删除文件
+        hpService.delDir("/emp/weater");
+
 
         // 启动任务
         JobClient.runJob(jobConf);
