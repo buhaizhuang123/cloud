@@ -1,6 +1,5 @@
 package com.cloud.util;
 
-import com.cloud.sys.dto.Person;
 import com.sun.istack.internal.NotNull;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -80,27 +79,8 @@ public class DomParse<T> {
                     }
                 }
             }
-//
-//            for (int j = 0; j < childNodes.getLength(); j++) {
-//                Node node = childNodes.item(j);
-//                String nodeValue = node.getNodeValue();
-//                System.out.println("node.getOwnerDocument().getDocumentElement().getTagName() = " + node.getOwnerDocument().getDocumentElement().getTagName());
-//
-//            }
 
         }
         return (T) o;
     }
-
-    public static void main(String[] args) {
-
-        DomParse<Person> personDomParse = new DomParse<>();
-
-        String path = DomParse.class.getResource("/").getPath();
-        Person person = personDomParse.getData(path + "Person.xml", "person", new Person());
-
-        System.out.println(person);
-
-    }
-
 }
