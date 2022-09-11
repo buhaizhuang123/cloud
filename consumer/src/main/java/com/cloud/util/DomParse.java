@@ -1,6 +1,5 @@
 package com.cloud.util;
 
-import com.sun.istack.internal.NotNull;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -39,7 +38,7 @@ public class DomParse<T> {
         return null;
     }
 
-    public <T> T getData(String path, @NotNull String domPath, T clazz) {
+    public <T> T getData(String path, String domPath, T clazz) {
         Document parse = DomParse.parse(path);
 
         String[] doms = domPath.split("_");
