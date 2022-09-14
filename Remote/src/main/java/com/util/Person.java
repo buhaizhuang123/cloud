@@ -2,6 +2,7 @@ package com.util;
 
 import com.sun.istack.internal.NotNull;
 import com.util.anno.Max;
+import com.util.anno.Min;
 
 import java.math.BigDecimal;
 
@@ -14,7 +15,7 @@ public class Person {
 
     private String name;
 
-    @Max(VALUE = 22 , MESSAGE = "年纪过大")
+    @Min(VALUE = 2,MESSAGE = "年龄过小")
     private BigDecimal age;
 
     public BigDecimal getAge() {

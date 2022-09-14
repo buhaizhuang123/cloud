@@ -2,6 +2,7 @@ package com.util.check;
 
 import com.util.anno.Max;
 
+import java.lang.annotation.Annotation;
 import java.math.BigDecimal;
 
 /**
@@ -11,6 +12,6 @@ import java.math.BigDecimal;
  */
 public interface Parent {
 
-    String check(Max max, BigDecimal value);
+    String check(Annotation annotation, Object value);
 
 }
