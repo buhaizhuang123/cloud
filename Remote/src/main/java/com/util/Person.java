@@ -3,6 +3,7 @@ package com.util;
 import com.sun.istack.internal.NotNull;
 import com.util.anno.Max;
 import com.util.anno.Min;
+import com.util.em.LoanTypeEnum;
 
 import java.math.BigDecimal;
 
@@ -15,7 +16,7 @@ public class Person {
 
     private String name;
 
-    @Min(VALUE = 2,MESSAGE = "年龄过小")
+    @Min(VALUE = 2, MESSAGE = "年龄过小")
     private BigDecimal age;
 
     public BigDecimal getAge() {

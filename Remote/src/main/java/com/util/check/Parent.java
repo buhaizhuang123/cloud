@@ -1,5 +1,6 @@
 package com.util.check;
 
+import com.util.Param;
 import com.util.anno.Max;
 
 import java.lang.annotation.Annotation;
@@ -12,6 +13,6 @@ import java.math.BigDecimal;
  */
 public interface Parent {
 
-    String check(Annotation annotation, Object value);
+    String check(Annotation annotation, Param value);
 
 }

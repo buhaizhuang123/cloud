@@ -20,7 +20,6 @@ public class Person {
 
     @NotBlank(message = "yichang")
     @JsonProperty("PERSON_NAME")
-    @JsonAlias("name")
     private String name;
 
 
