@@ -4,11 +4,14 @@ import com.util.check.Max;
 import com.util.check.Min;
 import com.util.check.Parent;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 /**
  * @author haizhuangbu
@@ -86,12 +89,21 @@ public class ValidUtils {
     }
 
     public static void main(String[] args) {
+//
+//        Person person = new Person();
+//        person.setName("123");
+//        person.setAge(BigDecimal.valueOf(1));
+//
+//        System.out.println(ValidUtils.valid(person));
 
-        Person person = new Person();
-        person.setName("123");
-        person.setAge(BigDecimal.valueOf(1));
-
-        System.out.println(ValidUtils.valid(person));
+        Properties properties = new Properties();
+        try {
+            properties.load(new FileInputStream("src/main/resources/app.properties"));
+            String name = properties.getProperty("name");
+            System.out.println(name);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
 
     }

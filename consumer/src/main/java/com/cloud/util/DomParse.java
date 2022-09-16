@@ -11,6 +11,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.util.Objects;
 
 /**
  * @author haizhuangbu
@@ -56,14 +57,12 @@ public class DomParse<T> {
         Object o = null;
         try {
             o = aClass.newInstance();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
+        } catch (InstantiationException | IllegalAccessException e) {
             e.printStackTrace();
         }
 
 
-        for (int i = 1; i < elementsByTagName.getLength(); i++) {
+        for (int i = 1; i < Objects.requireNonNull(elementsByTagName).getLength(); i++) {
 
             Node item = elementsByTagName.item(i);
             for (Field field : fields) {
