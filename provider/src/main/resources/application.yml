@@ -1,5 +1,5 @@
 server:
-  port: 8913
+  port: 8915
 spring:
   resources:
     static-locations: classpath:/static
@@ -13,14 +13,14 @@ spring:
     nacos:
       discovery:
         server-addr: http://localhost:8848
-#      config:
-#        #       配置服务地址
-#        server-addr: http://localhost:8848
-#        #       配置服务的dataId前缀
-#        prefix: 1
+      config:
+        #       配置服务地址
+        server-addr: http://localhost:8848
+        #       配置服务的dataId前缀
+        prefix: 1
     sentinel:
       transport:
-        port: 8720
+        port: 8999
         dashboard: localhost:8211
   datasource:
     url: jdbc:mysql://localhost:3306/firstDoc?serverTimezone=UTC
@@ -31,6 +31,6 @@ mybatis:
   configuration:
     map-underscore-to-camel-case: true
   mapper-locations: classpath:/mapper/*.xml
-nacos:
-  config:
-    server-addr: 127.0.0.1:8848
+#nacos:
+#  config:
+#    server-addr: 127.0.0.1:8848

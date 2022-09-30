@@ -4,6 +4,7 @@ import com.cloud.sys.dto.SUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -30,7 +31,7 @@ public class AuthServerProxy {
         sUser.setUsername(username);
         sUser.setPassword(password);
         HttpEntity<SUser> entity = new HttpEntity<>(sUser);
-        restTemplate.postForEntity(url, entity, Void.class);
+        restTemplate.exchange(url, HttpMethod.GET,entity, Void.class);
     }
 
     public Boolean sendOTP(String username, String code) {

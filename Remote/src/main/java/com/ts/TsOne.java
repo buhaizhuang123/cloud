@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 import java.util.Random;
 
-import static com.sun.tools.corba.se.idl.constExpr.Expression.two;
 
 /**
  * @author haizhuangbu

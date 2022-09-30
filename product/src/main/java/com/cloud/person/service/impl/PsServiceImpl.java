@@ -37,6 +37,9 @@ import org.springframework.stereotype.Service;
 import java.beans.PropertyDescriptor;
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
@@ -113,7 +116,7 @@ public class PsServiceImpl implements PsService {
 
         SearchHit[] hits = response.getHits()
                 .getHits();
-        if (Objects.nonNull(personDto.getTypes()) && personDto.getTypes().length > 1) {
+        if (Objects.nonNull(personDto.getTypes()) && personDto.getTypes().length >= 1) {
             ArrayList<PersonDto> personDtos = new ArrayList<>();
             for (SearchHit hit : hits) {
 

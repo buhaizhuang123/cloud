@@ -26,15 +26,15 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 @RequestMapping("shop")
 @RestController
-@NacosPropertySource(dataId = "1", autoRefreshed = true)
+//@NacosPropertySource(dataId = "1", autoRefreshed = true)
 public class ShopController {
 
     @Value("${server.port}")
     private String serverProt;
 
-    @NacosValue("${nacosName}")
+//    @NacosValue("${nacosName}")
     private String nacosName;
-    @Value("${nacosName}")
+//    @Value("${nacosName}")
     private String ncName;
 
     @Autowired

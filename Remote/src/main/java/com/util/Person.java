@@ -1,9 +1,6 @@
 package com.util;
 
-import com.sun.istack.internal.NotNull;
-import com.util.anno.Max;
 import com.util.anno.Min;
-import com.util.em.LoanTypeEnum;
 
 import java.math.BigDecimal;
 
