@@ -7,6 +7,7 @@ import com.cloud.config.handler.CustAuthFailHandler;
 import com.cloud.config.handler.CustAuthSuccHandler;
 import com.cloud.config.provider.OptAuthProvider;
 import com.cloud.config.provider.UsernamePasswordAuthProvider;
+import com.cloud.sys.dto.Person;
 import com.cloud.sys.dto.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -75,7 +76,7 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         // 表单验证
         http.authorizeRequests()
-                .mvcMatchers("image/**", "/error", "/file/**","sys/**")
+                .mvcMatchers("image/**", "/error", "/file/**", "sys/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
@@ -93,6 +94,20 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public AuthenticationManager authenticationManager() throws Exception {
         return super.authenticationManager();
+    }
+
+
+    public static void main(String[] args) {
+        Person person = new Person();
+        person.setName("123");
+        new WebConfig().str(person);
+//        s = "1";
+        System.out.println("person = " + person.getName());
+
+    }
+
+    public  void str(Person param1) {
+        param1.setName("2");
     }
 
 }
