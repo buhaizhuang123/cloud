@@ -34,3 +34,11 @@ mybatis:
 #nacos:
 #  config:
 #    server-addr: 127.0.0.1:8848
+wx:
+  pay:
+    appid: 123 # 公众账号id
+    mchid: 11111222 # 商户号id
+    key: test #商户号的支付key
+    keyPath:  test #微信支付证书（退款、关闭订单 时需要）
+    notifyUrl: /order/ask #支付通知地址（必须是外网可以访问的地址）
+    refundUrl: test #退款通知地址（必须是外网可以访问的地址）
