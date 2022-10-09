@@ -97,17 +97,4 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
     }
 
 
-    public static void main(String[] args) {
-        Person person = new Person();
-        person.setName("123");
-        new WebConfig().str(person);
-//        s = "1";
-        System.out.println("person = " + person.getName());
-
-    }
-
-    public  void str(Person param1) {
-        param1.setName("2");
-    }
-
 }
