@@ -54,7 +54,7 @@ public class BatchConfig {
 
     @Bean
     public Job myJob() {
-        return jobBuilderFactory.get("MyJob")
+        return jobBuilderFactory.get("MyJob3")
                 .listener(new JobExecutionListener() {
                     @Override
                     public void beforeJob(JobExecution jobExecution) {

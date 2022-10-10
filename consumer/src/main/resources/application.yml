@@ -64,6 +64,9 @@ spring:
     name: consumer
   jackson:
     time-zone: GMT+8
+  batch:
+    job:
+      enabled: false
 mybatis:
   configuration:
     map-underscore-to-camel-case: true
