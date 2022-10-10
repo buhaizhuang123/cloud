@@ -67,6 +67,8 @@ spring:
   batch:
     job:
       enabled: false
+  cache:
+    type: redis
 mybatis:
   configuration:
     map-underscore-to-camel-case: true
