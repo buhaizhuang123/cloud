@@ -17,4 +17,6 @@ public interface BusInfoMapper {
 
     Integer insertOne(BusInfo busInfo);
 
+    Integer updateSts(BusInfo busInfo);
+
 }

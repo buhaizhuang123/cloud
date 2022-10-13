@@ -1,5 +1,6 @@
 package com.cloud.batch.reader;
 
+import com.cloud.batch.common.BusSts;
 import com.cloud.batch.dao.BusInfoMapper;
 import com.cloud.batch.dto.BusInfo;
 import org.springframework.batch.item.ItemReader;
@@ -23,9 +24,7 @@ public class BusItemReader implements ItemReader<BusInfo> {
 
     @Override
     public BusInfo read() {
-        BusInfo busInfo = new BusInfo();
-        busInfo.setBusSts("1");
-        BusInfo info = busInfoMapper.findOne("1");
+        BusInfo info = busInfoMapper.findOne(BusSts.OK.getCode());
         return info;
     }
 }
