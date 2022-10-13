@@ -19,9 +19,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Objects;
@@ -70,20 +68,21 @@ public class ImageController {
         return map;
     }
 
-    @RequestMapping("check")
-    public Object check(@Valid() @RequestBody Person person) {
-        Person person1 = new Person();
-        person1.setName("123");
-        person1.setDate(new Date());
-        return person1;
-    }
 
-
-    @RequestMapping("back")
-    public Object back(@Valid() @RequestBody Person person) {
-        person.setId(1);
-        Person person1 = personMapper.getPerson(person);
-        return person1;
+    @RequestMapping("show")
+    public void show(HttpServletResponse response) throws IOException {
+        response.setContentType("application/pdf");
+        response.addHeader("Content-Disposition", "attachment; filename=" +new String("fileName".getBytes("utf-8"),"iso-8859-1")+ ".pdf");
+        ServletOutputStream writer = response.getOutputStream();
+        String fileName = "/Applications/tools/wd/后端书籍/JVM/深入理解Java虚拟机JVM高级特性与最佳实践.pdf";
+        FileInputStream fileInputStream = new FileInputStream(new File(fileName));
+        byte[] bytes = new byte[10240];
+        int len = 0;
+        while ((len = fileInputStream.read(bytes)) > 0) {
+            writer.write(bytes, 0, len);
+        }
+        fileInputStream.close();
+        writer.close();
     }
 
 }
