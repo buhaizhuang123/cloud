@@ -74,6 +74,9 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+//        http.oauth2Client();
+
+
         // 表单验证
         http.authorizeRequests()
                 .mvcMatchers("image/**", "/error", "/file/**", "sys/**")

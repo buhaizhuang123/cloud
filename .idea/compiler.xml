@@ -10,6 +10,7 @@
         <module name="Remote" />
         <module name="product" />
         <module name="provider" />
+        <module name="config" />
         <module name="consumer" />
         <module name="Hadoop" />
       </profile>
