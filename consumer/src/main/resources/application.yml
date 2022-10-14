@@ -31,9 +31,6 @@ spring:
     listener:
       ack-mode: manual_immediate
 
-  cloud:
-    config:
-      uri: http://localhost:8071
     nacos:
       discovery:
         server-addr: http://localhost:8848
@@ -80,3 +77,8 @@ auth:
   server:
     base:
       url: http://localhost:8912/shop/show
+management:
+  endpoint:
+    web:
+      exposure:
+        include: "*"
