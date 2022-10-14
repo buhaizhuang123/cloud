@@ -41,8 +41,6 @@ public class ImageController {
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
 
-    @Autowired
-    private PersonMapper personMapper;
 
     private Logger log = LoggerFactory.getLogger(ImageController.class);
 

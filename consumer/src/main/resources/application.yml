@@ -32,6 +32,8 @@ spring:
       ack-mode: manual_immediate
 
   cloud:
+    config:
+      uri: http://localhost:8071
     nacos:
       discovery:
         server-addr: http://localhost:8848
