@@ -22,6 +22,7 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.FilterChainProxy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.stereotype.Component;
@@ -29,6 +30,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -54,6 +56,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Autowired
     private AuthenticationUnauthorizedHandler authenticationUnauthorizedHandler;
 
+    @Autowired
+    private AuthenticationSuccessHandler authenticationMeSuccessHandler;
+
 
     @Autowired
     private ProductService webScoketService;
@@ -64,8 +69,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
 
         logger.info("=============== 执行非login身份验证 ======================");
-
         String token = request.getHeader("authentication");
+        Cookie[] cookies = request.getCookies();
+        for (Cookie cookie : cookies) {
+            if ("authentication".equals(cookie.getName())) {
+                token = cookie.getValue();
+            }
+        }
         if (StringUtils.isBlank(token)) {
             UsernamePasswordAuth usernamePasswordAuth = new UsernamePasswordAuth(request.getParameter("username"), request.getParameter("password"));
             authenticationUnauthorizedHandler.onAuthenticationFailure(request, response, new BadCredentialsException("请登录"));
@@ -83,6 +93,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         UsernamePasswordAuth auth = new UsernamePasswordAuth(username, null, Arrays.asList(a));
         SecurityContextHolder.getContext().setAuthentication(auth);
         webScoketService.sendAll(username + " : " + "token校验成功!!!");
+//        authenticationMeSuccessHandler.onAuthenticationSuccess(request, response, auth);
         chain.doFilter(request, response);
     }
 

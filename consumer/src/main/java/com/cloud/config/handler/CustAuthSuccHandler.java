@@ -47,11 +47,12 @@ public class CustAuthSuccHandler implements AuthenticationSuccessHandler {
         user.setAuth(authentication);
         String jwt = JwtUtils.createJwt(user);
         Cookie cookie = new Cookie("authentication", jwt);
+        cookie.setMaxAge(600);
         response.addCookie(cookie);
         response.setHeader("authentication", jwt);
         logger.info("============== 存储token =======================");
         ValueOperations<String, String> string = redisTemplate.opsForValue();
-        string.set(jwt, "1", 600, TimeUnit.SECONDS);
+        string.set(jwt, "1", 60, TimeUnit.MINUTES);
 
         HashMap<Object, Object> map = new HashMap<>();
         map.put("code", HttpStatus.OK);

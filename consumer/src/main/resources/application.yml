@@ -41,19 +41,34 @@ spring:
         port: 8943
         dashboard: localhost:8211
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    username: bhz
-    password: Bhz123456
-    url: jdbc:mysql://localhost:3306/firstDoc?serverTimezone=UTC
-    hikari:
-      connection-timeout: 30000
-      maximum-pool-size: 15
-      max-lifetime: 1800000
-      minimum-idle: 5
-      validation-timeout: 3000
-      idle-timeout: 30000
-      auto-commit: true
-      connection-test-query: select 1
+    first:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      username: bhz
+      password: Bhz123456
+      jdbc-url: jdbc:mysql://localhost:3306/firstDoc?serverTimezone=UTC
+      hikari:
+        connection-timeout: 30000
+        maximum-pool-size: 15
+        max-lifetime: 1800000
+        minimum-idle: 5
+        validation-timeout: 3000
+        idle-timeout: 30000
+        auto-commit: true
+        connection-test-query: select 1
+    klin:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      username: bhz
+      password: Bhz123456
+      jdbc-url: jdbc:mysql://localhost:3306/klin?serverTimezone=UTC
+      hikari:
+        connection-timeout: 30000
+        maximum-pool-size: 15
+        max-lifetime: 1800000
+        minimum-idle: 5
+        validation-timeout: 3000
+        idle-timeout: 30000
+        auto-commit: true
+        connection-test-query: select 1
   #  security:
   #    user:
   #      name: spring

@@ -47,4 +47,10 @@ public class AuthServerProxy {
     }
 
 
+
+    public static void main(String[] args) {
+        long sum =  60 * 1000;
+        System.out.println("sum = " + sum);
+    }
+
 }

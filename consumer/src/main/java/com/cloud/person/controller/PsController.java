@@ -1,4 +1,4 @@
-package com.cloud.person;
+package com.cloud.person.controller;
 
 import com.cloud.common.Page;
 import com.cloud.sys.service.ProductService;

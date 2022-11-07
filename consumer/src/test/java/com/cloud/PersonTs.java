@@ -12,6 +12,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+
 /**
  * @author haizhuangbu
  * @date 2022/7/31 15:26
@@ -42,9 +46,5 @@ public class PersonTs {
     @Value("${ts1}")
     private String ts1;
 
-    @Test
-    public void tsConfig() {
-        System.out.println("ts1 = " + ts1);
-    }
 
 }

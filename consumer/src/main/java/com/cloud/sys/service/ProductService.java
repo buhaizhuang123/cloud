@@ -39,5 +39,8 @@ public interface ProductService {
     @RequestMapping("/ps/list")
     Object listPs(Page page);
 
+    @RequestMapping("limit/query")
+    Object findLimit();
+
 
 }

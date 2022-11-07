@@ -49,7 +49,7 @@ public class InitialAuthenticationFilter extends OncePerRequestFilter {
 
 
         try {
-// 若是不包含otp 则会用用户名密码验证
+            // 若是不包含otp 则会用用户名密码验证
             if (code == null) {
                 UsernamePasswordAuth usernamePasswordAuth = new UsernamePasswordAuth(username, password);
 

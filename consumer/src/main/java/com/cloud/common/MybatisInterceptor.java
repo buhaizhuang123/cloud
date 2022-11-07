@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.Properties;
 
 /**
@@ -111,4 +112,12 @@ public class MybatisInterceptor implements Interceptor {
     public void setProperties(Properties properties) {
         Interceptor.super.setProperties(properties);
     }
+
+    public static void main(String[] args) {
+        String substring = "".substring(2);
+        System.out.println("substring = " + substring);
+        int i = substring.indexOf(".");
+        System.out.println("i = " + i);
+    }
+
 }
