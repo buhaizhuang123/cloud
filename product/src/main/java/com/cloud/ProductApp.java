@@ -27,7 +27,7 @@ import org.springframework.web.socket.config.annotation.EnableWebSocket;
  */
 @SpringBootApplication
 @EnableDiscoveryClient
-@MapperScan(basePackages = {"com.cloud.shop.shop", "com.cloud.usr.dao", "com.cloud.limit.dao"})
+@MapperScan(basePackages = {"com.cloud.shop.shop", "com.cloud.usr.dao", "com.cloud.*.dao"})
 @EnableCircuitBreaker
 @EnableFeignClients
 public class ProductApp {

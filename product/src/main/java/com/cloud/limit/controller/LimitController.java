@@ -1,13 +1,18 @@
 package com.cloud.limit.controller;
 
-import com.cloud.limit.dao.LimitApplyDao;
+import com.alibaba.fastjson.JSONObject;
+import com.cloud.limit.dto.CreditLimit;
 import com.cloud.limit.dto.CreditLimitApply;
+import com.cloud.limit.service.CreditLimitApplyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @author haizhuangbu
@@ -19,12 +24,16 @@ import java.util.List;
 public class LimitController {
 
     @Autowired
-    private LimitApplyDao limitApplyDao;
+    private CreditLimitApplyService creditLimitApplyService;
 
     @RequestMapping(value = "query", method = RequestMethod.GET)
     public List<CreditLimitApply> find() {
-        return limitApplyDao.find();
+        return creditLimitApplyService.find();
     }
 
 
+    @RequestMapping(value = "save", method = RequestMethod.POST)
+    public String saveLimit(@RequestBody CreditLimit creditLimit) {
+        return creditLimitApplyService.saveLimitApply(creditLimit).toString();
+    }
 }

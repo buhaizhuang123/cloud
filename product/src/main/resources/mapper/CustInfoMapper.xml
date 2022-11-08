@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cloud.cust.dao.CustInfoMapper">
+
+    <insert id="saveLimitApplyCustInfo" parameterType="com.cloud.limit.dto.CreditLimit">
+        insert into cust_info (appl_seq, cust_name, id_no, mobile_phone
+        <if test="personalInfo.isMarried != null and personalInfo.isMarried != ''">
+            , is_married
+        </if>
+        , unit_name, unit_address,
+        unit_mobile_phone, occu_typ, occu_level)
+        VALUES (#{applSeq},#{personalInfo.custName},#{personalInfo.idNo},#{personalInfo.mobilePhone}
+        <if test="personalInfo.isMarried != null and personalInfo.isMarried != ''">
+            ,#{personalInfo.is_married}
+        </if>
+        ,#{unit.unitName},#{unit.unitAddress},#{unit.unitMobilePhone},#{occupationInfo.occuTyp}
+        ,#{occupationInfo.occuLevel}
+        )
+        <if test="spouseInfo != null">
+            ,(
+            #{applSeq},#{spouseInfo.custName},#{spouseInfo.idNo},#{spouseInfo.mobilePhone}
+            <if test="personalInfo.isMarried != null and personalInfo.isMarried != ''">
+                ,#{personalInfo.is_married}
+            </if>
+            ,null,null,null,null,null
+            )
+        </if>
+        <if test="contactInfo.custName != null and contactInfo.idNo != null">
+            ,(
+            #{applSeq},#{contactInfo.custName},#{contactInfo.idNo},#{contactInfo.mobilePhone}
+            <if test="personalInfo.isMarried != null and personalInfo.isMarried != ''">
+                ,null
+            </if>
+            ,null,null,null,null,null
+            )
+        </if>
+    </insert>
+</mapper>

@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cloud.limit.dao.LimitApplyDao">
+    <insert id="saveLimitApply" parameterType="com.cloud.limit.dto.CreditLimitApply">
+        insert into CREDIT_LIMIT_APPLY (appl_seq, cust_name, id_no, mobile_phone, apply_dt, limit_sts)
+        VALUES (#{applSeq}, #{custName}, #{idNo}, #{mobilePhone}, #{applyDt}, #{limitSts})
+    </insert>
 
     <select id="find" resultType="com.cloud.limit.dto.CreditLimitApply">
         select *

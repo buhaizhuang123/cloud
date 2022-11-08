@@ -15,7 +15,7 @@ public class CreditLimitApply {
 
     private Integer limitNo;
 
-    private String custId;
+    private String applSeq;
 
     private String custName;
 

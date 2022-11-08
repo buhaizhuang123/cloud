@@ -13,5 +13,7 @@ public interface LimitApplyDao {
 
     List<CreditLimitApply> find();
 
+    Integer saveLimitApply(CreditLimitApply creditLimitApply);
+
 
 }
