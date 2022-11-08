@@ -6,8 +6,22 @@
         VALUES (#{applSeq}, #{custName}, #{idNo}, #{mobilePhone}, #{applyDt}, #{limitSts})
     </insert>
 
-    <select id="find" resultType="com.cloud.limit.dto.CreditLimitApply">
+    <select id="find" resultType="com.cloud.limit.dto.CreditLimitApply"
+            parameterType="com.cloud.limit.LimitCustQueryVo">
         select *
         from CREDIT_LIMIT_APPLY
+        <where>
+            <trim prefixOverrides="and">
+                <if test="custName != null and custName != ''">
+                    and CUST_NAME like concat(#{custName},'%')
+                </if>
+                <if test="idNo != null and idNo != ''">
+                    and ID_NO = #{idNo}
+                </if>
+                <if test="mobilePhone != null and mobilePhone != ''">
+                    and MOBILE_PHONE = #{mobilePhone}
+                </if>
+            </trim>
+        </where>
     </select>
 </mapper>

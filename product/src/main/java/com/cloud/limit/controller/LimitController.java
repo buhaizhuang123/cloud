@@ -1,6 +1,7 @@
 package com.cloud.limit.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.cloud.limit.LimitCustQueryVo;
 import com.cloud.limit.dto.CreditLimit;
 import com.cloud.limit.dto.CreditLimitApply;
 import com.cloud.limit.service.CreditLimitApplyService;
@@ -26,9 +27,9 @@ public class LimitController {
     @Autowired
     private CreditLimitApplyService creditLimitApplyService;
 
-    @RequestMapping(value = "query", method = RequestMethod.GET)
-    public List<CreditLimitApply> find() {
-        return creditLimitApplyService.find();
+    @RequestMapping(value = "query", method = RequestMethod.POST)
+    public List<CreditLimitApply> find(@RequestBody(required = false) LimitCustQueryVo limitCustQueryVo) {
+        return creditLimitApplyService.find(limitCustQueryVo);
     }
 
 

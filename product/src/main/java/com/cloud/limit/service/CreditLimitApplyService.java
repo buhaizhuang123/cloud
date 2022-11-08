@@ -1,5 +1,6 @@
 package com.cloud.limit.service;
 
+import com.cloud.limit.LimitCustQueryVo;
 import com.cloud.limit.dto.CreditLimit;
 import com.cloud.limit.dto.CreditLimitApply;
 
@@ -12,7 +13,7 @@ import java.util.List;
  */
 public interface CreditLimitApplyService {
 
-    List<CreditLimitApply> find();
+    List<CreditLimitApply> find(LimitCustQueryVo limitCustQueryVo);
 
 
     Integer saveLimitApply(CreditLimit creditLimit);

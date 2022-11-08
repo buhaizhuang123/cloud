@@ -1,6 +1,7 @@
 package com.cloud.limit.service.impl;
 
 import com.cloud.cust.dao.CustInfoMapper;
+import com.cloud.limit.LimitCustQueryVo;
 import com.cloud.limit.dao.LimitApplyDao;
 import com.cloud.limit.dto.CreditLimit;
 import com.cloud.limit.dto.CreditLimitApply;
@@ -28,8 +29,8 @@ public class CreditLimitApplyServiceImpl implements CreditLimitApplyService {
 
 
     @Override
-    public List<CreditLimitApply> find() {
-        return limitApplyDao.find();
+    public List<CreditLimitApply> find(LimitCustQueryVo limitCustQueryVo) {
+        return limitApplyDao.find(limitCustQueryVo);
     }
 
     @Override

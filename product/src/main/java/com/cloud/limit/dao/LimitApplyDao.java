@@ -1,5 +1,6 @@
 package com.cloud.limit.dao;
 
+import com.cloud.limit.LimitCustQueryVo;
 import com.cloud.limit.dto.CreditLimitApply;
 
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.List;
  */
 public interface LimitApplyDao {
 
-    List<CreditLimitApply> find();
+    List<CreditLimitApply> find(LimitCustQueryVo limitCustQueryVo);
 
     Integer saveLimitApply(CreditLimitApply creditLimitApply);
 

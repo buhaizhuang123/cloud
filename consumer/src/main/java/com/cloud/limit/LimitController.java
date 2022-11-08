@@ -2,6 +2,7 @@ package com.cloud.limit;
 
 import com.cloud.sys.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,9 +20,9 @@ public class LimitController {
     @Autowired
     private ProductService productService;
 
-    @RequestMapping(value = "query", method = RequestMethod.GET)
-    public Object find() {
-        return productService.findLimit();
+    @RequestMapping(value = "query", method = RequestMethod.POST)
+    public Object find(@RequestBody(required = false) Object o) {
+        return productService.findLimit(o);
     }
 
 

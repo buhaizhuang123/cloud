@@ -2,10 +2,7 @@ package com.cloud.sys.service;
 
 import com.cloud.common.Page;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -39,8 +36,8 @@ public interface ProductService {
     @RequestMapping("/ps/list")
     Object listPs(Page page);
 
-    @RequestMapping("limit/query")
-    Object findLimit();
+    @RequestMapping(value = "limit/query", method = RequestMethod.POST)
+    Object findLimit(@RequestBody(required = false) Object o);
 
 
 }

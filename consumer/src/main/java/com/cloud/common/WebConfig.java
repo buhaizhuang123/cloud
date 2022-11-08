@@ -78,7 +78,7 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
 
 
         // 表单验证
-        http.authorizeRequests()
+        http.csrf().disable().authorizeRequests()
                 .mvcMatchers("image/**", "/error", "/file/**", "sys/**")
                 .permitAll()
                 .anyRequest()
