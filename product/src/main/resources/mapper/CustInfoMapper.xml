@@ -16,7 +16,7 @@
         ,#{unit.unitName},#{unit.unitAddress},#{unit.unitMobilePhone},#{occupationInfo.occuTyp}
         ,#{occupationInfo.occuLevel}
         )
-        <if test="spouseInfo != null">
+        <if test="spouseInfo.custName != null and spouseInfo.custName != '' ">
             ,(
             #{applSeq},#{spouseInfo.custName},#{spouseInfo.idNo},#{spouseInfo.mobilePhone}
             <if test="personalInfo.isMarried != null and personalInfo.isMarried != ''">

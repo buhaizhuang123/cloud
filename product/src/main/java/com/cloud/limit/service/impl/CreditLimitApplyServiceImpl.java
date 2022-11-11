@@ -35,7 +35,7 @@ public class CreditLimitApplyServiceImpl implements CreditLimitApplyService {
 
     @Override
     public Integer saveLimitApply(CreditLimit creditLimit) {
-        String applSeq = "LIMIT" + UUID.randomUUID().toString();
+        String applSeq = "LIMIT" + UUID.randomUUID().toString().replaceAll("-","");
         creditLimit.setApplSeq(applSeq);
         custInfoMapper.saveLimitApplyCustInfo(creditLimit);
         CreditLimitApply creditLimitApply = new CreditLimitApply();
