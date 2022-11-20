@@ -18,5 +18,6 @@ public interface CreditLimitApplyService {
 
     Integer saveLimitApply(CreditLimit creditLimit);
 
+    CreditLimit findByApplSeq(String applSeq);
 
 }

@@ -10,4 +10,6 @@ import com.cloud.limit.dto.CreditLimit;
 public interface CustInfoMapper {
 
     Integer saveLimitApplyCustInfo(CreditLimit creditLimit);
+
+    CreditLimit findCreditLimitByApplSeq(String applSeq);
 }

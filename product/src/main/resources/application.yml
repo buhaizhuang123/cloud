@@ -40,9 +40,9 @@ spring:
       discovery:
         server-addr: http://localhost:8848
       config:
-#       配置服务地址
+        #       配置服务地址
         server-addr: http://localhost:8848
-#       配置服务的dataId前缀
+        #       配置服务的dataId前缀
         prefix: 1
     sentinel:
       transport:
@@ -56,7 +56,7 @@ spring:
 mybatis:
   configuration:
     map-underscore-to-camel-case: true
-  mapper-locations: classpath:/mapper/*.xml
+  mapper-locations: classpath:/mapper/**.xml
 nacos:
   config:
     server-addr: 127.0.0.1:8848

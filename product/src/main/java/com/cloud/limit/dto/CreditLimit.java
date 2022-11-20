@@ -12,7 +12,7 @@ public class CreditLimit {
 
     private String applSeq;
 
-    private CreditLimit.PersonalInfo personalInfo;// 个人信息
+    private PersonalInfo personalInfo;// 个人信息
 
     private SpouseInfo spouseInfo;// 配偶信息
 
@@ -21,31 +21,6 @@ public class CreditLimit {
     private Unit unit; // 单位信息
 
     private OccupationInfo occupationInfo; // 职业信息
-
-    @Data
-    class PersonalInfo {
-        private String custName;
-
-        private String mobilePhone;
-
-        private String idNo;
-
-        private String isMarried;
-
-    }
-
-
-    @Data
-    class SpouseInfo {
-        private String custName;
-
-        private String mobilePhone;
-
-        private String idNo;
-
-        private String isMarried;
-
-    }
 
 
     @Data

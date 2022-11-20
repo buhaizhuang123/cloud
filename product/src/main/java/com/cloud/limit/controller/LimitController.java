@@ -6,10 +6,7 @@ import com.cloud.limit.dto.CreditLimit;
 import com.cloud.limit.dto.CreditLimitApply;
 import com.cloud.limit.service.CreditLimitApplyService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -27,14 +24,20 @@ public class LimitController {
     @Autowired
     private CreditLimitApplyService creditLimitApplyService;
 
-    @RequestMapping(value = "query", method = RequestMethod.POST)
+    @RequestMapping(value = "/query", method = RequestMethod.POST)
     public List<CreditLimitApply> find(@RequestBody(required = false) LimitCustQueryVo limitCustQueryVo) {
         return creditLimitApplyService.find(limitCustQueryVo);
     }
 
 
-    @RequestMapping(value = "save", method = RequestMethod.POST)
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String saveLimit(@RequestBody CreditLimit creditLimit) {
         return creditLimitApplyService.saveLimitApply(creditLimit).toString();
     }
+
+    @RequestMapping(value = "/findByApplSeq", method = RequestMethod.GET)
+    public CreditLimit findByApplSeq(@RequestParam("applSeq") String applSeq) {
+        return creditLimitApplyService.findByApplSeq(applSeq);
+    }
+
 }
