@@ -50,7 +50,7 @@
                si.mobile_phone,
                info.appl_seq applSeq
         from cust_info info
-                 inner join spouse_info si on info.appl_seq = si.appl_seq
-        where si.appl_seq = #{applSeq}
+        left join spouse_info si on info.appl_seq = si.appl_seq
+        where info.appl_seq = #{applSeq} limit 1
     </select>
 </mapper>

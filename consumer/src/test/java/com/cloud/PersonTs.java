@@ -45,6 +45,10 @@ public class PersonTs {
 
     @Value("${ts1}")
     private String ts1;
+    @Test
+    public void t1(){
+        System.out.println("ts1 = " + ts1);
+    }
 
 
 }

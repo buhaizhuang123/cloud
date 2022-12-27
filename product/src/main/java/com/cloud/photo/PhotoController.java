@@ -32,4 +32,15 @@ public class PhotoController {
     }
 
 
+    public static void main(String[] args) {
+
+       String r =  "a-zA-Z|\\-";
+
+        String s = "-a12".replaceAll(r, "");
+        System.out.println("s = " + s);
+
+
+    }
+
+
 }
