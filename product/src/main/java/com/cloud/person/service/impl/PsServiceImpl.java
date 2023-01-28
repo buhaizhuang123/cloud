@@ -78,7 +78,7 @@ public class PsServiceImpl implements PsService {
     @Override
     public List<PersonDto> findPerson(PersonVo personDto, Page page) throws IOException {
         RestHighLevelClient restHighLevelClient = EsClient.builder();
-        SearchRequest searchRequest = new SearchRequest("person", "person1");
+        SearchRequest searchRequest = new SearchRequest("person");
         SearchSourceBuilder searchSourceBuilder = SearchSourceBuilder.searchSource();
         if (Objects.isNull(personDto) && StringUtils.isBlank(personDto.getValue())) {
             MatchAllQueryBuilder matchAllQueryBuilder = new MatchAllQueryBuilder();
