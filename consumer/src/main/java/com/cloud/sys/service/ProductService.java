@@ -1,5 +1,6 @@
 package com.cloud.sys.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.cloud.common.Page;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
@@ -39,5 +40,7 @@ public interface ProductService {
     @RequestMapping(value = "limit/query", method = RequestMethod.POST)
     Object findLimit(@RequestBody(required = false) Object o);
 
+    @RequestMapping(value = "loanRever/list",method = RequestMethod.POST)
+    List<Object> list(@RequestBody JSONObject loan, @RequestParam("pageSize") Integer pageSize, @RequestParam("pageNum") Integer pageNum);
 
 }

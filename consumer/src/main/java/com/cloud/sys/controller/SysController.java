@@ -1,5 +1,6 @@
 package com.cloud.sys.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.cloud.common.Page;
 import com.cloud.common.Result;
 import com.cloud.sys.dao.UserMapper;
@@ -10,9 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -54,6 +53,12 @@ public class SysController {
         Result<List<User>> userResult = new Result<>();
         userResult.success(user);
         return userResult;
+    }
+
+    @RequestMapping(value = "list",method = RequestMethod.POST)
+    public List<Object> list(@RequestBody JSONObject loan, @RequestParam("pageSize") Integer pageSize, @RequestParam("pageNum") Integer pageNum){
+        List<Object> list = productService.list(loan, pageSize, pageNum);
+        return list;
     }
 
 }
