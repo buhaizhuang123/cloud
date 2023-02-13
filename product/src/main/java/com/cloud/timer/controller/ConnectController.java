@@ -31,13 +31,14 @@ public class ConnectController {
     @RequestMapping("sendAll")
     @ResponseBody
     public String send(@RequestParam("message") String message) {
-        ConcurrentHashMap<String, Session> webSocketSet = WebSocket.webSocketSet;
-        if (!CollectionUtils.isEmpty(webSocketSet)) {
-            for (Map.Entry<String, Session> session : webSocketSet.entrySet()) {
-                Session value = session.getValue();
-                value.getAsyncRemote().sendText(message);
-            }
-        }
+        WebSocket.GroupSending(message);
+//        ConcurrentHashMap<String, Session> webSocketSet = WebSocket.webSocketSet;
+//        if (!CollectionUtils.isEmpty(webSocketSet)) {
+//            for (Map.Entry<String, Session> session : webSocketSet.entrySet()) {
+//                Session value = session.getValue();
+//                value.getAsyncRemote().sendText(message);
+//            }
+//        }
         return "发送完成";
     }
 

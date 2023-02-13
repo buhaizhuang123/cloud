@@ -58,6 +58,7 @@ public class CustAuthSuccHandler implements AuthenticationSuccessHandler {
         map.put("code", HttpStatus.OK);
         map.put("success", true);
         map.put("message", "loginSuccess");
+        map.put("user", user);
         outputStream.print(JSONObject.toJSONString(map));
         outputStream.flush();
         outputStream.close();

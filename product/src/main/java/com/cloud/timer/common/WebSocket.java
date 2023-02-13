@@ -78,10 +78,12 @@ public class WebSocket {
      *
      * @param message
      */
-    public void GroupSending(String message) {
+    public static void GroupSending(String message) {
         for (String name : webSocketSet.keySet()) {
             try {
-                webSocketSet.get(name).getBasicRemote().sendText(message);
+                if (webSocketSet.get(name).isOpen()) {
+                    webSocketSet.get(name).getBasicRemote().sendText(message);
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -94,9 +96,11 @@ public class WebSocket {
      * @param name
      * @param message
      */
-    public void AppointSending(String name, String message) {
+    public static void AppointSending(String name, String message) {
         try {
-            webSocketSet.get(name).getBasicRemote().sendText(message);
+            if (webSocketSet.get(name).isOpen()) {
+                webSocketSet.get(name).getBasicRemote().sendText(message);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

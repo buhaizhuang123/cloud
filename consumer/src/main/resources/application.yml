@@ -97,3 +97,9 @@ management:
     web:
       exposure:
         include: "*"
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000

@@ -64,7 +64,7 @@ public class MybatisInterceptor implements Interceptor {
         if ("ORACLE".equalsIgnoreCase(databaseProductName)) {
             sql = oracle(sql, rowBounds);
         }
-
+        logger.info(sql);
         StaticSqlSource staticSqlSource = new StaticSqlSource(mappedStatements.getConfiguration(), sql, boundSql.getParameterMappings());
         // 通过反射设置MapperStatment 的sqlSource字段
         Field field = MappedStatement.class.getDeclaredField("sqlSource");

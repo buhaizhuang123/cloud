@@ -101,7 +101,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
 
-        return request.getServletPath().equals("/login") || request.getServletPath().matches("^/image.*$") || request.getServletPath().matches("^/file.*$") || request.getServletPath().matches("^/sys.*$");
+//        || request.getServletPath().matches("^/sys.*$")
+        return request.getServletPath().equals("/login") || request.getServletPath().matches("^/image.*$") || request.getServletPath().matches("^/file.*$") ;
     }
 
 }
