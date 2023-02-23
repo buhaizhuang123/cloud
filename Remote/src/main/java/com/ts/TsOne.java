@@ -2,7 +2,10 @@ package com.ts;
 
 import org.junit.jupiter.api.Test;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -80,6 +83,17 @@ public class TsOne {
         }
         sort[left] = pivot;
         return left;
+    }
+
+
+    @Test
+    public void tsDate() throws ParseException {
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date parse = simpleDateFormat.parse("2023-01-0");
+        String format = simpleDateFormat.format(parse);
+        System.out.println("format = " + format);
+
     }
 
 }

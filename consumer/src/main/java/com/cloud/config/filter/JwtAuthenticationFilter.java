@@ -92,8 +92,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         GrantedAuthority a = new SimpleGrantedAuthority("user");
         UsernamePasswordAuth auth = new UsernamePasswordAuth(username, null, Arrays.asList(a));
         SecurityContextHolder.getContext().setAuthentication(auth);
-//        webScoketService.sendAll(username + " : " + "token校验成功!!!");
-//        authenticationMeSuccessHandler.onAuthenticationSuccess(request, response, auth);
         chain.doFilter(request, response);
     }
 

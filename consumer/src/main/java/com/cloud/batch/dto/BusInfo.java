@@ -18,10 +18,5 @@ public class BusInfo {
 
     private String busSts;
 
-    public static void main(String[] args) {
-        BigDecimal bigDecimal = new BigDecimal("");
-        System.out.println(bigDecimal);
-
-    }
 
 }

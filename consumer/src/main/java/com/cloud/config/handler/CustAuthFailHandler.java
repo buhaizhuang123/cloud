@@ -33,14 +33,10 @@ public class CustAuthFailHandler implements AuthenticationFailureHandler {
         response.setContentType("application/json;charset=UTF-8");
         response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
         PrintWriter writer = response.getWriter();
-//        ServletOutputStream outputStream = response.getOutputStream();
         HashMap<Object, Object> map = new HashMap<>();
         map.put("code", HttpStatus.INTERNAL_SERVER_ERROR);
         map.put("success", false);
         map.put("message", e.getMessage());
-        writer.print(JSONObject.toJSONString(map));
-        response.sendRedirect("/login");
-        writer.flush();
-        writer.close();
+        writer.write(JSONObject.toJSONString(map));
     }
 }

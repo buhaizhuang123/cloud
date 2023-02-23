@@ -124,4 +124,39 @@
             <optional>true</optional>
         </dependency>
     </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>2.2.1.RELEASE</version>
+            </plugin>
+
+            <!-- docker插件-->
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>1.0.0</version>
+
+                <configuration>
+                    <!-- 远程Docker的地址 -->
+                    <dockerHost>http://10.192.85.102:2375</dockerHost>
+                    <baseImage>openjdk:8</baseImage>
+                    <!-- 镜像名称、前缀、项目名 -->
+                    <imageName>cloud-consumer</imageName>
+                    <!-- Dockerfile的位置 -->
+                    <dockerDirectory>src/main/resources/docker</dockerDirectory>
+                    <resources>
+                        <resource>
+                            <targetPath>/</targetPath>
+                            <!-- 表示的target文件夹 -->
+                            <directory>/Applications/tools/wd/cloud/consumer/target</directory>
+                            <!-- 表示打出来的JAR包-->
+                            <include>consumer-1.0-SNAPSHOT.jar</include>
+                        </resource>
+                    </resources>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>

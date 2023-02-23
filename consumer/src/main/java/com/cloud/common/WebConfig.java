@@ -23,6 +23,8 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.sql.DataSource;
 import java.util.Arrays;
@@ -34,7 +36,7 @@ import java.util.Arrays;
  * @mark WebConfig
  */
 @Configuration
-public class WebConfig extends WebSecurityConfigurerAdapter {
+public class WebConfig extends WebSecurityConfigurerAdapter implements WebMvcConfigurer {
 
     @Autowired
     private DataSource dataSource;
@@ -79,7 +81,7 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
 
         // 表单验证
         http.csrf().disable().authorizeRequests()
-                .mvcMatchers("image/**", "/error", "/file/**")
+                .mvcMatchers("image/**", "/error", "/file/**","/login")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
@@ -99,5 +101,13 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManager();
     }
 
-
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOrigins("*")
+                .allowCredentials(true)
+                .allowedMethods("GET","POST")
+                .allowedHeaders("*")
+                .maxAge(3600);
+    }
 }
