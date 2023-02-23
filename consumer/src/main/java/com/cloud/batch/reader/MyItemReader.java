@@ -13,7 +13,7 @@ import org.springframework.batch.item.UnexpectedInputException;
  */
 public class MyItemReader implements ItemReader<String> {
     @Override
-    public String read() throws Exception, UnexpectedInputException, ParseException, NonTransientResourceException {
+    public String read()  {
         return RandomStringUtils.randomAlphabetic(10);
     }
 }
