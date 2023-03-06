@@ -9,6 +9,10 @@ import org.apache.ibatis.jdbc.ScriptRunner;
 import org.apache.ibatis.session.Configuration;
 import org.mybatis.spring.annotation.MapperScan;
 import org.mybatis.spring.boot.autoconfigure.ConfigurationCustomizer;
+import org.redisson.Redisson;
+import org.redisson.api.RedissonClient;
+import org.redisson.codec.JsonJacksonCodec;
+import org.redisson.config.Config;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -52,6 +56,15 @@ public class ConsumerApp {
         return new RoundRobinRule();
         // 配置随机负载均衡
 //        return new RandomRule();
+    }
+
+    @Bean
+    public RedissonClient redisson(){
+        Config config = new Config();
+        config.useSingleServer()
+                .setAddress("redis://localhost:6379");
+        config.setCodec(new JsonJacksonCodec());
+        return Redisson.create(config);
     }
 
 
