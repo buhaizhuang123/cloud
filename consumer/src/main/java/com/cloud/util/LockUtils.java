@@ -16,6 +16,16 @@ import java.util.concurrent.TimeUnit;
 public class LockUtils {
 
     public static void main(String[] args) throws InterruptedException {
+        /*LongAdder longAdder = new LongAdder();
+        LongAccumulator longAccumulator = new LongAccumulator(new LongBinaryOperator() {
+            @Override
+            public long applyAsLong(long left, long right) {
+                return left + right;
+            }
+        }, 2);
+        longAccumulator.accumulate(2);*/
+
+
 
         Config config = new Config();
         config.useSingleServer()
