@@ -15,7 +15,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 /**nacos*/
 @EnableDiscoveryClient
 /**hystrix*/
-@EnableCircuitBreaker
+//@EnableCircuitBreaker
 @EnableFeignClients
 public class ProviderApp {
 

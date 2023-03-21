@@ -67,8 +67,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
-
-        logger.info("=============== 执行非login身份验证 ======================");
         String token = request.getHeader("authentication");
         Cookie[] cookies = request.getCookies();
         for (Cookie cookie : cookies) {

@@ -25,7 +25,7 @@ public class FsController {
 
 
     @RequestMapping("list")
-    @SentinelResource(value = "fs-list", blockHandler = "exceptionHandler", fallback = "rollback")
+//    @SentinelResource(value = "fs-list", blockHandler = "exceptionHandler", fallback = "rollback")
     public List list(Page page) {
         return productService.list(page);
     }

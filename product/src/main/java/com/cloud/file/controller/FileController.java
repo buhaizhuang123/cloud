@@ -27,5 +27,4 @@ public class FileController {
         QrCodeUtils.createCodeToFile("李佳君是个大傻逼！！！",outputStream);
     }
 
-
 }
