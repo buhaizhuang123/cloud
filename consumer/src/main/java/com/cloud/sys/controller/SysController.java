@@ -14,6 +14,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.io.File;
 import java.util.List;
 
 /**
@@ -60,6 +61,20 @@ public class SysController {
     public List<Object> list(@RequestBody JSONObject loan, @RequestParam("pageSize") Integer pageSize, @RequestParam("pageNum") Integer pageNum){
         List<Object> list = productService.list(loan, pageSize, pageNum);
         return list;
+    }
+
+    public static void main(String[] args) {
+
+//        File file = new File("/Applications/tools/wd/3001-");
+        File file = new File("/Applications/tools/wd/3001-");
+        for (File listFile : file.listFiles()) {
+            if (listFile.isFile()) {
+                String name = listFile.getName();
+                String toName = name.substring(0,4);
+                listFile.renameTo(new File("/Applications/tools/wd/3001-/"+toName + ".mp3"));
+            }
+        }
+
     }
 
 }

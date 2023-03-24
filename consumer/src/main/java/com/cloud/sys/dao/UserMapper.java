@@ -18,4 +18,6 @@ public interface UserMapper {
     List<User> findUser(RowBounds rowBounds);
 
     User loadUserByUsername(@Param("userName") String userName);
+
+    void addUser(User user);
 }
