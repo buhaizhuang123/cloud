@@ -1,6 +1,5 @@
 package com.cloud.person.controller;
 
-import com.cloud.kafka.event.MessageEvent;
 import com.cloud.person.dto.PersonDto;
 import com.cloud.person.dto.PersonVo;
 import com.cloud.person.service.PsService;

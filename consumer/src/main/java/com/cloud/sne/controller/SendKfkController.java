@@ -21,6 +21,7 @@ public class SendKfkController {
     @RequestMapping("send")
     public String send(@RequestBody String info) {
         InfoUtils.send("kafka_temp", info);
+
         return "数据发送成功";
     }
 

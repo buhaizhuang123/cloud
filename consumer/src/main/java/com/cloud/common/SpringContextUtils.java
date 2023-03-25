@@ -3,6 +3,7 @@ package com.cloud.common;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.event.ApplicationContextEvent;
 import org.springframework.stereotype.Component;
 
 /**
@@ -28,6 +29,10 @@ public class SpringContextUtils implements ApplicationContextAware {
 
     public static <T> T getBean(String name, Class<T> aClass) {
         return applicationContext.getBean(name, aClass);
+    }
+
+    public static void publishEvent(ApplicationContextEvent event) {
+        applicationContext.publishEvent(event);
     }
 
 
