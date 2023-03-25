@@ -5,7 +5,7 @@
         select user_id, user_name, user_pass, user_enable, USER_AUTH
         from S_USR
     </select>
-    <select id="loadUserByUsername" resultType="com.cloud.sys.dto.User">
+    <select id="loadUserByUsername" resultType="com.cloud.sys.dto.User" parameterType="java.lang.String">
         select user_id, user_name, user_pass, user_enable, USER_AUTH
         from S_USR where user_name = #{userName}
     </select>

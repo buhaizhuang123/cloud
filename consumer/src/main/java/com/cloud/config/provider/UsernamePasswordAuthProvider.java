@@ -28,7 +28,8 @@ public class UsernamePasswordAuthProvider implements AuthenticationProvider {
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        User user = userMapper.loadUserByUsername(authentication.getName());
+        Object principal = authentication.getPrincipal();
+        User user = userMapper.loadUserByUsername(principal.toString());
         if (user == null || !user.getPassword().equals(authentication.getCredentials().toString())) {
             throw new BadCredentialsException("用户名密码错误");
         }

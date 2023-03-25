@@ -1,5 +1,6 @@
 package com.cloud.common;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.builder.StaticSqlSource;
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.mapping.BoundSql;
@@ -20,6 +21,7 @@ import java.util.Properties;
  * @mark MybatisIntercepter mybatis 拦截器
  */
 @Intercepts(@Signature(type = Executor.class, method = "query", args = {MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class}))
+@Slf4j
 public class MybatisInterceptor implements Interceptor {
 
     private Logger logger = LoggerFactory.getLogger(MybatisInterceptor.class);
