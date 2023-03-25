@@ -66,12 +66,15 @@ public class SysController {
     public static void main(String[] args) {
 
 //        File file = new File("/Applications/tools/wd/3001-");
-        File file = new File("/Applications/tools/wd/3001-");
+        File file = new File("/Applications/tools/wd/2000-2468");
         for (File listFile : file.listFiles()) {
             if (listFile.isFile()) {
                 String name = listFile.getName();
-                String toName = name.substring(0,4);
-                listFile.renameTo(new File("/Applications/tools/wd/3001-/"+toName + ".mp3"));
+                String o1 = name.replace("加微信382929更多有声书", "");
+                String o2 = o1.replace("(", "");
+                String toName = o2.replace(")", "");
+//                String toName = name.substring(0,4);
+                listFile.renameTo(new File("/Applications/tools/wd/2000-2468/"+toName + ".mp3"));
             }
         }
 

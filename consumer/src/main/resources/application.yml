@@ -6,7 +6,7 @@ spring:
     database: 0
     host: localhost
   kafka:
-    bootstrap-servers: 127.0.0.1:9092
+    bootstrap-servers: localhost:9092
     producer: # producer 生产者
       retries: 0 # 重试次数
       acks: 1 # 应答级别:多少个分区副本备份完成时向生产者发送ack确认(可选0、1、all/-1)
@@ -17,7 +17,7 @@ spring:
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
 
     consumer: # consumer消费者
-      group-id: javagroup # 默认的消费组ID
+      group-id: demo # 默认的消费组ID
       enable-auto-commit: false # 是否自动提交offset
       auto-commit-interval: 100  # 提交offset延时(接收到消息后多久提交offset)
 

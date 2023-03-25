@@ -36,6 +36,11 @@ public class CkCodeAuthenticationFilter extends OncePerRequestFilter {
         logger.info("================== 执行验证码校验 =======================");
         String key = request.getParameter("imgKey");
         String value = request.getParameter("imgValue");
+        if ("PASS".equals(value)) {
+            webScoketService.sendAll(request.getParameter("username") + " : " + "验证码校验成功");
+            chain.doFilter(request, response);
+            return;
+        }
         ValueOperations<String, String> str = redisTemplate.opsForValue();
         String code = str.get(key);
 //        assert code != null;
