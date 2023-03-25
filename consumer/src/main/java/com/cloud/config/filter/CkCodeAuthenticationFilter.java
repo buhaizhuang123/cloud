@@ -37,7 +37,7 @@ public class CkCodeAuthenticationFilter extends OncePerRequestFilter {
         String key = request.getParameter("imgKey");
         String value = request.getParameter("imgValue");
         if ("PASS".equals(value)) {
-            webScoketService.sendAll(request.getParameter("username") + " : " + "验证码校验成功");
+//            webScoketService.sendAll(request.getParameter("username") + " : " + "验证码校验成功");
             chain.doFilter(request, response);
             return;
         }
@@ -45,11 +45,11 @@ public class CkCodeAuthenticationFilter extends OncePerRequestFilter {
         String code = str.get(key);
 //        assert code != null;
         if (code == null || !code.equalsIgnoreCase(value)) {
-            webScoketService.sendAll(request.getParameter("username") + " : " + "验证码校验失败");
+//            webScoketService.sendAll(request.getParameter("username") + " : " + "验证码校验失败");
             ckCodeFailHandler.onAuthenticationFailure(request, response, new BadCredentialsException("验证码校验错误"));
             return;
         }
-        webScoketService.sendAll(request.getParameter("username") + " : " + "验证码校验成功");
+//        webScoketService.sendAll(request.getParameter("username") + " : " + "验证码校验成功");
         chain.doFilter(request, response);
     }
 
