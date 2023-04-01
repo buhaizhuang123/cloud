@@ -11,9 +11,14 @@ import org.springframework.batch.core.*;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
+import org.springframework.batch.item.ItemReader;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author haizhuangbu
@@ -126,6 +131,26 @@ public class BatchConfig {
                     }
                 }).flow(buStep()).end().build();
     }
+
+
+    @Bean
+    public Job myJob2() {
+        return jobBuilderFactory.get("MyJob2")
+                .listener(new JobExecutionListener() {
+                    @Override
+                    public void beforeJob(JobExecution jobExecution) {
+
+                    }
+
+                    @Override
+                    public void afterJob(JobExecution jobExecution) {
+                        if (jobExecution.getStatus() == BatchStatus.COMPLETED) {
+                            System.out.println("OK");
+                        }
+                    }
+                }).flow(buStep()).end().build();
+    }
+
 
 
 }

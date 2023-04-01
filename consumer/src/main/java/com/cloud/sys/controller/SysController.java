@@ -70,11 +70,15 @@ public class SysController {
         for (File listFile : file.listFiles()) {
             if (listFile.isFile()) {
                 String name = listFile.getName();
-                String o1 = name.replace("加微信382929更多有声书", "");
-                String o2 = o1.replace("(", "");
-                String toName = o2.replace(")", "");
-//                String toName = name.substring(0,4);
-                listFile.renameTo(new File("/Applications/tools/wd/2000-2468/"+toName + ".mp3"));
+                String replace = name.replace("..mp3.mp3", "");
+                System.out.println("name = " + replace);
+//                String o1 = name.replaceFirst("mp3", "");
+//                String o2 = name.replaceFirst(".", "");
+//
+////                String toName = name.substring(0,4);
+                listFile.renameTo(new File("/Applications/tools/wd/2000-2468/"+replace + ".mp3"));
+//
+//
             }
         }
 
