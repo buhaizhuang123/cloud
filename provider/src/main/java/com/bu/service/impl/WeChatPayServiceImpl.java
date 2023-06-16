@@ -22,7 +22,7 @@ import java.math.BigDecimal;
  * @mark WeChatPayServiceImpl
  */
 @Slf4j
-@Service
+//@Service
 public class WeChatPayServiceImpl implements WeChatPayService {
 
 

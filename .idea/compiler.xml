@@ -1,18 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
+    <excludeFromCompile>
+      <directory url="file://$PROJECT_DIR$/activitity/src/main/resources/archetype-resources" includeSubdirectories="true" />
+    </excludeFromCompile>
     <annotationProcessing>
       <profile default="true" name="Default" enabled="true" />
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="Remote" />
+        <module name="camunda-spring" />
         <module name="product" />
+        <module name="untitled" />
         <module name="provider" />
+        <module name="Hadoop" />
+        <module name="flowable-sping" />
+        <module name="Remote" />
         <module name="config" />
         <module name="consumer" />
-        <module name="Hadoop" />
       </profile>
     </annotationProcessing>
   </component>

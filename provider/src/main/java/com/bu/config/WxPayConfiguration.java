@@ -1,10 +1,10 @@
 package com.bu.config;
 
 import com.bu.config.dto.WxMaProperty;
-import com.ctrip.framework.apollo.core.utils.StringUtils;
 import com.github.binarywang.wxpay.config.WxPayConfig;
 import com.github.binarywang.wxpay.service.WxPayService;
 import com.github.binarywang.wxpay.service.impl.WxPayServiceImpl;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -19,9 +19,9 @@ import java.util.Map;
  * @date 2022/10/8 15:05
  * @mark WxPayConfiguration
  */
-@Configuration
-@ConditionalOnClass(WxPayService.class)
-@EnableConfigurationProperties(WxMaProperty.class)
+//@Configuration
+//@ConditionalOnClass(WxPayService.class)
+//@EnableConfigurationProperties(WxMaProperty.class)
 public class WxPayConfiguration {
 
     @Autowired
@@ -36,7 +36,7 @@ public class WxPayConfiguration {
      */
     private String defaultAppid = null;
 
-    @PostConstruct
+//    @PostConstruct
     public void init() {
         //1、赋值wxPayServices
         WxPayConfig payConfig = new WxPayConfig();

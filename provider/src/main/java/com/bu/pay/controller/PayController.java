@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("order")
 public class PayController {
-
-    @Autowired
+//
+//    @Autowired
     private WeChatPayService weChatPayService;
 
     @RequestMapping(value = "pay", method = RequestMethod.POST)

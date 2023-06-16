@@ -6,7 +6,7 @@ spring:
     database: 0
     host: localhost
   kafka:
-    bootstrap-servers: localhost:9092
+    bootstrap-servers: 10.192.85.102:9092
     producer: # producer 生产者
       retries: 0 # 重试次数
       acks: 1 # 应答级别:多少个分区副本备份完成时向生产者发送ack确认(可选0、1、all/-1)
@@ -30,6 +30,7 @@ spring:
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
     listener:
       ack-mode: manual_immediate
+      missing-topics-fatal: false
 
     nacos:
       discovery:

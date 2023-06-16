@@ -15,6 +15,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author haizhuangbu
@@ -45,10 +48,42 @@ public class PersonTs {
 
     @Value("${ts1}")
     private String ts1;
+
     @Test
-    public void t1(){
+    public void t1() {
         System.out.println("ts1 = " + ts1);
     }
+
+
+    public static void main(String[] args) {
+        ArrayList<Integer> list1 = new ArrayList<>();
+        List<Integer> list
+                = Collections.synchronizedList(list1);
+        for (int i = 0; i < 50; i++) {
+            list.add(i );
+        }
+        PersonTs personTs = new PersonTs();
+        list.parallelStream()
+                .map(personTs::createList)
+                .map(personTs::doList)
+                .forEach(System.out::println);
+
+
+    }
+
+    public List createList(Integer s) {
+        ArrayList<Integer> list = new ArrayList<>();
+        for (int i = 0; i < 25; i++) {
+            list.add(i);
+        }
+        return list;
+    }
+
+    public String doList(List list){
+        list.forEach(System.out::println);
+        return "s";
+    }
+
 
 
 }

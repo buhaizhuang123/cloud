@@ -115,13 +115,13 @@ public class ValidUtils {
 //        person.setAge(BigDecimal.valueOf(1));
 //
 //        System.out.println(ValidUtils.valid(person));
-//        docker run --name elasticsearch -p 9200:9200 -p 9300:9300 \
+//        docker run --name elasticsearch_7131 -p 9200:9200 -p 9300:9300 \
 //        -e "discovery.type=single-node" \
 //        -e ES_JAVA_OPTS="-Xms64m -Xmx512m" \
-//        -v /Applications/tools/myConfig/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml \
-//        -v /Applications/tools/myConfig/data:/usr/share/elasticsearch/data \
-//        -v  /Applications/tools/myConfig/plugins:/usr/share/elasticsearch/plugins \
-//        -d elasticsearch:7.17.3
+//        -v /Applications/tools/myconf/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml \
+//        -v /Applications/tools/myconf/data/elasticsearch:/usr/share/elasticsearch/data \
+//        -v  /Applications/tools/myconf/plugins:/usr/share/elasticsearch/plugins \
+//        -d elasticsearch:7.13.1
 //
 //
 //        docker run --name kibana -e ELASTICSEARCH_HOSTS=http://192.168.0.113:9200 -p 5601:5601 -v /Applications/tools/myConfig/config/kibana.yml:/usr/share/kibana/config/kibana.yml -d kibana:7.17.3
