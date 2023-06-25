@@ -101,6 +101,6 @@ management:
 feign:
   client:
     config:
-      default:
+      flowable:
         connectTimeout: 5000
         readTimeout: 5000

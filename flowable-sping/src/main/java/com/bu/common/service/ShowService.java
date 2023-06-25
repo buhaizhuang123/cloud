@@ -53,7 +53,7 @@ public interface ShowService {
     ResultPo reviveProcess(String processId);
 
     // 流程部署
-    ResultPo createDeployment(String path);
+    ResultPo createDeployment(String path,String name);
 
 
     // 删除部署
@@ -119,6 +119,6 @@ public interface ShowService {
     // 获取所有流程信息
     ResultPo queryProcessList();
 
-    //
+    ResultPo listDeploys(int pageNum, int pageSize);
 
 }

@@ -3,6 +3,7 @@ package com.bu.common.service.impl;
 import com.alibaba.fastjson.JSONObject;
 import com.bu.common.po.ResultPo;
 import com.bu.common.service.ShowService;
+import com.bu.common.to.WaitExeTaskTo;
 import org.flowable.engine.HistoryService;
 import org.flowable.engine.RepositoryService;
 import org.flowable.engine.RuntimeService;
@@ -17,6 +18,7 @@ import org.flowable.engine.runtime.ProcessInstanceQuery;
 import org.flowable.identitylink.api.IdentityLink;
 import org.flowable.task.api.Task;
 import org.flowable.task.api.history.HistoricTaskInstance;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -25,6 +27,7 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -132,8 +135,8 @@ public class ShowServiceImpl implements ShowService {
     }
 
     @Override
-    public ResultPo createDeployment(String path) {
-        Deployment deploy = repositoryService.createDeployment().addClasspathResource("processes/" + path).deploy();
+    public ResultPo createDeployment(String path, String name) {
+        Deployment deploy = repositoryService.createDeployment().name(name).addClasspathResource("processes/" + path).deploy();
 
         return queryDeployment(deploy.getId());
     }
@@ -162,9 +165,10 @@ public class ShowServiceImpl implements ShowService {
         ResultPo resultPo = new ResultPo();
         ArrayList<Object> res = new ArrayList<>();
         for (Task task : list) {
-            ResultPo resultPo1 = new ResultPo();
-            resultPo1.put("id", task.getId()).put("isSuspend", task.isSuspended()).put("claimTime", task.getClaimTime()).put("assignee", task.getAssignee()).put("name", task.getName()).put("owner", task.getOwner()).put("priorty", task.getPriority());
-            res.add(resultPo1);
+            WaitExeTaskTo waitExeTaskTo = new WaitExeTaskTo();
+            BeanUtils.copyProperties(task, waitExeTaskTo);
+            waitExeTaskTo.setIsSuspend(task.isSuspended());
+            res.add(waitExeTaskTo);
         }
         resultPo.put("list", res);
         return resultPo;
@@ -356,42 +360,46 @@ public class ShowServiceImpl implements ShowService {
         HistoricTaskInstance historicTaskInstance = list.get(0);
         // 替换节点
         System.out.println("task.getTaskDefinitionKey() = " + task.getTaskDefinitionKey());
-        runtimeService.createChangeActivityStateBuilder()
-                .processInstanceId(historicTaskInstance.getProcessInstanceId())
-                .moveActivityIdTo(task.getTaskDefinitionKey(), historicTaskInstance.getTaskDefinitionId()).changeState();
+        runtimeService.createChangeActivityStateBuilder().processInstanceId(historicTaskInstance.getProcessInstanceId()).moveActivityIdTo(task.getTaskDefinitionKey(), historicTaskInstance.getTaskDefinitionId()).changeState();
 
         String taskDefinitionId = historicTaskInstance.getTaskDefinitionId();
         System.out.println("taskDefinitionId = " + taskDefinitionId);
-        resultPo.put("result","节点退回成功!!!");
+        resultPo.put("result", "节点退回成功!!!");
 
         return resultPo;
     }
 
     @Override
     public ResultPo deleteTask(String taskId) {
-        taskService.deleteTask(taskId,true);
+        taskService.deleteTask(taskId, true);
         return null;
     }
 
     @Override
     public ResultPo queryProcessList() {
-        List<ProcessInstance> list = runtimeService.createProcessInstanceQuery().orderByProcessDefinitionId()
-                .asc().list();
+        List<ProcessInstance> list = runtimeService.createProcessInstanceQuery().orderByProcessDefinitionId().asc().list();
         ResultPo resultPo1 = new ResultPo();
         List<ResultPo> list1 = list.stream().map(i -> {
             ResultPo resultPo = new ResultPo();
-            resultPo
-                    .put("startTime", i.getStartTime())
-                    .put("businessKey", i.getBusinessKey())
-                    .put("startUser", i.getStartUserId())
-                    .put("name", i.getName())
-                    .put("processDefinitionId", i.getProcessDefinitionId())
-                    .put("id", i.getId())
-                    .put("activityId", i.getActivityId());
+            resultPo.put("startTime", i.getStartTime()).put("businessKey", i.getBusinessKey()).put("startUser", i.getStartUserId()).put("name", i.getName()).put("processDefinitionId", i.getProcessDefinitionId()).put("id", i.getId()).put("activityId", i.getActivityId());
             return resultPo;
         }).collect(Collectors.toList());
 
-        return resultPo1.put("list",list1);
+        return resultPo1.put("list", list1);
+    }
+
+    @Override
+    public ResultPo listDeploys(int pageNum, int pageSize) {
+        ResultPo resultPo = new ResultPo();
+        ListIterator<Deployment> list = repositoryService.createDeploymentQuery().orderByDeploymenTime().desc().listPage(pageNum, pageSize).listIterator();
+        List<JSONObject> list1 = new ArrayList<>();
+        while (list.hasNext()) {
+            Deployment deployment = list.next();
+            JSONObject jsonObject = asmDeploy(deployment);
+            list1.add(jsonObject);
+        }
+        resultPo.put("list", list1);
+        return resultPo;
     }
 
 
@@ -404,5 +412,13 @@ public class ShowServiceImpl implements ShowService {
         }).collect(Collectors.toList());
         resultPo1.put("list", list);
     }
+
+    public JSONObject asmDeploy(Deployment deployment) {
+        ResultPo resultPo = new ResultPo();
+
+        resultPo.put("name", deployment.getName()).put("deploymentTime", deployment.getDeploymentTime()).put("isNew", deployment.isNew()).put("category", deployment.getCategory()).put("id", deployment.getId());
+        return resultPo.getData();
+    }
+
 
 }

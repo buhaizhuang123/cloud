@@ -1,0 +1,8 @@
+docker run -d --name kafka-server \
+    --network app-tier \
+    -e ALLOW_PLAINTEXT_LISTENER=yes \
+    -e KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper-server:2181 \
+    -e KAFKA_LISTENERS=PLAINTEXT://0.0.0.0:9092 \
+    -e KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9092 \
+    -p 9092:9092 \
+    bitnami/kafka:latest

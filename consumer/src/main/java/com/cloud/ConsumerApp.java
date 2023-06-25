@@ -52,13 +52,13 @@ public class ConsumerApp {
         };
     }
 
-    @Bean
-    public IRule iRule() {
-        // 轮询
-        return new RoundRobinRule();
-        // 配置随机负载均衡
-//        return new RandomRule();
-    }
+//    @Bean
+//    public IRule iRule() {
+//        // 轮询
+//        return new RoundRobinRule();
+//        // 配置随机负载均衡
+////        return new RandomRule();
+//    }
 
     @Bean
     public RedissonClient redisson(){
