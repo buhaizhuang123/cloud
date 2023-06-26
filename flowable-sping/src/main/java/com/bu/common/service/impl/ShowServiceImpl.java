@@ -24,12 +24,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.ListIterator;
+import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author haizhuangbu
@@ -51,8 +47,12 @@ public class ShowServiceImpl implements ShowService {
 
 
     @Override
-    public JSONObject startProcess(String process) {
-        ProcessInstance processInstance = runtimeService.startProcessInstanceById(process);
+    public JSONObject startProcess(String process, Map<String, Object> map) {
+        ProcessInstance processInstance = runtimeService.createProcessInstanceBuilder()
+                .variables(map)
+                .processDefinitionId(process)
+                .name(map.get("name").toString())
+                .start();
         String id = processInstance.getId();
         String startUserId = processInstance.getStartUserId();
         JSONObject reson = new JSONObject();
@@ -104,7 +104,7 @@ public class ShowServiceImpl implements ShowService {
     public void startProcess(String process, String assignee) {
         HashMap<String, Object> variables = new HashMap<>();
         variables.put("person", assignee);
-        runtimeService.startProcessInstanceByKey(process, variables);
+        ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(process, variables);
     }
 
     @Override
@@ -204,7 +204,14 @@ public class ShowServiceImpl implements ShowService {
         ArrayList<Object> list = new ArrayList<>();
         for (Task task : tasks) {
             ResultPo resultPo = new ResultPo();
-            resultPo.put("claimTime", task.getClaimTime()).put("name", task.getName()).put("assignee", task.getAssignee()).put("executionId", task.getExecutionId()).put("processId", task.getProcessDefinitionId()).put("createTime", task.getCreateTime()).put("id", task.getId());
+           resultPo.put("claimTime", task.getClaimTime())
+                    .put("name", task.getName())
+                    .put("assignee", task.getAssignee())
+                    .put("executionId", task.getExecutionId())
+                    .put("processId", task.getProcessDefinitionId())
+                    .put("createTime", task.getCreateTime())
+                    .put("vis", task.getTaskLocalVariables())
+                    .put("id", task.getId());
             list.add(resultPo);
         }
 
@@ -290,7 +297,13 @@ public class ShowServiceImpl implements ShowService {
 
             ResultPo resultPo1 = new ResultPo();
 
-            resultPo1.put("startTime", historicTaskInstance.getStartTime()).put("claimTime", historicTaskInstance.getClaimTime()).put("assignee", historicTaskInstance.getAssignee()).put("endTime", historicTaskInstance.getEndTime()).put("tenantId", historicTaskInstance.getTenantId()).put("id", historicTaskInstance.getId());
+            resultPo1.put("startTime", historicTaskInstance.getStartTime())
+                    .put("claimTime", historicTaskInstance.getClaimTime())
+                    .put("assignee", historicTaskInstance.getAssignee())
+                    .put("endTime", historicTaskInstance.getEndTime())
+                    .put("tenantId", historicTaskInstance.getTenantId())
+                    .put("vis", historicTaskInstance.getProcessVariables())
+                    .put("id", historicTaskInstance.getId());
             list1.add(resultPo1);
         }
 
@@ -381,7 +394,14 @@ public class ShowServiceImpl implements ShowService {
         ResultPo resultPo1 = new ResultPo();
         List<ResultPo> list1 = list.stream().map(i -> {
             ResultPo resultPo = new ResultPo();
-            resultPo.put("startTime", i.getStartTime()).put("businessKey", i.getBusinessKey()).put("startUser", i.getStartUserId()).put("name", i.getName()).put("processDefinitionId", i.getProcessDefinitionId()).put("id", i.getId()).put("activityId", i.getActivityId());
+            resultPo.put("startTime", i.getStartTime())
+                    .put("businessKey", i.getBusinessKey())
+                    .put("startUser", i.getStartUserId())
+                    .put("name", i.getName())
+                    .put("processDefinitionId", i.getProcessDefinitionId())
+                    .put("id", i.getId())
+                    .put("vis", i.getProcessVariables())
+                    .put("activityId", i.getActivityId());
             return resultPo;
         }).collect(Collectors.toList());
 
@@ -402,12 +422,25 @@ public class ShowServiceImpl implements ShowService {
         return resultPo;
     }
 
+    @Override
+    public ResultPo sendInfoToTask(String processId, Map<String, Object> params) {
+
+        return null;
+    }
+
 
     public void asmTask(List<Task> tasks, ResultPo resultPo1) {
 
         List<ResultPo> list = tasks.stream().map(i -> {
             ResultPo resultPo = new ResultPo();
-            resultPo.put("name", i.getName()).put("id", i.getId()).put("assignee", i.getAssignee()).put("owner", i.getOwner()).put("time", i.getClaimTime()).put("taskId", i.getTaskDefinitionId());
+            resultPo.put("name", i.getName())
+                    .put("id", i.getId())
+                    .put("assignee", i.getAssignee())
+                    .put("owner", i.getOwner())
+                    .put("time", i.getClaimTime())
+                    .put("vis", i.getTaskLocalVariables())
+                    .put("processId", i.getProcessDefinitionId())
+                    .put("taskId", i.getTaskDefinitionId());
             return resultPo;
         }).collect(Collectors.toList());
         resultPo1.put("list", list);

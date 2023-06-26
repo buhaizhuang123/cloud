@@ -8,6 +8,7 @@ import org.flowable.engine.repository.ProcessDefinition;
 import org.flowable.task.api.Task;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author haizhuangbu
@@ -17,7 +18,7 @@ import java.util.List;
 public interface ShowService {
 
     // 发起流程实例
-    JSONObject startProcess(String process);
+    JSONObject startProcess(String process, Map<String, Object> map);
 
     // 挂起流程实例
     ResultPo suspendProcess(String processId);
@@ -120,5 +121,8 @@ public interface ShowService {
     ResultPo queryProcessList();
 
     ResultPo listDeploys(int pageNum, int pageSize);
+
+    ResultPo sendInfoToTask(String processId, Map<String,Object> params);
+
 
 }

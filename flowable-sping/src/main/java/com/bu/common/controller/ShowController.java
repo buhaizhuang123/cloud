@@ -4,10 +4,10 @@ import com.alibaba.fastjson.JSONObject;
 import com.bu.common.po.ResultPo;
 import com.bu.common.service.ShowService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Map;
 
 /**
  * @author haizhuangbu
@@ -66,8 +66,8 @@ public class ShowController {
      * @return 启动流程实例
      */
     @GetMapping("startProcess")
-    public JSONObject startProcess(String processId) {
-        return showService.startProcess(processId);
+    public JSONObject startProcess(@RequestParam String processId, @RequestBody(required = false) Map<String,Object> map) {
+        return showService.startProcess(processId,map);
     }
 
     @GetMapping("queryProcess")
