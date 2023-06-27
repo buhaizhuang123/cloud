@@ -3,6 +3,7 @@ package com.bu.common.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.bu.common.po.ResultPo;
 import com.bu.common.service.ShowService;
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -141,9 +142,9 @@ public class ShowController {
         return showService.completeTask(taskId, username);
     }
 
-    @GetMapping("waitTask")
-    public ResultPo waitTask(String userId) {
-        return showService.queryUserTodoTasks(userId);
+    @PostMapping("waitTask")
+    public ResultPo waitTask(@RequestParam String userId,@RequestBody RowBounds rowBounds) {
+        return showService.queryUserTodoTasks(userId,rowBounds);
     }
 
     @GetMapping("finished")
@@ -164,6 +165,11 @@ public class ShowController {
     @GetMapping("listDeploys")
     public ResultPo listDeploys(int pageNum, int pageSize) {
         return showService.listDeploys(pageNum, pageSize);
+    }
+
+    @PostMapping("/queryHistoryProcess")
+    public ResultPo queryHistoryProcess(String processId){
+        return showService.queryHistoryProcess(processId);
     }
 
 

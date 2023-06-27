@@ -9,18 +9,18 @@
     <serviceTask id="apprSucc" activiti:exclusive="true" activiti:class="com.cloud.acti.ActivitiSuccCall" name="审批通过"/>
     <serviceTask id="backCall" activiti:class="com.cloud.acti.ActivitiBackCall" activiti:exclusive="true" name="审批拒绝"/>
     <endEvent id="endEvent" name="审批结束"/>
-    <sequenceFlow id="pass" activiti:expression="1=1" sourceRef="exclusive01" targetRef="apprSucc">
+    <sequenceFlow id="pass" activiti:expression="1=1" sourceRef="sid-7dd87eea-b336-4ca1-9848-1479c04ccc2d" targetRef="apprSucc">
       <conditionExpression>succ</conditionExpression>
     </sequenceFlow>
-    <sequenceFlow id="jujue" activiti:expression="1&lt;1" sourceRef="exclusive01" targetRef="backCall">
+    <sequenceFlow id="jujue" activiti:expression="1&lt;1" sourceRef="sid-7dd87eea-b336-4ca1-9848-1479c04ccc2d" targetRef="backCall">
       <conditionExpression>back</conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="sid-0bf60ef6-d9c7-4296-8c49-f74170df3c73" sourceRef="backCall" targetRef="endEvent"/>
     <sequenceFlow id="sid-7b874646-609c-4a8d-9fb3-3caec07e7e5a" sourceRef="apprSucc" targetRef="lisi"/>
     <sequenceFlow id="sid-d14e20f7-7dc3-42e6-bf87-9ea1093d0660" sourceRef="lisi" targetRef="endEvent"/>
     <sequenceFlow id="sid-72b15ed1-b061-4a7f-a519-ef988e7576ab" sourceRef="start1" targetRef="zhangshan"/>
-    <exclusiveGateway id="exclusive01" name="拦截判断"/>
     <sequenceFlow id="sid-6a41d964-ad62-426e-af76-7363bc28f3e4" sourceRef="zhangshan" targetRef="exclusive01"/>
+    <exclusiveGateway id="sid-7dd87eea-b336-4ca1-9848-1479c04ccc2d"/>
   </process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_Worker">
     <bpmndi:BPMNPlane bpmnElement="Worker" id="BPMNPlane_Worker">
@@ -34,14 +34,14 @@
         <omgdc:Bounds x="-20.0" y="-415.0" width="100.0" height="80.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="edge-2c1a097b-e812-4856-9106-59a2837be2da" bpmnElement="pass">
-        <omgdi:waypoint x="-100.0" y="-322.4001"/>
+        <omgdi:waypoint x="-125.0" y="-322.40005"/>
         <omgdi:waypoint x="-20.0" y="-374.99997"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="shape-98e48f49-1d19-49de-9088-6651a4fa6158" bpmnElement="backCall">
         <omgdc:Bounds x="-10.0" y="-280.0" width="100.0" height="80.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="edge-9e5d8452-36a0-4c2d-bf7f-5c44675da2ed" bpmnElement="jujue">
-        <omgdi:waypoint x="-100.000015" y="-322.4001"/>
+        <omgdi:waypoint x="-125.0" y="-322.40002"/>
         <omgdi:waypoint x="-10.0" y="-260.0"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="shape-4af9922b-a17c-4a2a-8078-cd9641ef6b48" bpmnElement="endEvent">
@@ -69,13 +69,13 @@
         <omgdi:waypoint x="-365.0" y="-322.40005"/>
         <omgdi:waypoint x="-310.90002" y="-322.4001"/>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="shape-56e017b9-c43c-440f-80ca-5aa9ac9dc263" bpmnElement="exclusive01">
-        <omgdc:Bounds x="-140.0" y="-342.4001" width="40.0" height="40.0"/>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="edge-0a38fcc9-a08c-406c-9280-3dfcf857e80f" bpmnElement="sid-6a41d964-ad62-426e-af76-7363bc28f3e4">
         <omgdi:waypoint x="-210.90002" y="-322.4001"/>
         <omgdi:waypoint x="-140.0" y="-322.4001"/>
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="shape-ce80bef1-3ca3-465d-98d5-95553d4ce975" bpmnElement="sid-7dd87eea-b336-4ca1-9848-1479c04ccc2d">
+        <omgdc:Bounds x="-145.0" y="-342.4001" width="40.0" height="40.0"/>
+      </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </definitions>

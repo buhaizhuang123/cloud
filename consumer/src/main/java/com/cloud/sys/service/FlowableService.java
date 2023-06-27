@@ -1,6 +1,7 @@
 package com.cloud.sys.service;
 
 import com.alibaba.fastjson.JSONObject;
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,8 +23,8 @@ public interface FlowableService {
     /**
      * @return 找到待处理工作流
      */
-    @GetMapping("/show/waitTask")
-    JSONObject findAssignTask(@RequestParam("userId") String assign);
+    @PostMapping("/show/waitTask")
+    JSONObject findAssignTask(@RequestParam("userId") String assign,@RequestBody RowBounds rowBounds);
 
     /**
      * @return 找到待处理工作流

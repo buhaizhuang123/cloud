@@ -4,6 +4,10 @@ import com.alibaba.fastjson.JSONObject;
 import com.bu.common.po.ResultPo;
 import com.bu.common.service.ShowService;
 import com.bu.common.to.WaitExeTaskTo;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import org.apache.ibatis.session.RowBounds;
 import org.flowable.engine.HistoryService;
 import org.flowable.engine.RepositoryService;
 import org.flowable.engine.RuntimeService;
@@ -160,17 +164,24 @@ public class ShowServiceImpl implements ShowService {
     }
 
     @Override
-    public ResultPo queryUserTodoTasks(String userId) {
-        List<Task> list = taskService.createTaskQuery().taskCandidateOrAssigned(userId).orderByTaskCreateTime().desc().list();
+    public ResultPo queryUserTodoTasks(String userId, RowBounds rowBounds) {
+        PageHelper.startPage(rowBounds.getOffset(), rowBounds.getLimit());
+        List<Task> list = taskService.createTaskQuery()
+                .taskCandidateOrAssigned(userId)
+                .orderByTaskCreateTime()
+                .desc()
+                .list();
+        PageInfo<Task> taskPageInfo = new PageInfo<>(list);
         ResultPo resultPo = new ResultPo();
         ArrayList<Object> res = new ArrayList<>();
-        for (Task task : list) {
+        for (Task task : taskPageInfo.getList()) {
             WaitExeTaskTo waitExeTaskTo = new WaitExeTaskTo();
             BeanUtils.copyProperties(task, waitExeTaskTo);
             waitExeTaskTo.setIsSuspend(task.isSuspended());
             res.add(waitExeTaskTo);
         }
         resultPo.put("list", res);
+        resultPo.put("total",taskPageInfo.getTotal());
         return resultPo;
     }
 
@@ -357,7 +368,14 @@ public class ShowServiceImpl implements ShowService {
         List<ResultPo> collect = list.stream().map(i -> {
 
             ResultPo resultPo1 = new ResultPo();
-            resultPo1.put("name", i.getName()).put("startTime", i.getStartTime()).put("endTime", i.getEndTime()).put("startUserId", i.getStartUserId()).put("businessKey", i.getBusinessKey()).put("processName", i.getProcessDefinitionName()).put("deployment", i.getDeploymentId());
+            resultPo1.put("name", i.getName())
+                    .put("startTime", i.getStartTime())
+                    .put("endTime", i.getEndTime())
+                    .put("startUserId", i.getStartUserId())
+                    .put("businessKey", i.getBusinessKey())
+                    .put("processName", i.getProcessDefinitionName())
+                    .put("processId", i.getId())
+                    .put("deployment", i.getDeploymentId());
             return resultPo1;
         }).collect(Collectors.toList());
 
@@ -426,6 +444,29 @@ public class ShowServiceImpl implements ShowService {
     public ResultPo sendInfoToTask(String processId, Map<String, Object> params) {
 
         return null;
+    }
+
+    @Override
+    public ResultPo queryHistoryProcess(String processId) {
+        List<HistoricTaskInstance> list = historyService.createHistoricTaskInstanceQuery()
+                .processInstanceId(processId)
+                .orderByTaskCreateTime()
+                .asc()
+                .list();
+
+        ResultPo resultPo1 = new ResultPo();
+        List<JSONObject> list1 = list.stream().map(i -> {
+
+            ResultPo resultPo = new ResultPo();
+            resultPo.put("assignee", i.getAssignee())
+                    .put("claimTime", i.getClaimTime())
+                    .put("id", i.getId())
+                    .put("name", i.getName())
+                    .put("vis", i.getProcessVariables());
+            return resultPo.getData();
+        }).collect(Collectors.toList());
+        resultPo1.put("list",list1);
+        return resultPo1;
     }
 
 

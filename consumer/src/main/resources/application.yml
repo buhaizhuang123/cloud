@@ -52,7 +52,7 @@ spring:
         maximum-pool-size: 15
         max-lifetime: 1800000
         minimum-idle: 5
-        validation-timeout: 3000
+        validation-timeout: 30000
         idle-timeout: 30000
         auto-commit: true
         connection-test-query: select 1
@@ -66,7 +66,7 @@ spring:
         maximum-pool-size: 15
         max-lifetime: 1800000
         minimum-idle: 5
-        validation-timeout: 3000
+        validation-timeout: 30000
         idle-timeout: 30000
         auto-commit: true
         connection-test-query: select 1
@@ -98,9 +98,6 @@ management:
     web:
       exposure:
         include: "*"
-feign:
-  client:
-    config:
-      flowable:
-        connectTimeout: 5000
-        readTimeout: 5000
+ribbon:
+  ReadTimeout: 60000
+  ConnectTimeout: 30000

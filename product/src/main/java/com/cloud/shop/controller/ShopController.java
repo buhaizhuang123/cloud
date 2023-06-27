@@ -1,6 +1,7 @@
 package com.cloud.shop.controller;
 
 import com.alibaba.csp.sentinel.annotation.SentinelResource;
+import com.alibaba.fastjson.JSONObject;
 import com.alibaba.nacos.api.config.annotation.NacosValue;
 import com.alibaba.nacos.spring.context.annotation.config.NacosPropertySource;
 import com.cloud.common.InfoUtils;
@@ -8,12 +9,10 @@ import com.cloud.shop.dto.Shop;
 import com.cloud.shop.service.ShopService;
 import com.cloud.shop.shop.ShopDao;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
@@ -49,9 +48,8 @@ public class ShopController {
 
     @RequestMapping("list")
     @HystrixCommand(fallbackMethod = "defaultFail")
-    public List<Shop> listShop() {
-        int i = 1 / 0;
-        return shopService.getShops();
+    public JSONObject listShop(@RequestBody RowBounds rowBounds) {
+        return shopService.getShops(rowBounds);
     }
 
     @RequestMapping("default")

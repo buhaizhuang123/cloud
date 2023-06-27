@@ -1,10 +1,15 @@
 package com.cloud.sys.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.cloud.common.JwtUtils;
+import com.cloud.common.Page;
 import com.cloud.sys.service.FlowableService;
+import io.jsonwebtoken.Claims;
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 
 /**
@@ -19,9 +24,13 @@ public class FlowableController {
     @Autowired
     private FlowableService flowableService;
 
-    @GetMapping("/findAssignWaitTask")
-    public JSONObject findAssignWaitTask(String assign) {
-        return flowableService.findAssignTask(assign);
+    @PostMapping("/findAssignWaitTask")
+    public JSONObject findAssignWaitTask(@RequestBody Page page, HttpServletRequest request) {
+        String authentication = request.getHeader("authentication");
+        Claims claims = JwtUtils.parseJwt(authentication);
+        String usrename = (String)(claims.get("username"));
+        RowBounds rowBounds = new RowBounds(page.getPageNum(),page.getPageSize());
+        return flowableService.findAssignTask(usrename,rowBounds);
     }
 
 

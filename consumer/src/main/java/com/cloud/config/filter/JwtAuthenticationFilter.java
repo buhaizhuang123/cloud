@@ -60,9 +60,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private AuthenticationSuccessHandler authenticationMeSuccessHandler;
 
 
-    @Autowired
-    private ProductService webScoketService;
-
     private Logger logger = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
 
     @Override

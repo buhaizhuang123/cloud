@@ -36,9 +36,10 @@ public class SysController {
         return productService.show();
     }
 
-    @RequestMapping("list")
-    public List<Object> listShops() {
-        return productService.listShops();
+    @PostMapping("list")
+    public JSONObject listShops(@RequestBody Page page) {
+        RowBounds rowBounds = new RowBounds(page.getPageNum(), page.getPageSize());
+        return productService.listShops(rowBounds);
     }
 
     @RequestMapping("str")
@@ -57,31 +58,10 @@ public class SysController {
         return userResult;
     }
 
-    @RequestMapping(value = "list",method = RequestMethod.POST)
+    @RequestMapping(value = "listRevert",method = RequestMethod.POST)
     public List<Object> list(@RequestBody JSONObject loan, @RequestParam("pageSize") Integer pageSize, @RequestParam("pageNum") Integer pageNum){
         List<Object> list = productService.list(loan, pageSize, pageNum);
         return list;
-    }
-
-    public static void main(String[] args) {
-
-//        File file = new File("/Applications/tools/wd/3001-");
-        File file = new File("/Applications/tools/wd/2000-2468");
-        for (File listFile : file.listFiles()) {
-            if (listFile.isFile()) {
-                String name = listFile.getName();
-                String replace = name.replace("..mp3.mp3", "");
-                System.out.println("name = " + replace);
-//                String o1 = name.replaceFirst("mp3", "");
-//                String o2 = name.replaceFirst(".", "");
-//
-////                String toName = name.substring(0,4);
-                listFile.renameTo(new File("/Applications/tools/wd/2000-2468/"+replace + ".mp3"));
-//
-//
-            }
-        }
-
     }
 
 }

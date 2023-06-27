@@ -1,8 +1,7 @@
 package com.cloud.shop.service;
 
-import com.cloud.shop.dto.Shop;
-
-import java.util.List;
+import com.alibaba.fastjson.JSONObject;
+import org.apache.ibatis.session.RowBounds;
 
 /**
  * @author haizhuangbu
@@ -11,6 +10,6 @@ import java.util.List;
  */
 public interface ShopService {
 
-    List<Shop> getShops();
+    JSONObject getShops(RowBounds rowBounds);
 
 }

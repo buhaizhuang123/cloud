@@ -2,6 +2,7 @@ package com.cloud.sys.service;
 
 import com.alibaba.fastjson.JSONObject;
 import com.cloud.common.Page;
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,8 +19,8 @@ public interface ProductService {
     @RequestMapping(value = "/shop/show", method = RequestMethod.GET)
     String show();
 
-    @RequestMapping("/shop/list")
-    List<Object> listShops();
+    @PostMapping("/shop/list")
+    JSONObject listShops(@RequestBody RowBounds rowBounds);
 
 
     @GetMapping("/usr/list")

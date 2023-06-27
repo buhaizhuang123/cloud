@@ -34,7 +34,7 @@ import java.sql.DriverManager;
 @EnableDiscoveryClient
 @EnableFeignClients
 @MapperScan(basePackages = {"com.cloud.sys.dao","com.cloud.person.dao","com.cloud.batch.dao"})
-@EnableHystrix
+//@EnableHystrix
 public class ConsumerApp {
 
     public static void main(String[] args) {

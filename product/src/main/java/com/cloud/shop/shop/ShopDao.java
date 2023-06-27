@@ -14,7 +14,7 @@ import java.util.List;
 public interface ShopDao {
 
 
-    List<Shop> listShop(RowBounds rowBounds);
+    List<Shop> listShop();
 
     List<Shop> search(@Param("s1") String... s1);
 

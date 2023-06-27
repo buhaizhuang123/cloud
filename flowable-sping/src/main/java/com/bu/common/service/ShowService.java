@@ -2,6 +2,7 @@ package com.bu.common.service;
 
 import com.alibaba.fastjson.JSONObject;
 import com.bu.common.po.ResultPo;
+import org.apache.ibatis.session.RowBounds;
 import org.flowable.engine.history.HistoricDetail;
 import org.flowable.engine.history.HistoricProcessInstance;
 import org.flowable.engine.repository.ProcessDefinition;
@@ -68,7 +69,7 @@ public interface ShowService {
 
 
     // 查询待办任务
-    ResultPo queryUserTodoTasks(String userId);
+    ResultPo queryUserTodoTasks(String userId, RowBounds rowBounds);
 
     // 领取任务
     ResultPo claim(String taskId, String userId);
@@ -124,5 +125,7 @@ public interface ShowService {
 
     ResultPo sendInfoToTask(String processId, Map<String,Object> params);
 
+
+    ResultPo queryHistoryProcess(String processId);
 
 }
