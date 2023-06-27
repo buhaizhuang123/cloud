@@ -66,7 +66,7 @@ public class ShowController {
     /**
      * @return 启动流程实例
      */
-    @GetMapping("startProcess")
+    @PostMapping("startProcess")
     public JSONObject startProcess(@RequestParam String processId, @RequestBody(required = false) Map<String,Object> map) {
         return showService.startProcess(processId,map);
     }

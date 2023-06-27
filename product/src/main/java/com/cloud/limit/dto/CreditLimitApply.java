@@ -23,7 +23,7 @@ public class CreditLimitApply {
 
     private String mobilePhone;
 
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
     private Date applyDt;
 
     private String limitSts;
