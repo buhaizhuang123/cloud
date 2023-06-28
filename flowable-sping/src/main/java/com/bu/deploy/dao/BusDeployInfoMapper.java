@@ -16,4 +16,5 @@ public interface BusDeployInfoMapper {
 
     List<BusDeployInfoDto> listBusDeployInfo(@Param("deployInfo") BusDeployInfoDto busDeployInfoDto, @Param("pageNum") Integer pageNum,@Param("pageSize") Integer pageSize);
 
+    BusDeployInfoDto findBusDeployInfoByName(@Param("busName") String busName);
 }

@@ -4,10 +4,7 @@ import com.bu.common.po.ResultPo;
 import com.bu.deploy.dto.BusDeployInfoDto;
 import com.bu.deploy.service.BusDeployInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -42,6 +39,12 @@ public class DeployController {
         resultPo.put("list", busDeployInfoDtos);
         return resultPo;
 
+    }
+
+
+    @RequestMapping("findBusDeployInfo")
+    public BusDeployInfoDto findBusDeployInfo(@RequestParam("busName") String busName){
+        return busDeployInfoService.findBusDeployInfoDtoByName(busName);
     }
 
 

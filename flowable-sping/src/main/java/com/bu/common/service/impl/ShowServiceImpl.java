@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.bu.common.po.ResultPo;
 import com.bu.common.service.ShowService;
 import com.bu.common.to.WaitExeTaskTo;
+import com.bu.deploy.dao.BusDeployInfoMapper;
+import com.bu.deploy.dto.BusDeployInfoDto;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -49,14 +51,13 @@ public class ShowServiceImpl implements ShowService {
     @Autowired
     private RepositoryService repositoryService;
 
+    @Autowired
+    private BusDeployInfoMapper busDeployInfoMapper;
+
 
     @Override
     public JSONObject startProcess(String process, Map<String, Object> map) {
-        ProcessInstance processInstance = runtimeService.createProcessInstanceBuilder()
-                .variables(map)
-                .processDefinitionId(process)
-                .name(map.get("name").toString())
-                .start();
+        ProcessInstance processInstance = runtimeService.createProcessInstanceBuilder().variables(map).processDefinitionId(process).name(map.get("name").toString()).start();
         String id = processInstance.getId();
         String startUserId = processInstance.getStartUserId();
         JSONObject reson = new JSONObject();
@@ -166,22 +167,26 @@ public class ShowServiceImpl implements ShowService {
     @Override
     public ResultPo queryUserTodoTasks(String userId, RowBounds rowBounds) {
         PageHelper.startPage(rowBounds.getOffset(), rowBounds.getLimit());
-        List<Task> list = taskService.createTaskQuery()
-                .taskCandidateOrAssigned(userId)
-                .orderByTaskCreateTime()
-                .desc()
-                .list();
+        List<Task> list = taskService.createTaskQuery().taskCandidateOrAssigned(userId).orderByTaskCreateTime().desc().list();
         PageInfo<Task> taskPageInfo = new PageInfo<>(list);
         ResultPo resultPo = new ResultPo();
         ArrayList<Object> res = new ArrayList<>();
         for (Task task : taskPageInfo.getList()) {
+            Map<String, Object> variables = runtimeService.getVariables(task.getProcessInstanceId());
+            System.out.println("variables = " + variables);
             WaitExeTaskTo waitExeTaskTo = new WaitExeTaskTo();
             BeanUtils.copyProperties(task, waitExeTaskTo);
+            waitExeTaskTo.setProcessVariables(variables);
+            String name = (String) variables.get("name");
+            if (name != null) {
+                BusDeployInfoDto busDeployInfoByName = busDeployInfoMapper.findBusDeployInfoByName(name);
+                waitExeTaskTo.setBusDeployInfoDto(busDeployInfoByName);
+            }
             waitExeTaskTo.setIsSuspend(task.isSuspended());
             res.add(waitExeTaskTo);
         }
         resultPo.put("list", res);
-        resultPo.put("total",taskPageInfo.getTotal());
+        resultPo.put("total", taskPageInfo.getTotal());
         return resultPo;
     }
 
@@ -215,14 +220,7 @@ public class ShowServiceImpl implements ShowService {
         ArrayList<Object> list = new ArrayList<>();
         for (Task task : tasks) {
             ResultPo resultPo = new ResultPo();
-           resultPo.put("claimTime", task.getClaimTime())
-                    .put("name", task.getName())
-                    .put("assignee", task.getAssignee())
-                    .put("executionId", task.getExecutionId())
-                    .put("processId", task.getProcessDefinitionId())
-                    .put("createTime", task.getCreateTime())
-                    .put("vis", task.getTaskLocalVariables())
-                    .put("id", task.getId());
+            resultPo.put("claimTime", task.getClaimTime()).put("name", task.getName()).put("assignee", task.getAssignee()).put("executionId", task.getExecutionId()).put("processId", task.getProcessDefinitionId()).put("createTime", task.getCreateTime()).put("vis", task.getTaskLocalVariables()).put("id", task.getId());
             list.add(resultPo);
         }
 
@@ -308,13 +306,7 @@ public class ShowServiceImpl implements ShowService {
 
             ResultPo resultPo1 = new ResultPo();
 
-            resultPo1.put("startTime", historicTaskInstance.getStartTime())
-                    .put("claimTime", historicTaskInstance.getClaimTime())
-                    .put("assignee", historicTaskInstance.getAssignee())
-                    .put("endTime", historicTaskInstance.getEndTime())
-                    .put("tenantId", historicTaskInstance.getTenantId())
-                    .put("vis", historicTaskInstance.getProcessVariables())
-                    .put("id", historicTaskInstance.getId());
+            resultPo1.put("startTime", historicTaskInstance.getStartTime()).put("claimTime", historicTaskInstance.getClaimTime()).put("assignee", historicTaskInstance.getAssignee()).put("endTime", historicTaskInstance.getEndTime()).put("tenantId", historicTaskInstance.getTenantId()).put("vis", historicTaskInstance.getProcessVariables()).put("id", historicTaskInstance.getId());
             list1.add(resultPo1);
         }
 
@@ -368,14 +360,7 @@ public class ShowServiceImpl implements ShowService {
         List<ResultPo> collect = list.stream().map(i -> {
 
             ResultPo resultPo1 = new ResultPo();
-            resultPo1.put("name", i.getName())
-                    .put("startTime", i.getStartTime())
-                    .put("endTime", i.getEndTime())
-                    .put("startUserId", i.getStartUserId())
-                    .put("businessKey", i.getBusinessKey())
-                    .put("processName", i.getProcessDefinitionName())
-                    .put("processId", i.getId())
-                    .put("deployment", i.getDeploymentId());
+            resultPo1.put("name", i.getName()).put("startTime", i.getStartTime()).put("endTime", i.getEndTime()).put("startUserId", i.getStartUserId()).put("businessKey", i.getBusinessKey()).put("processName", i.getProcessDefinitionName()).put("processId", i.getId()).put("deployment", i.getDeploymentId());
             return resultPo1;
         }).collect(Collectors.toList());
 
@@ -412,14 +397,7 @@ public class ShowServiceImpl implements ShowService {
         ResultPo resultPo1 = new ResultPo();
         List<ResultPo> list1 = list.stream().map(i -> {
             ResultPo resultPo = new ResultPo();
-            resultPo.put("startTime", i.getStartTime())
-                    .put("businessKey", i.getBusinessKey())
-                    .put("startUser", i.getStartUserId())
-                    .put("name", i.getName())
-                    .put("processDefinitionId", i.getProcessDefinitionId())
-                    .put("id", i.getId())
-                    .put("vis", i.getProcessVariables())
-                    .put("activityId", i.getActivityId());
+            resultPo.put("startTime", i.getStartTime()).put("businessKey", i.getBusinessKey()).put("startUser", i.getStartUserId()).put("name", i.getName()).put("processDefinitionId", i.getProcessDefinitionId()).put("id", i.getId()).put("vis", i.getProcessVariables()).put("activityId", i.getActivityId());
             return resultPo;
         }).collect(Collectors.toList());
 
@@ -448,24 +426,16 @@ public class ShowServiceImpl implements ShowService {
 
     @Override
     public ResultPo queryHistoryProcess(String processId) {
-        List<HistoricTaskInstance> list = historyService.createHistoricTaskInstanceQuery()
-                .processInstanceId(processId)
-                .orderByTaskCreateTime()
-                .asc()
-                .list();
+        List<HistoricTaskInstance> list = historyService.createHistoricTaskInstanceQuery().processInstanceId(processId).orderByTaskCreateTime().asc().list();
 
         ResultPo resultPo1 = new ResultPo();
         List<JSONObject> list1 = list.stream().map(i -> {
 
             ResultPo resultPo = new ResultPo();
-            resultPo.put("assignee", i.getAssignee())
-                    .put("claimTime", i.getClaimTime())
-                    .put("id", i.getId())
-                    .put("name", i.getName())
-                    .put("vis", i.getProcessVariables());
+            resultPo.put("assignee", i.getAssignee()).put("claimTime", i.getClaimTime()).put("id", i.getId()).put("name", i.getName()).put("vis", i.getProcessVariables());
             return resultPo.getData();
         }).collect(Collectors.toList());
-        resultPo1.put("list",list1);
+        resultPo1.put("list", list1);
         return resultPo1;
     }
 
@@ -474,14 +444,7 @@ public class ShowServiceImpl implements ShowService {
 
         List<ResultPo> list = tasks.stream().map(i -> {
             ResultPo resultPo = new ResultPo();
-            resultPo.put("name", i.getName())
-                    .put("id", i.getId())
-                    .put("assignee", i.getAssignee())
-                    .put("owner", i.getOwner())
-                    .put("time", i.getClaimTime())
-                    .put("vis", i.getTaskLocalVariables())
-                    .put("processId", i.getProcessDefinitionId())
-                    .put("taskId", i.getTaskDefinitionId());
+            resultPo.put("name", i.getName()).put("id", i.getId()).put("assignee", i.getAssignee()).put("owner", i.getOwner()).put("time", i.getClaimTime()).put("vis", i.getTaskLocalVariables()).put("processId", i.getProcessDefinitionId()).put("taskId", i.getTaskDefinitionId());
             return resultPo;
         }).collect(Collectors.toList());
         resultPo1.put("list", list);

@@ -1,6 +1,7 @@
 server:
   port: 8912
 spring:
+
   resources:
     static-locations: classpath:/static
   mvc:
@@ -45,6 +46,10 @@ spring:
         server-addr: http://localhost:8848
         #       配置服务的dataId前缀
         prefix: 1
+      metadata:
+        preserved.heart.beat.interval: 1000
+        preserved.heart.beat.timeout: 3000
+        preserved.ip.delete.timeout: 3000
     sentinel:
       transport:
         port: 8719

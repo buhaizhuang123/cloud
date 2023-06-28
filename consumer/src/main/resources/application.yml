@@ -35,7 +35,13 @@ spring:
     nacos:
       discovery:
         server-addr: http://localhost:8848
-  #      config:
+    cloud:
+      nacos:
+        metadata:
+          preserved.heart.beat.interval: 1000
+          preserved.heart.beat.timeout: 3000
+          preserved.ip.delete.timeout: 3000
+    #      config:
   #        shared-configs: application.yaml
     sentinel:
       transport:

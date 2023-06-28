@@ -16,4 +16,5 @@ public interface BusDeployInfoService {
 
     List<BusDeployInfoDto> listBusDeployInfo(BusDeployInfoDto busDeployInfoDto, Integer pageNum, Integer pageSize);
 
+    BusDeployInfoDto findBusDeployInfoDtoByName(String busName);
 }

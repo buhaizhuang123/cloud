@@ -31,4 +31,11 @@ public class BusDeployInfoServiceImpl implements BusDeployInfoService {
     public List<BusDeployInfoDto> listBusDeployInfo(BusDeployInfoDto busDeployInfoDto, Integer pageNum, Integer pageSize) {
         return busDeployInfoMapper.listBusDeployInfo(busDeployInfoDto,pageNum,pageSize);
     }
+
+
+    @Override
+    public BusDeployInfoDto findBusDeployInfoDtoByName(String busName){
+        return busDeployInfoMapper.findBusDeployInfoByName(busName);
+    }
+
 }

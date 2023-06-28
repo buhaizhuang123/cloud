@@ -26,4 +26,18 @@
         </where>
         order by modify_time desc
     </select>
+
+    <select id="findBusDeployInfoByName" resultType="com.bu.deploy.dto.BusDeployInfoDto">
+
+        select id, deploy_name, bus_name, deploy_status, router_path, create_time, modify_time
+        from bus_deploy_info
+        <where>
+            <trim prefixOverrides="and">
+                <if test="busName != null and busName != ''">
+                    and bus_name = #{busName}
+                </if>
+
+            </trim>
+        </where>
+    </select>
 </mapper>

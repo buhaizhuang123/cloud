@@ -11,6 +11,12 @@ spring:
   nacos:
     discovery:
       server-addr: http://localhost:8848
+  cloud:
+    nacos:
+      metadata:
+        preserved.heart.beat.interval: 1000
+        preserved.heart.beat.timeout: 3000
+        preserved.ip.delete.timeout: 3000
   main:
     allow-bean-definition-overriding: true
   datasource:

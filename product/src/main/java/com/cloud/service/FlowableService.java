@@ -2,10 +2,7 @@ package com.cloud.service;
 
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -20,5 +17,6 @@ public interface FlowableService {
     @PostMapping("show/startProcess")
     JSONObject startProcess(@RequestParam("processId") String processId, @RequestBody(required = false) Map<String,Object> map);
 
-
+    @RequestMapping("deploy/findBusDeployInfo")
+    JSONObject findBusDeployInfo(@RequestParam("busName") String busName);
 }
