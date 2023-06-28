@@ -173,7 +173,6 @@ public class ShowServiceImpl implements ShowService {
         ArrayList<Object> res = new ArrayList<>();
         for (Task task : taskPageInfo.getList()) {
             Map<String, Object> variables = runtimeService.getVariables(task.getProcessInstanceId());
-            System.out.println("variables = " + variables);
             WaitExeTaskTo waitExeTaskTo = new WaitExeTaskTo();
             BeanUtils.copyProperties(task, waitExeTaskTo);
             waitExeTaskTo.setProcessVariables(variables);
