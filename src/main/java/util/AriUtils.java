@@ -1,5 +1,10 @@
 package util;
 
+import com.sun.tools.hat.internal.parser.ReadBuffer;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -56,7 +61,7 @@ public class AriUtils {
     /**
      * 生成随机数
      *
-     * @param size daxiao
+     * @param size  daxiao
      * @param range fanwei
      * @return
      */
@@ -69,5 +74,21 @@ public class AriUtils {
         return arr;
     }
 
+    public static void main(String[] args) {
+        try {
+            Process exec = Runtime.getRuntime().exec("ls -l");
+            BufferedReader readBuffer = new BufferedReader(new InputStreamReader(exec.getInputStream()));
+            String line = "";
+            while ((line = readBuffer.readLine()) != null) {
+                System.out.println(line);
+            }
+            exec.waitFor();
+            exec.destroy();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 }
