@@ -3,8 +3,9 @@ server:
 flowable:
   database-schema-update: true
   idm:
-    enabled: false
+    enabled: true
   async-executor-activate: false
+
 
 
 spring:
@@ -21,7 +22,7 @@ spring:
     allow-bean-definition-overriding: true
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/klin?serverTimezone=Asia/Shanghai&nullCatalogMeansCurrent=true
+    url: jdbc:mysql://localhost:3306/flowable?serverTimezone=Asia/Shanghai&nullCatalogMeansCurrent=true
     password: Bhz123456
     username: bhz
   application:

@@ -19,6 +19,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.netflix.hystrix.EnableHystrix;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -35,6 +36,7 @@ import java.sql.DriverManager;
 @EnableFeignClients
 @MapperScan(basePackages = {"com.cloud.sys.dao","com.cloud.person.dao","com.cloud.batch.dao"})
 //@EnableHystrix
+@EnableTransactionManagement
 public class ConsumerApp {
 
     public static void main(String[] args) {

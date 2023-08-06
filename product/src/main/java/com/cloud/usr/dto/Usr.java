@@ -33,4 +33,6 @@ public class Usr {
 
     private String userAuth;
 
+    private String groupId;
+
 }

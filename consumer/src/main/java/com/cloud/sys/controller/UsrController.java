@@ -42,7 +42,7 @@ public class UsrController {
         return info;
     }
 
-    @RequestMapping(value = "addUser", method = RequestMethod.POST)
+    @RequestMapping(value = "/addUser", method = RequestMethod.POST)
     public String addUser(@RequestBody User user) {
         userService.addUser(user);
         return "新增成功";

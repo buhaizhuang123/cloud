@@ -28,6 +28,8 @@ public class User implements UserDetails {
 
     private String userAuth;
 
+    private String group;
+
 
     public void setAuth(Authentication authentication){
         this.userName = authentication.getName();

@@ -3,6 +3,10 @@ package sort.base;
 import sort.Sort;
 import util.AriUtils;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * @author haizhuangbu
  * @date 2023/6/6 09:02
@@ -27,5 +31,19 @@ public class Bubble extends Sort {
     @Override
     public String getName() {
         return "Bubble";
+    }
+
+
+    public static void main(String[] args) {
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddhhmmss");
+        try {
+            Date parse = simpleDateFormat.parse("20230614205006");
+            System.out.println(parse);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+
+
     }
 }

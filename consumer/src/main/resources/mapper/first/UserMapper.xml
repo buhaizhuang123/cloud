@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cloud.sys.dao.UserMapper">
     <select id="findUser" useCache="true" resultType="com.cloud.sys.dto.User">
-        select user_id, user_name, user_pass, user_enable, USER_AUTH
+        select user_id, user_name, user_pass, user_enable, USER_AUTH,GROUP_ID
         from S_USR
     </select>
     <select id="loadUserByUsername" resultType="com.cloud.sys.dto.User" parameterType="java.lang.String">
@@ -10,7 +10,7 @@
         from S_USR where user_name = #{userName}
     </select>
     <insert id="addUser" parameterType="com.cloud.sys.dto.User">
-        insert into S_USR (USER_ID, USER_NAME, USER_PASS, USER_ENABLE, USER_AUTH)
-        values (#{userId},#{userName},#{userPass},#{userEnable},#{userAuth})
+        insert into S_USR (USER_ID, USER_NAME, USER_PASS, USER_ENABLE, USER_AUTH,GROUP_ID)
+        values (#{userId},#{userName},#{userPass},#{userEnable},#{userAuth},#{group})
     </insert>
 </mapper>

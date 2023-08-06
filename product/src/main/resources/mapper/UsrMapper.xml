@@ -4,7 +4,7 @@
 
 
     <select id="listUsr" resultType="com.cloud.usr.dto.Usr">
-        select user_id, user_name, user_pass, user_enable, user_auth
+        select user_id, user_name, user_pass, user_enable, user_auth,group_id
         from S_USR
     </select>
 </mapper>

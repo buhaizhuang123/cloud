@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/processdef">
+  <process id="credit_apply" name="credit_apply" isExecutable="true">
+    <startEvent id="sid-a4d1f272-09fc-4a27-820f-53e270dbf1f0"/>
+    <userTask id="电核调查" name="电核调查">
+      <documentation>电核调查</documentation>
+    </userTask>
+    <sequenceFlow id="sid-1e21b0b3-328f-4edf-b80a-6970ac7ab21f" sourceRef="sid-a4d1f272-09fc-4a27-820f-53e270dbf1f0" targetRef="电核调查"/>
+    <exclusiveGateway id="sid-d4adcf28-d3d5-4ab5-beeb-694eb1cd0d5f"/>
+    <sequenceFlow id="sid-f752be8f-6563-4de3-9e44-9a85f4acd1ab" sourceRef="电核调查" targetRef="sid-d4adcf28-d3d5-4ab5-beeb-694eb1cd0d5f"/>
+    <serviceTask id="退回" activiti:exclusive="true" name="退回">
+      <documentation>退回</documentation>
+    </serviceTask>
+    <sequenceFlow id="sid-5acb1983-2907-49cb-b3dc-1ce30748ba94" sourceRef="sid-d4adcf28-d3d5-4ab5-beeb-694eb1cd0d5f" targetRef="退回">
+      <conditionExpression xsi:type="tFormalExpression"/>
+    </sequenceFlow>
+    <serviceTask id="sid-1c0da130-ee20-46bf-a8c2-702cf43ed8c2" activiti:exclusive="true"/>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_credit_apply">
+    <bpmndi:BPMNPlane bpmnElement="credit_apply" id="BPMNPlane_credit_apply">
+      <bpmndi:BPMNShape id="shape-2a9a2286-8ba3-418c-a071-a0090b3f2354" bpmnElement="sid-a4d1f272-09fc-4a27-820f-53e270dbf1f0">
+        <omgdc:Bounds x="-205.0" y="25.0" width="30.0" height="30.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape-4905aa26-a9b1-42aa-b936-a35eee69393e" bpmnElement="电核调查">
+        <omgdc:Bounds x="-130.0" y="0.0" width="100.0" height="80.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="edge-aacab7df-a5c7-4c45-8eac-18cb030cc66c" bpmnElement="sid-1e21b0b3-328f-4edf-b80a-6970ac7ab21f">
+        <omgdi:waypoint x="-175.0" y="40.0"/>
+        <omgdi:waypoint x="-130.0" y="40.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="shape-71defb9d-42ae-4d98-a8b9-5738aa2370f8" bpmnElement="sid-d4adcf28-d3d5-4ab5-beeb-694eb1cd0d5f">
+        <omgdc:Bounds x="5.0" y="-25.0" width="40.0" height="40.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="edge-e052bd84-d28d-4849-b5b8-197d24648767" bpmnElement="sid-f752be8f-6563-4de3-9e44-9a85f4acd1ab">
+        <omgdi:waypoint x="-30.0" y="40.0"/>
+        <omgdi:waypoint x="5.0" y="-5.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="shape-46fdd6a7-1643-4255-b75d-57daecccb126" bpmnElement="退回">
+        <omgdc:Bounds x="100.0" y="-30.0" width="100.0" height="80.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="edge-c7ce5a40-5329-4c62-8b7b-33a6af6dc8d2" bpmnElement="sid-5acb1983-2907-49cb-b3dc-1ce30748ba94">
+        <omgdi:waypoint x="45.0" y="-5.0"/>
+        <omgdi:waypoint x="100.0" y="30.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="shape-e1bab72d-56bd-47b0-9911-2bfaaf7d57ef" bpmnElement="sid-1c0da130-ee20-46bf-a8c2-702cf43ed8c2">
+        <omgdc:Bounds x="100.0" y="75.0" width="100.0" height="80.0"/>
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>
