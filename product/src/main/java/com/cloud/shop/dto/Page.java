@@ -14,4 +14,6 @@ public class Page {
 
     private Integer size = 10;
 
+    private Integer pageSize = 10;
+
 }

@@ -1,14 +1,12 @@
 package com.cloud.sys.controller;
 
 import com.cloud.common.InfoUtils;
+import com.cloud.common.Page;
 import com.cloud.sys.dto.User;
 import com.cloud.sys.service.ProductService;
 import com.cloud.sys.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -30,9 +28,9 @@ public class UsrController {
     private UserService userService;
 
 
-    @RequestMapping("list")
-    public List listUsr() {
-        return productService.listUsr();
+    @PostMapping("list")
+    public List listUsr(@RequestBody(required = false) Page page) {
+        return productService.listUsr(page);
     }
 
 

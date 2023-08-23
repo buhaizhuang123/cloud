@@ -1,5 +1,6 @@
 package com.cloud.usr.service.impl;
 
+import com.cloud.shop.dto.Page;
 import com.cloud.usr.dao.UsrDao;
 import com.cloud.usr.dto.Usr;
 import com.cloud.usr.service.UsrService;
@@ -26,8 +27,8 @@ public class UsrServiceImpl implements UsrService {
      * @function 返回所有用户
      */
     @Override
-    public List<Usr> listUsr(){
-        RowBounds rowBounds = new RowBounds(0,10);
+    public List<Usr> listUsr(Page page){
+        RowBounds rowBounds = new RowBounds((page.getPageNum() -1) * page.getPageSize(),page.getPageSize());
         return usrDao.listUsr(rowBounds);
     }
 

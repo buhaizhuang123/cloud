@@ -300,7 +300,7 @@ public abstract class Sort04 {
             while (j <= cnt) {
                 // 入桶
                 for (int i = 0; i < arr.length; i++) {
-                    int idx = (int) (arr[i] % Math.pow(10, j) / 10);
+                    int idx = (int) (arr[i] / Math.pow(10, j) % 10);
                     l[idx].add(arr[i]);
                 }
                 int d = 0;

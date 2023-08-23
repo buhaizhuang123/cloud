@@ -64,7 +64,7 @@ public class MybatisInterceptor implements Interceptor {
         if ("ORACLE".equalsIgnoreCase(databaseProductName)) {
             sql = oracle(sql, rowBounds);
         }
-        logger.info(sql);
+        System.out.println("'sql'" + sql);
         StaticSqlSource staticSqlSource = new StaticSqlSource(mappedStatements.getConfiguration(), sql, boundSql.getParameterMappings());
         // 通过反射设置MapperStatment 的sqlSource字段
         Field field = MappedStatement.class.getDeclaredField("sqlSource");
@@ -78,7 +78,7 @@ public class MybatisInterceptor implements Interceptor {
 
 
         // 为查询语句给到别名
-        sql = "select * from (select t1.*, rownum rn from (" + sql +
+        sql = "select t2.*,count(1) total from (select t1.*, rownum rn from (" + sql +
                 ") t1 ) t2 where rn > " + (rowBounds.getOffset() - 1) * rowBounds.getLimit() + " and rn <= " + rowBounds.getOffset() * rowBounds.getLimit();
 
         return sql;
@@ -98,6 +98,8 @@ public class MybatisInterceptor implements Interceptor {
         }
 
         sql += format;
+
+        sql = "select a.*,count(1) total from (" + sql + ") a";
 
         return sql;
     }

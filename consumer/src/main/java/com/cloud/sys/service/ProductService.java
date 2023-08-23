@@ -23,8 +23,8 @@ public interface ProductService {
     JSONObject listShops(@RequestBody RowBounds rowBounds);
 
 
-    @GetMapping("/usr/list")
-    List listUsr();
+    @PostMapping("/usr/list")
+    List listUsr(@RequestBody Page page);
 
     /**
      * 发送数据到全部

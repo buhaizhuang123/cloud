@@ -22,6 +22,7 @@
                 </if>
             </trim>
         </where>
+        order by updateTime desc
     </select>
     <select id="list" resultType="com.cloud.common.SComCde" >
         select dept_code id, dept_name name, dept_code code
