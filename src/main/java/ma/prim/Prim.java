@@ -42,36 +42,38 @@ public class Prim {
         graph.addEdge(4, 4, 0);
     }
 
-
     public void prim(int v) {
 
-        int[][] edges = graph.getEdges();
         low[v] = 0;
+        int[][] edges = graph.getEdges();
         for (int i = 0; i < edges.length - 1; i++) {
-            int minNode = findMinNode(low);
+            int minNode = findMin(low);
             visited[minNode] = true;
             for (int j = 0; j < edges[minNode].length; j++) {
-                if (edges[minNode][j] !=0 && low[j] > edges[minNode][j] && !visited[j]) {
+                if (low[j] > edges[minNode][j] && edges[minNode][j] != 0 && !visited[j]) {
                     low[j] = edges[minNode][j];
                     path[j] = minNode;
                 }
             }
         }
 
-
         Arrays.stream(path).forEach(System.out::print);
+
     }
 
-    public int findMinNode(int[] low) {
-        int min = Integer.MAX_VALUE;
-        int minV = -1;
+    private int findMin(int[] low) {
+        int minNode = -1;
+        int minValue = Integer.MAX_VALUE;
+
         for (int i = 0; i < low.length; i++) {
-            if (low[i] < min && !visited[i]) {
-                min = low[i];
-                minV = i;
+
+            if (low[i] < minValue && !visited[i]) {
+                minValue = low[i];
+                minNode = i;
             }
+
         }
-        return minV;
+        return minNode;
     }
 
 

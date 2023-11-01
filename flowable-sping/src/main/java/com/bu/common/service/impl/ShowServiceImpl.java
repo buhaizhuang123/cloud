@@ -27,6 +27,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -54,7 +55,11 @@ public class ShowServiceImpl implements ShowService {
 
     @Override
     public JSONObject startProcess(String process, Map<String, Object> map) {
-        ProcessInstance processInstance = runtimeService.createProcessInstanceBuilder().variables(map).processDefinitionId(process).name(map.get("name").toString()).start();
+
+        ProcessInstance processInstance = runtimeService.createProcessInstanceBuilder()
+                .variable("param", map)
+                .processDefinitionId(process)
+                .name(map.get("name").toString()).start();
         String id = processInstance.getId();
         String startUserId = processInstance.getStartUserId();
         JSONObject reson = new JSONObject();
@@ -81,6 +86,7 @@ public class ShowServiceImpl implements ShowService {
     @Override
     public ResultPo processHistroy(String processId) {
         HistoricProcessInstance historicProcessInstance = historyService.createHistoricProcessInstanceQuery().processInstanceId(processId).singleResult();
+        historyService.createHistoricTaskInstanceQuery();
         ResultPo resultPo = new ResultPo();
         resultPo.put("id", historicProcessInstance.getId()).put("name", historicProcessInstance.getName()).put("businessKey", historicProcessInstance.getBusinessKey()).put("deploymentId", historicProcessInstance.getDeploymentId()).put("startId", historicProcessInstance.getStartActivityId()).put("startTime", historicProcessInstance.getStartTime()).put("startUserId", historicProcessInstance.getStartUserId()).put("endTime", historicProcessInstance.getEndTime()).put("endId", historicProcessInstance.getEndActivityId());
         return resultPo;
@@ -107,6 +113,7 @@ public class ShowServiceImpl implements ShowService {
         HashMap<String, Object> variables = new HashMap<>();
         variables.put("person", assignee);
         ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(process, variables);
+
     }
 
     @Override
@@ -190,6 +197,7 @@ public class ShowServiceImpl implements ShowService {
     public ResultPo claim(String taskId, String userId) {
 
         taskService.claim(taskId, userId);
+        taskService.setVariable(taskId, "param", "ssxxx");
         List<Task> list = taskService.createTaskQuery().taskCandidateOrAssigned(userId).list();
         ResultPo resultPo1 = new ResultPo();
         ArrayList<Object> list1 = new ArrayList<>();
@@ -215,8 +223,18 @@ public class ShowServiceImpl implements ShowService {
         ResultPo resultPo1 = new ResultPo();
         ArrayList<Object> list = new ArrayList<>();
         for (Task task : tasks) {
+            Object param = runtimeService.getVariable(processId, "param");
             ResultPo resultPo = new ResultPo();
-            resultPo.put("claimTime", task.getClaimTime()).put("name", task.getName()).put("assignee", task.getAssignee()).put("executionId", task.getExecutionId()).put("processId", task.getProcessDefinitionId()).put("createTime", task.getCreateTime()).put("vis", task.getTaskLocalVariables()).put("id", task.getId());
+            resultPo.put("claimTime", task.getClaimTime())
+                    .put("v", task.getProcessVariables())
+                    .put("name", task.getName())
+                    .put("assignee", task.getAssignee())
+                    .put("executionId", task.getExecutionId())
+                    .put("processId", task.getProcessDefinitionId())
+                    .put("createTime", task.getCreateTime())
+                    .put("vis", task.getTaskLocalVariables())
+                    .put("param", param)
+                    .put("id", task.getId());
             list.add(resultPo);
         }
 
@@ -454,9 +472,8 @@ public class ShowServiceImpl implements ShowService {
     }
 
 
-    public void identity () {
+    public void identity() {
 
     }
-
 
 }
