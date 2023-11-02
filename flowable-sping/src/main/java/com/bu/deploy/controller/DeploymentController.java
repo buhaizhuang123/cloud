@@ -44,10 +44,20 @@ public class DeploymentController {
         return deployments;
     }
 
-    @DeleteMapping("delete")
+    @DeleteMapping("/delete")
     public boolean deleteDeployment(String id) {
         return deploymentService.deleteDeployment(id);
     }
 
+    @RequestMapping("/suspend")
+    public boolean suspend(String id) {
+        return deploymentService.suspendDeployment(id);
+    }
+
+
+    @RequestMapping("/active")
+    public boolean active(String id) {
+        return deploymentService.activeDeployment(id);
+    }
 
 }

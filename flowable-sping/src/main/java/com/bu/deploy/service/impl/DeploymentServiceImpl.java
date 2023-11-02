@@ -1,11 +1,11 @@
 package com.bu.deploy.service.impl;
 
+import com.bu.deploy.dao.DeploymentDao;
 import com.bu.deploy.dto.DeploymentDto;
 import com.bu.deploy.service.DeploymentService;
+import lombok.extern.slf4j.Slf4j;
 import org.flowable.engine.RepositoryService;
 import org.flowable.engine.RuntimeService;
-import org.flowable.engine.repository.Deployment;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
  * @date 2023/10/31 14:28
  * @mark ProcessServiceImpl
  */
+@Slf4j
 @Service
 public class DeploymentServiceImpl implements DeploymentService {
 
@@ -27,6 +28,8 @@ public class DeploymentServiceImpl implements DeploymentService {
     @Resource
     private RepositoryService repositoryService;
 
+    @Resource
+    private DeploymentDao deploymentDao;
 
     /**
      * @param processName 流程名
@@ -48,19 +51,43 @@ public class DeploymentServiceImpl implements DeploymentService {
 
     @Override
     public List<DeploymentDto> listDeployment() {
-        List<Deployment> list = repositoryService.createDeploymentQuery()
-                .list();
-        List<DeploymentDto> collect = list.stream().map(i -> {
-            DeploymentDto deploymentDto = new DeploymentDto();
-            BeanUtils.copyProperties(i, deploymentDto);
-            return deploymentDto;
-        }).collect(Collectors.toList());
-        return collect;
+
+        return deploymentDao.listDeployment(null);
     }
 
     @Override
     public boolean deleteDeployment(String deployId) {
         repositoryService.deleteDeployment(deployId);
+        return true;
+    }
+
+    /**
+     * @param id
+     * @return 中断
+     */
+    @Override
+    public boolean suspendDeployment(String id) {
+        try {
+            repositoryService.suspendProcessDefinitionById(id);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
+     * @param id
+     * @return 唤醒
+     */
+    @Override
+    public boolean activeDeployment(String id) {
+        try {
+            repositoryService.activateProcessDefinitionById(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
         return true;
     }
 }

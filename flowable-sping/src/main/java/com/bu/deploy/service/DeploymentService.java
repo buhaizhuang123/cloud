@@ -19,4 +19,7 @@ public interface DeploymentService {
 
     boolean deleteDeployment(String deployId);
 
+    boolean suspendDeployment(String id);
+
+    boolean activeDeployment(String id);
 }
