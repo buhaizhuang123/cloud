@@ -13,5 +13,5 @@ public interface ProcessService {
 
     void startProcess(String deployId);
 
-    List<ProcessInstanceDto> listProcess();
+    List<ProcessInstanceDto> listProcess(Integer pageNum, Integer pageSize);
 }

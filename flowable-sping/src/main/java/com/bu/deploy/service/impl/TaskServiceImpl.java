@@ -2,6 +2,9 @@ package com.bu.deploy.service.impl;
 
 import com.bu.deploy.dto.TaskDto;
 import com.bu.deploy.service.TaskRunService;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.flowable.engine.TaskService;
 import org.flowable.task.api.Task;
@@ -56,6 +59,18 @@ public class TaskServiceImpl implements TaskRunService {
             TaskDto taskDto = new TaskDto();
             BeanUtils.copyProperties(i, taskDto);
             taskDto.setParams(variables);
+            return taskDto;
+        }).collect(Collectors.toList());
+        return taskDtos;
+    }
+
+    @Override
+    public List<TaskDto> list(Integer pageNum, Integer pageSize) {
+        List<Task> list = taskService.createTaskQuery()
+                .listPage(pageNum, pageSize);
+        List<TaskDto> taskDtos = list.stream().map(i -> {
+            TaskDto taskDto = new TaskDto();
+            BeanUtils.copyProperties(i, taskDto);
             return taskDto;
         }).collect(Collectors.toList());
         return taskDtos;

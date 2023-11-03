@@ -45,5 +45,10 @@ public class TaskController {
         return taskRunService.list(id);
     }
 
+    @RequestMapping("/listAll")
+    public List<TaskDto> listAll(Integer pageNum, Integer pageSize) {
+        return taskRunService.list(pageNum, pageSize);
+    }
+
 
 }

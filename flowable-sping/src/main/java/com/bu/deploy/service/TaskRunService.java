@@ -16,4 +16,6 @@ public interface TaskRunService {
 
     List<TaskDto> list(String id);
 
+    List<TaskDto> list(Integer pageNum, Integer pageSize);
+
 }

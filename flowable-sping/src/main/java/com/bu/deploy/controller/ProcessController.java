@@ -28,8 +28,8 @@ public class ProcessController {
 
 
     @RequestMapping("/list")
-    public List<ProcessInstanceDto> listProcess() {
-        return processService.listProcess();
+    public List<ProcessInstanceDto> listProcess(Integer pageNum, Integer pageSize) {
+        return processService.listProcess(pageNum,pageSize);
     }
 
 

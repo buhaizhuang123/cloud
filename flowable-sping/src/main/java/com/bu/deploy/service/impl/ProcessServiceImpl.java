@@ -44,9 +44,9 @@ public class ProcessServiceImpl implements ProcessService {
 
 
     @Override
-    public List<ProcessInstanceDto> listProcess() {
+    public List<ProcessInstanceDto> listProcess(Integer pageNum, Integer pageSize) {
         List<ProcessInstance> list = runtimeService.createProcessInstanceQuery()
-                .list();
+                .listPage(pageNum, pageSize);
         return list.stream().map(i -> {
             Map<String, Object> variables = runtimeService.getVariables(i.getId());
             ProcessInstanceDto processInstanceDto = new ProcessInstanceDto();
