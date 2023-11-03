@@ -78,4 +78,5 @@ public class ProcessInstanceDto {
     private String isUpdated;
     private String isDeleted;
     private String originalPersistentState;
+    private Map<String, Object> vars;
 }

@@ -1,13 +1,17 @@
 package com.bu.deploy.controller;
 
 import com.bu.deploy.dto.DeploymentDto;
+import com.bu.deploy.dto.FileDto;
 import com.bu.deploy.service.DeploymentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.File;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author haizhuangbu
@@ -58,6 +62,20 @@ public class DeploymentController {
     @RequestMapping("/active")
     public boolean active(String id) {
         return deploymentService.activeDeployment(id);
+    }
+
+    @RequestMapping("listFiles")
+    public List<FileDto> listFiles() {
+        String path = this.getClass().getResource("/").getPath();
+        File file = new File(path + "processes");
+        File[] files = file.listFiles();
+        return Arrays.stream(files)
+                .map(i-> {
+                    FileDto fileDto = new FileDto();
+                    fileDto.setFileName(i.getName());
+                    return fileDto;
+                })
+                .collect(Collectors.toList());
     }
 
 }

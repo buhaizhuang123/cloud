@@ -2,6 +2,8 @@ package com.bu.deploy.dto;
 
 import lombok.Data;
 
+import java.util.Map;
+
 /**
  * @author haizhuangbu
  * @date 2023/11/2 16:24
@@ -60,4 +62,6 @@ public class TaskDto {
     private String isUpdated;
     private String AbstractEntity;
     private String originalPersistentState;
+
+    private Map<String, Object> params;
 }

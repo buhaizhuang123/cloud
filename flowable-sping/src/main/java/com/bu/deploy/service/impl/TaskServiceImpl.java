@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -48,11 +49,13 @@ public class TaskServiceImpl implements TaskRunService {
 
     @Override
     public List<TaskDto> list(String id) {
-        List<Task> list = taskService.createTaskQuery().processDefinitionId(id)
+        List<Task> list = taskService.createTaskQuery().processInstanceId(id)
                 .list();
         List<TaskDto> taskDtos = list.stream().map(i -> {
+            Map<String, Object> variables = taskService.getVariables(i.getId());
             TaskDto taskDto = new TaskDto();
             BeanUtils.copyProperties(i, taskDto);
+            taskDto.setParams(variables);
             return taskDto;
         }).collect(Collectors.toList());
         return taskDtos;

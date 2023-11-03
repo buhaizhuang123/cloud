@@ -2,18 +2,16 @@ package com.bu.deploy.service.impl;
 
 import com.bu.deploy.dto.ProcessInstanceDto;
 import com.bu.deploy.service.ProcessService;
-import liquibase.pro.packaged.A;
-import org.flowable.engine.RepositoryService;
 import org.flowable.engine.RuntimeService;
 import org.flowable.engine.TaskService;
 import org.flowable.engine.runtime.ProcessInstance;
-import org.flowable.task.api.Task;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -50,8 +48,10 @@ public class ProcessServiceImpl implements ProcessService {
         List<ProcessInstance> list = runtimeService.createProcessInstanceQuery()
                 .list();
         return list.stream().map(i -> {
+            Map<String, Object> variables = runtimeService.getVariables(i.getId());
             ProcessInstanceDto processInstanceDto = new ProcessInstanceDto();
             BeanUtils.copyProperties(i, processInstanceDto);
+            processInstanceDto.setVars(variables);
             return processInstanceDto;
         }).collect(Collectors.toList());
     }
