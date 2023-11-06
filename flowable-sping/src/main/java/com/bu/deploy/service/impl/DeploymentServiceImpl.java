@@ -3,7 +3,11 @@ package com.bu.deploy.service.impl;
 import com.bu.deploy.dao.DeploymentDao;
 import com.bu.deploy.dto.DeploymentDto;
 import com.bu.deploy.service.DeploymentService;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.session.RowBounds;
 import org.flowable.engine.RepositoryService;
 import org.flowable.engine.RuntimeService;
 import org.springframework.stereotype.Service;
@@ -50,9 +54,11 @@ public class DeploymentServiceImpl implements DeploymentService {
     }
 
     @Override
-    public List<DeploymentDto> listDeployment() {
-
-        return deploymentDao.listDeployment(null);
+    public PageInfo<DeploymentDto> listDeployment(RowBounds rowBounds) {
+        PageHelper.startPage(rowBounds.getOffset(), rowBounds.getLimit());
+        List<DeploymentDto> deploymentDtos = deploymentDao.listDeployment(null);
+        PageInfo<DeploymentDto> deploymentDtoPageInfo = new PageInfo<>(deploymentDtos);
+        return deploymentDtoPageInfo;
     }
 
     @Override

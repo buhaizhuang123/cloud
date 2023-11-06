@@ -1,8 +1,8 @@
 package com.bu.deploy.service.impl;
 
+import com.bu.deploy.dao.TaskDtoMapper;
 import com.bu.deploy.dto.TaskDto;
 import com.bu.deploy.service.TaskRunService;
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +28,9 @@ public class TaskServiceImpl implements TaskRunService {
 
     @Autowired
     private TaskService taskService;
+
+    @Autowired
+    private TaskDtoMapper taskDtoMapper;
 
     public Boolean claim(String id, String name) {
         try {
@@ -65,15 +68,11 @@ public class TaskServiceImpl implements TaskRunService {
     }
 
     @Override
-    public List<TaskDto> list(Integer pageNum, Integer pageSize) {
-        List<Task> list = taskService.createTaskQuery()
-                .listPage(pageNum, pageSize);
-        List<TaskDto> taskDtos = list.stream().map(i -> {
-            TaskDto taskDto = new TaskDto();
-            BeanUtils.copyProperties(i, taskDto);
-            return taskDto;
-        }).collect(Collectors.toList());
-        return taskDtos;
+    public PageInfo<TaskDto> list(Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum,pageSize);
+        List<TaskDto> taskDtos = taskDtoMapper.listAll();
+        PageInfo<TaskDto> taskDtoPageInfo = new PageInfo<>(taskDtos);
+        return taskDtoPageInfo;
     }
 
 }

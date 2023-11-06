@@ -1,6 +1,8 @@
 package com.bu.deploy.service;
 
 import com.bu.deploy.dto.DeploymentDto;
+import com.github.pagehelper.PageInfo;
+import org.apache.ibatis.session.RowBounds;
 import org.flowable.engine.repository.Deployment;
 
 import java.util.List;
@@ -15,7 +17,7 @@ public interface DeploymentService {
 
     void createDeployment(String processName, String processPath);
 
-    List<DeploymentDto> listDeployment();
+    PageInfo<DeploymentDto> listDeployment(RowBounds rowBounds);
 
     boolean deleteDeployment(String deployId);
 

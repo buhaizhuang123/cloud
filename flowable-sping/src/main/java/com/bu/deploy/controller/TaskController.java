@@ -2,6 +2,7 @@ package com.bu.deploy.controller;
 
 import com.bu.deploy.dto.TaskDto;
 import com.bu.deploy.service.TaskRunService;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -46,7 +47,7 @@ public class TaskController {
     }
 
     @RequestMapping("/listAll")
-    public List<TaskDto> listAll(Integer pageNum, Integer pageSize) {
+    public PageInfo<TaskDto> listAll(Integer pageNum, Integer pageSize) {
         return taskRunService.list(pageNum, pageSize);
     }
 

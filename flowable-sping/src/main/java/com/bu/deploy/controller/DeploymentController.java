@@ -3,6 +3,8 @@ package com.bu.deploy.controller;
 import com.bu.deploy.dto.DeploymentDto;
 import com.bu.deploy.dto.FileDto;
 import com.bu.deploy.service.DeploymentService;
+import com.github.pagehelper.PageInfo;
+import org.apache.ibatis.session.RowBounds;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,9 +45,9 @@ public class DeploymentController {
 
     @RequestMapping("/list")
     @ResponseBody
-    public List<DeploymentDto> listDeployment() {
-        List<DeploymentDto> deployments = deploymentService.listDeployment();
-        return deployments;
+    public PageInfo<DeploymentDto> listDeployment(Integer pageNum, Integer pageSize) {
+        RowBounds rowBounds = new RowBounds(pageNum, pageSize);
+        return deploymentService.listDeployment(rowBounds);
     }
 
     @DeleteMapping("/delete")
@@ -70,7 +72,7 @@ public class DeploymentController {
         File file = new File(path + "processes");
         File[] files = file.listFiles();
         return Arrays.stream(files)
-                .map(i-> {
+                .map(i -> {
                     FileDto fileDto = new FileDto();
                     fileDto.setFileName(i.getName());
                     return fileDto;

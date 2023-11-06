@@ -1,6 +1,7 @@
 package com.bu.deploy.service;
 
 import com.bu.deploy.dto.TaskDto;
+import com.github.pagehelper.PageInfo;
 
 import java.util.List;
 
@@ -16,6 +17,6 @@ public interface TaskRunService {
 
     List<TaskDto> list(String id);
 
-    List<TaskDto> list(Integer pageNum, Integer pageSize);
+    PageInfo<TaskDto> list(Integer pageNum, Integer pageSize);
 
 }
