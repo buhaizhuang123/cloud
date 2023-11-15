@@ -2,7 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bu.deploy.dao.TaskDtoMapper">
     <select id="listAll" resultType="com.bu.deploy.dto.TaskDto">
-        select PROC_DEF_ID_ processDefinitionId,ID_ id,NAME_ name,DESCRIPTION_ description
+        select PROC_DEF_ID_ processDefinitionId,ID_ id,NAME_ name,DESCRIPTION_ description,ASSIGNEE_,PROC_INST_ID_ processInstanceId
         from ACT_RU_TASK order by CREATE_TIME_ desc
+    </select>
+
+    <select id="history" resultType="com.bu.deploy.dto.TaskDto">
+        select ASSIGNEE_,NAME_,DESCRIPTION_,REV_,ID_,LAST_UPDATED_TIME_
+        from ACT_HI_TASKINST where PROC_INST_ID_ = #{procInstId}
+        order by LAST_UPDATED_TIME_
     </select>
 </mapper>

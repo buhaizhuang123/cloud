@@ -1,14 +1,13 @@
 package com.cloud.sys.service;
 
 import com.alibaba.fastjson.JSONObject;
+import com.cloud.sys.dto.GroupEntity;
+import com.cloud.sys.dto.UserEntity;
 import com.cloud.sys.to.FlowableIdentityGroupInfo;
 import com.cloud.sys.to.IdentityUserInfo;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -53,5 +52,13 @@ public interface FlowableService {
 
     @GetMapping("/identity/listGroup")
     List listGroup();
+
+    @RequestMapping(value = "/identify/addUser", method = RequestMethod.POST)
+    void addUserEntity(@RequestBody UserEntity userEntity);
+
+
+    @RequestMapping(value = "/identify/addGroup", method = RequestMethod.POST)
+    void addUserGroup(@RequestBody GroupEntity entity);
+
 
 }

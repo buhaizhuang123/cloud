@@ -52,4 +52,10 @@ public class TaskController {
     }
 
 
+    @RequestMapping("/history")
+    public List<TaskDto> history(String id) {
+        return taskRunService.history(id);
+    }
+
+
 }

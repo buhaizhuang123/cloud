@@ -13,4 +13,6 @@ public interface TaskDtoMapper {
 
     List<TaskDto> listAll();
 
+    List<TaskDto> history(String procInstId);
+
 }

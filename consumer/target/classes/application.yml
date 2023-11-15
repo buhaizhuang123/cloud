@@ -1,0 +1,109 @@
+server:
+  port: 8911
+spring:
+  redis:
+    port: 6379
+    database: 0
+    host: localhost
+  kafka:
+    bootstrap-servers: 10.192.85.102:9092
+    producer: # producer 生产者
+      retries: 0 # 重试次数
+      acks: 1 # 应答级别:多少个分区副本备份完成时向生产者发送ack确认(可选0、1、all/-1)
+      batch-size: 16384 # 批量大小
+      buffer-memory: 33554432 # 生产端缓冲区大小
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      #      value-serializer: com.itheima.demo.config.MySerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
+    consumer: # consumer消费者
+      group-id: demo # 默认的消费组ID
+      enable-auto-commit: false # 是否自动提交offset
+      auto-commit-interval: 100  # 提交offset延时(接收到消息后多久提交offset)
+
+      # earliest:当各分区下有已提交的offset时，从提交的offset开始消费；无提交的offset时，从头开始消费
+      # latest:当各分区下有已提交的offset时，从提交的offset开始消费；无提交的offset时，消费新产生的该分区下的数据
+      # none:topic各分区都存在已提交的offset时，从offset后开始消费；只要有一个分区不存在已提交的offset，则抛出异常
+      auto-offset-reset: latest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      #      value-deserializer: com.itheima.demo.config.MyDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    listener:
+      ack-mode: manual_immediate
+      missing-topics-fatal: false
+
+    nacos:
+      discovery:
+        server-addr: http://localhost:8848
+    cloud:
+      nacos:
+        metadata:
+          preserved.heart.beat.interval: 1000
+          preserved.heart.beat.timeout: 3000
+          preserved.ip.delete.timeout: 3000
+    #      config:
+  #        shared-configs: application.yaml
+    sentinel:
+      transport:
+        port: 8943
+        dashboard: localhost:8211
+  datasource:
+    first:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      username: bhz
+      password: Bhz123456
+      jdbc-url: jdbc:mysql://localhost:3306/firstDoc?serverTimezone=UTC
+      hikari:
+        connection-timeout: 30000
+        maximum-pool-size: 15
+        max-lifetime: 1800000
+        minimum-idle: 5
+        validation-timeout: 30000
+        idle-timeout: 30000
+        auto-commit: true
+        connection-test-query: select 1
+    klin:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      username: bhz
+      password: Bhz123456
+      jdbc-url: jdbc:mysql://localhost:3306/klin?serverTimezone=UTC
+      hikari:
+        connection-timeout: 30000
+        maximum-pool-size: 15
+        max-lifetime: 1800000
+        minimum-idle: 5
+        validation-timeout: 30000
+        idle-timeout: 30000
+        auto-commit: true
+        connection-test-query: select 1
+  #  security:
+  #    user:
+  #      name: spring
+  #      password: spring_admin
+
+  application:
+    name: consumer
+  jackson:
+    time-zone: GMT+8
+  batch:
+    job:
+      enabled: false
+  cache:
+    type: redis
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: true
+  mapper-locations: classpath:/mapper/*.xml
+auth:
+  server:
+    base:
+      url: http://localhost:8912/shop/show
+management:
+  endpoint:
+    web:
+      exposure:
+        include: "*"
+ribbon:
+  ReadTimeout: 60000
+  ConnectTimeout: 30000

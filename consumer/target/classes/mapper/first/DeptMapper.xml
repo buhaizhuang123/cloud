@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cloud.sys.dao.DeptMapper">
+
+    <select id="save" parameterType="com.cloud.sys.dto.SDeptDo">
+
+        insert into s_dept values (#{deptId},#{deptName},#{deptType}
+        ,#{createTime},#{updateTime},#{isRunning},#{deptCode})
+
+    </select>
+    <select id="listDept" resultType="com.cloud.sys.dto.SDeptDo" parameterType="com.cloud.sys.vo.DeptVo">
+        select dept_id deptId, dept_name deptName, dept_type deptType, create_time createTime, update_time updateTime,
+        is_running isRunning, dept_code deptCode
+        from s_dept
+        <where>
+            <trim prefixOverrides="and" prefix="and">
+                <if test="deptName != null and deptName != ''">
+                    dept_name like concat('%',#{deptName})
+                </if>
+                <if test="deptCode != null and deptCode != ''">
+                    dept_type = #{deptCode}
+                </if>
+            </trim>
+        </where>
+        order by updateTime desc
+    </select>
+    <select id="list" resultType="com.cloud.common.SComCde" >
+        select dept_code id, dept_name name, dept_code code
+        from s_dept
+    </select>
+</mapper>

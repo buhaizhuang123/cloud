@@ -19,4 +19,5 @@ public interface TaskRunService {
 
     PageInfo<TaskDto> list(Integer pageNum, Integer pageSize);
 
+    List<TaskDto> history(String id);
 }

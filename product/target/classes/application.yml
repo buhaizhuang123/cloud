@@ -1,0 +1,68 @@
+server:
+  port: 8912
+spring:
+
+  resources:
+    static-locations: classpath:/static
+  mvc:
+    view:
+      suffix: .html
+      prefix: /
+  kafka:
+    bootstrap-servers: 10.192.85.102:9092
+    producer: # producer 生产者
+      retries: 0 # 重试次数
+      acks: 1 # 应答级别:多少个分区副本备份完成时向生产者发送ack确认(可选0、1、all/-1)
+      batch-size: 16384 # 批量大小
+      buffer-memory: 33554432 # 生产端缓冲区大小
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      #      value-serializer: com.itheima.demo.config.MySerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
+    consumer: # consumer消费者
+      group-id: javagroup # 默认的消费组ID
+      enable-auto-commit: false # 是否自动提交offset
+      auto-commit-interval: 100  # 提交offset延时(接收到消息后多久提交offset)
+
+      # earliest:当各分区下有已提交的offset时，从提交的offset开始消费；无提交的offset时，从头开始消费
+      # latest:当各分区下有已提交的offset时，从提交的offset开始消费；无提交的offset时，消费新产生的该分区下的数据
+      # none:topic各分区都存在已提交的offset时，从offset后开始消费；只要有一个分区不存在已提交的offset，则抛出异常
+      auto-offset-reset: latest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      #      value-deserializer: com.itheima.demo.config.MyDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    listener:
+      ack-mode: manual_immediate
+      missing-topics-fatal: false
+
+  application:
+    name: product
+  cloud:
+    nacos:
+      discovery:
+        server-addr: http://localhost:8848
+      config:
+        #       配置服务地址
+        server-addr: http://localhost:8848
+        #       配置服务的dataId前缀
+        prefix: 1
+      metadata:
+        preserved.heart.beat.interval: 1000
+        preserved.heart.beat.timeout: 3000
+        preserved.ip.delete.timeout: 3000
+    sentinel:
+      transport:
+        port: 8719
+        dashboard: localhost:8211
+  datasource:
+    url: jdbc:mysql://localhost:3306/firstDoc?serverTimezone=UTC
+    username: bhz
+    password: Bhz123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations: classpath:/mapper/**.xml
+nacos:
+  config:
+    server-addr: 127.0.0.1:8848

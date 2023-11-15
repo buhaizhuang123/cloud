@@ -6,8 +6,11 @@ import com.bu.deploy.service.TaskRunService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
+import org.flowable.engine.HistoryService;
 import org.flowable.engine.TaskService;
 import org.flowable.task.api.Task;
+import org.flowable.task.api.history.HistoricTaskInstance;
+import org.flowable.task.api.history.HistoricTaskInstanceQuery;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,10 +33,16 @@ public class TaskServiceImpl implements TaskRunService {
     private TaskService taskService;
 
     @Autowired
+    private HistoryService historyService;
+
+    @Autowired
     private TaskDtoMapper taskDtoMapper;
 
     public Boolean claim(String id, String name) {
         try {
+            // 取消调单
+            taskService.unclaim(id);
+            // 调单
             taskService.claim(id, name);
         } catch (Exception e) {
             e.printStackTrace();
@@ -69,10 +78,15 @@ public class TaskServiceImpl implements TaskRunService {
 
     @Override
     public PageInfo<TaskDto> list(Integer pageNum, Integer pageSize) {
-        PageHelper.startPage(pageNum,pageSize);
+        PageHelper.startPage(pageNum, pageSize);
         List<TaskDto> taskDtos = taskDtoMapper.listAll();
         PageInfo<TaskDto> taskDtoPageInfo = new PageInfo<>(taskDtos);
         return taskDtoPageInfo;
     }
 
+    @Override
+    public List<TaskDto> history(String procInstId) {
+        List<TaskDto> history = taskDtoMapper.history(procInstId);
+        return history;
+    }
 }

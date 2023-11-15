@@ -1,7 +1,9 @@
 package com.bu.deploy.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
+import java.util.Date;
 import java.util.Map;
 
 /**
@@ -62,6 +64,10 @@ public class TaskDto {
     private String isUpdated;
     private String AbstractEntity;
     private String originalPersistentState;
+    private String rev;
+
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss",timezone = "GMT+8")
+    private Date lastUpdatedTime;
 
     private Map<String, Object> params;
 }

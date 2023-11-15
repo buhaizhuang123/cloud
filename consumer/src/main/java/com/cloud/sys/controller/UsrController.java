@@ -2,7 +2,9 @@ package com.cloud.sys.controller;
 
 import com.cloud.common.InfoUtils;
 import com.cloud.common.Page;
+import com.cloud.sys.dto.GroupEntity;
 import com.cloud.sys.dto.User;
+import com.cloud.sys.dto.UserEntity;
 import com.cloud.sys.service.ProductService;
 import com.cloud.sys.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,5 +47,19 @@ public class UsrController {
         userService.addUser(user);
         return "新增成功";
     }
+
+    @RequestMapping(value = "/addUsr", method = RequestMethod.POST)
+    public Boolean addUserEntity(@RequestBody UserEntity entity) {
+        userService.addUserEntity(entity);
+        return true;
+    }
+
+
+    @RequestMapping(value = "/addGroup", method = RequestMethod.POST)
+    public Boolean addUsrGroup(@RequestBody GroupEntity entity) {
+        userService.addUserGroup(entity);
+        return true;
+    }
+
 
 }
