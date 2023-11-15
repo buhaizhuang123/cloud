@@ -20,4 +20,5 @@ public interface IdentifyService {
 
     void relationGroup(String userId, String groupId);
 
+    Boolean removeUserRelation(String userId);
 }

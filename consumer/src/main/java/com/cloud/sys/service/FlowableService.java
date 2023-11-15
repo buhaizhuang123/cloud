@@ -61,4 +61,8 @@ public interface FlowableService {
     void addUserGroup(@RequestBody GroupEntity entity);
 
 
+    @RequestMapping(value = "/identify/deleteUser", method = RequestMethod.POST)
+    Boolean deleteUser(@RequestParam("userId") String userId);
+
+
 }

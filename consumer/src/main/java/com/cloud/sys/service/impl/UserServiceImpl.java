@@ -8,9 +8,12 @@ import com.cloud.sys.dto.UserEntity;
 import com.cloud.sys.service.FlowableService;
 import com.cloud.sys.service.UserService;
 import com.cloud.sys.to.IdentityUserInfo;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -59,5 +62,19 @@ public class UserServiceImpl implements UserService {
     public void addUserGroup(GroupEntity entity) {
         groupMapper.insertGroup(entity);
         flowableService.addUserGroup(entity);
+    }
+
+    @Override
+    public PageInfo<User> listUser(Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<User> users = userMapper.listUser();
+        PageInfo<User> userPageInfo = new PageInfo<>(users);
+        return userPageInfo;
+    }
+
+    @Override
+    public Integer deleteUser(String userId) {
+        flowableService.deleteUser(userId);
+        return userMapper.deleteUser(userId);
     }
 }

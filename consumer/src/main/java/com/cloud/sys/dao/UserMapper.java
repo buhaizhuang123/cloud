@@ -20,4 +20,8 @@ public interface UserMapper {
     User loadUserByUsername(@Param("userName") String userName);
 
     void addUser(User user);
+
+    List<User> listUser();
+
+    Integer deleteUser(String userId);
 }

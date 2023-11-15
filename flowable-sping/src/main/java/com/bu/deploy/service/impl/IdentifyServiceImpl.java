@@ -66,5 +66,11 @@ public class IdentifyServiceImpl implements IdentifyService {
         identityService.createMembership(userId, groupId);
     }
 
+    @Override
+    public Boolean removeUserRelation(String userId) {
+        identityService.deleteUser(userId);
+        return true;
+    }
+
 
 }

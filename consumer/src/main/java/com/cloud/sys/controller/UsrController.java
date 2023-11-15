@@ -7,6 +7,7 @@ import com.cloud.sys.dto.User;
 import com.cloud.sys.dto.UserEntity;
 import com.cloud.sys.service.ProductService;
 import com.cloud.sys.service.UserService;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -61,5 +62,16 @@ public class UsrController {
         return true;
     }
 
+
+    @RequestMapping(value = "/listUser", method = RequestMethod.POST)
+    public PageInfo<User> listUser(@RequestBody Page page) {
+        return userService.listUser(page.getPageNum(), page.getPageSize());
+    }
+
+
+    @PostMapping("/deleteUser")
+    public Integer deleteUser(String userId) {
+        return userService.deleteUser(userId);
+    }
 
 }
