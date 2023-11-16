@@ -5,6 +5,7 @@
 
     <insert id="insertGroup" parameterType="com.cloud.sys.dto.GroupEntity">
         insert into S_GROUP
-        (name, type) value (#{name},#{type})
+        (name, type,id,create_time,modify_time)
+        value (#{name},#{type},#{id},#{createTime},#{modifyTime})
     </insert>
 </mapper>

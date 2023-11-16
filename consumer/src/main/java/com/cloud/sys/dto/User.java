@@ -30,8 +30,14 @@ public class User implements UserDetails {
 
     private String group;
 
+    private String idNo;
 
-    public void setAuth(Authentication authentication){
+    private String idType;
+
+    private String mobilePhone;
+
+
+    public void setAuth(Authentication authentication) {
         this.userName = authentication.getName();
         this.userPass = (String) authentication.getCredentials();
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();

@@ -5,6 +5,7 @@ import com.cloud.common.Page;
 import com.cloud.sys.dto.GroupEntity;
 import com.cloud.sys.dto.User;
 import com.cloud.sys.dto.UserEntity;
+import com.cloud.sys.service.FlowableService;
 import com.cloud.sys.service.ProductService;
 import com.cloud.sys.service.UserService;
 import com.github.pagehelper.PageInfo;
@@ -30,6 +31,8 @@ public class UsrController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private FlowableService flowableService;
 
     @PostMapping("list")
     public List listUsr(@RequestBody(required = false) Page page) {
@@ -72,6 +75,24 @@ public class UsrController {
     @PostMapping("/deleteUser")
     public Integer deleteUser(String userId) {
         return userService.deleteUser(userId);
+    }
+
+    @RequestMapping(value = "/listGroup", method = RequestMethod.POST)
+    public PageInfo<GroupEntity> listGroup(@RequestParam Integer pageNum, @RequestParam Integer pageSize) {
+        Page page = new Page();
+        page.setPageNum(pageNum);
+        page.setPageSize(pageSize);
+        return flowableService.listGroup(page);
+    }
+
+    @RequestMapping(value = "/deleteGroup", method = RequestMethod.POST)
+    public Boolean deleteGroup(@RequestParam String groupId) {
+        return flowableService.deleteGroup(groupId);
+    }
+
+    @RequestMapping(value = "/listGroupAll", method = RequestMethod.POST)
+    public List<GroupEntity> listGroup() {
+        return flowableService.listGroupAll();
     }
 
 }

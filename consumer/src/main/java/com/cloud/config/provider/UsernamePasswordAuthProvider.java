@@ -1,6 +1,7 @@
 package com.cloud.config.provider;
 
 import com.cloud.config.AuthServerProxy;
+import com.cloud.config.SimpleUserDetailsService;
 import com.cloud.config.impl.UsernamePasswordAuth;
 import com.cloud.sys.dao.UserMapper;
 import com.cloud.sys.dto.User;
@@ -10,8 +11,10 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.security.AuthProvider;
 
 /**
@@ -23,7 +26,7 @@ import java.security.AuthProvider;
 public class UsernamePasswordAuthProvider implements AuthenticationProvider {
     @Autowired
     private AuthServerProxy authServerProxy;
-    @Autowired
+    @Resource
     private UserMapper userMapper;
 
     @Override

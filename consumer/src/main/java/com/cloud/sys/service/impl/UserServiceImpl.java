@@ -13,6 +13,7 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -54,12 +55,17 @@ public class UserServiceImpl implements UserService {
         user.setUserName(entity.getFirstName() + entity.getLastName());
         user.setUserPass(entity.getPassword());
         user.setGroup(entity.getGroupId());
+        user.setUserId(UUID.randomUUID().toString().replace("-", ""));
         userMapper.addUser(user);
+        entity.setId(user.getUserId());
         flowableService.addUserEntity(entity);
     }
 
     @Override
     public void addUserGroup(GroupEntity entity) {
+        entity.setId(UUID.randomUUID().toString().replace("-", ""));
+        entity.setModifyTime(new Date());
+        entity.setCreateTime(new Date());
         groupMapper.insertGroup(entity);
         flowableService.addUserGroup(entity);
     }

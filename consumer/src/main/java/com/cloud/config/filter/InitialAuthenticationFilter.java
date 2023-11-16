@@ -41,12 +41,9 @@ public class InitialAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
-        System.out.println("init");
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String code = request.getHeader("code");
-        Enumeration<String> headerNames = request.getHeaderNames();
-
 
         try {
             // 若是不包含otp 则会用用户名密码验证

@@ -1,8 +1,10 @@
 package com.bu.deploy.controller;
 
 import com.bu.deploy.dto.GroupEntity;
+import com.bu.deploy.dto.Page;
 import com.bu.deploy.dto.UserEntity;
 import com.bu.deploy.service.IdentifyService;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -54,5 +56,22 @@ public class IdentifyController {
     public Boolean removeUserRelation(String userId) {
         return identifyService.removeUserRelation(userId);
     }
+
+    @RequestMapping(value = "/listGroup", method = RequestMethod.POST)
+    public PageInfo<GroupEntity> listGroup(@RequestBody Page page) {
+        return identifyService.listGroup(page.getPageNum(), page.getPageSize());
+    }
+
+
+    @RequestMapping(value = "/deleteGroup", method = RequestMethod.POST)
+    public Boolean deleteGroup(String groupId) {
+        return identifyService.deleteGroup(groupId);
+    }
+
+    @RequestMapping(value = "/listGroupAll", method = RequestMethod.POST)
+    public List<GroupEntity> listGroupAll() {
+        return identifyService.listGroup();
+    }
+
 
 }

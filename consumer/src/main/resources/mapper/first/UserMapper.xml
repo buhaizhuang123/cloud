@@ -10,8 +10,10 @@
         select user_id, user_name, user_pass, user_enable, USER_AUTH,GROUP_ID
         from S_USR
     </select>
-    <select id="loadUserByUsername" resultType="com.cloud.sys.dto.User" parameterType="java.lang.String">
-        select user_id, user_name, user_pass, user_enable, USER_AUTH
+    <select id="loadUserByUsername"
+            resultType="com.cloud.sys.dto.User"
+            parameterType="java.lang.String">
+        select user_id userId, user_name userName, user_pass userPass, user_enable userEnable, USER_AUTH userAuth
         from S_USR where user_name = #{userName}
     </select>
     <select id="listUser" resultType="com.cloud.sys.dto.User">
@@ -19,10 +21,11 @@
         user_enable userEnable,USER_AUTH userAuth,GROUP_ID 'group' from S_USR
     </select>
     <insert id="addUser" parameterType="com.cloud.sys.dto.User">
-        insert into S_USR (USER_ID, USER_NAME, USER_PASS, USER_ENABLE, USER_AUTH,GROUP_ID)
-        values (#{userId},#{userName},#{userPass},#{userEnable},#{userAuth},#{group})
+        insert into S_USR (USER_ID, USER_NAME, USER_PASS,
+        USER_ENABLE, USER_AUTH,GROUP_ID,ID_NO,ID_TYPE,MOBILE_PHONE)
+        values (#{userId},#{userName},#{userPass},
+        #{userEnable},#{userAuth},#{group},#{idNo},#{idType},#{mobilePhone})
     </insert>
-
 
 
 </mapper>

@@ -1,10 +1,12 @@
 package com.cloud.sys.service;
 
 import com.alibaba.fastjson.JSONObject;
+import com.cloud.common.Page;
 import com.cloud.sys.dto.GroupEntity;
 import com.cloud.sys.dto.UserEntity;
 import com.cloud.sys.to.FlowableIdentityGroupInfo;
 import com.cloud.sys.to.IdentityUserInfo;
+import com.github.pagehelper.PageInfo;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
@@ -50,9 +52,6 @@ public interface FlowableService {
     @GetMapping("/identity/saveUser")
     void saveIdentityUser(@RequestBody IdentityUserInfo identityUserInfo);
 
-    @GetMapping("/identity/listGroup")
-    List listGroup();
-
     @RequestMapping(value = "/identify/addUser", method = RequestMethod.POST)
     void addUserEntity(@RequestBody UserEntity userEntity);
 
@@ -65,4 +64,14 @@ public interface FlowableService {
     Boolean deleteUser(@RequestParam("userId") String userId);
 
 
+    @RequestMapping(value = "/identify/listGroup", method = RequestMethod.POST)
+    PageInfo<GroupEntity> listGroup(@RequestBody Page page);
+
+
+    @RequestMapping(value = "/identify/deleteGroup", method = RequestMethod.POST)
+    Boolean deleteGroup(@RequestParam("groupId") String groupId);
+
+
+    @RequestMapping(value = "/identify/listGroupAll", method = RequestMethod.POST)
+    List<GroupEntity> listGroupAll();
 }

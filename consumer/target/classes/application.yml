@@ -76,11 +76,6 @@ spring:
         idle-timeout: 30000
         auto-commit: true
         connection-test-query: select 1
-  #  security:
-  #    user:
-  #      name: spring
-  #      password: spring_admin
-
   application:
     name: consumer
   jackson:

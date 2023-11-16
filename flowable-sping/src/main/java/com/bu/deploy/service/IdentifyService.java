@@ -2,6 +2,7 @@ package com.bu.deploy.service;
 
 import com.bu.deploy.dto.GroupEntity;
 import com.bu.deploy.dto.UserEntity;
+import com.github.pagehelper.PageInfo;
 
 import java.util.List;
 
@@ -21,4 +22,10 @@ public interface IdentifyService {
     void relationGroup(String userId, String groupId);
 
     Boolean removeUserRelation(String userId);
+
+    PageInfo<GroupEntity> listGroup(Integer pageNum, Integer pageSize);
+
+    Boolean deleteGroup(String groupId);
+
+    List<GroupEntity> listGroup();
 }
