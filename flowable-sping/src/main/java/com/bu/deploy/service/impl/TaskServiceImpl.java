@@ -8,16 +8,12 @@ import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.flowable.engine.HistoryService;
 import org.flowable.engine.TaskService;
-import org.flowable.task.api.Task;
-import org.flowable.task.api.history.HistoricTaskInstance;
-import org.flowable.task.api.history.HistoricTaskInstanceQuery;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * @author haizhuangbu
@@ -52,9 +48,12 @@ public class TaskServiceImpl implements TaskRunService {
     }
 
 
-    public Boolean complete(String id) {
+    public Boolean complete(String id, String commonContext) {
         try {
-            taskService.complete(id);
+            // 审批意见
+            HashMap<String, Object> param = new HashMap<>();
+            param.put("commonContext", commonContext);
+            taskService.complete(id, param);
         } catch (Exception e) {
             e.printStackTrace();
             return false;
@@ -64,15 +63,7 @@ public class TaskServiceImpl implements TaskRunService {
 
     @Override
     public List<TaskDto> list(String id) {
-        List<Task> list = taskService.createTaskQuery().processInstanceId(id)
-                .list();
-        List<TaskDto> taskDtos = list.stream().map(i -> {
-            Map<String, Object> variables = taskService.getVariables(i.getId());
-            TaskDto taskDto = new TaskDto();
-            BeanUtils.copyProperties(i, taskDto);
-            taskDto.setParams(variables);
-            return taskDto;
-        }).collect(Collectors.toList());
+        List<TaskDto> taskDtos = taskDtoMapper.listAll();
         return taskDtos;
     }
 
@@ -80,6 +71,14 @@ public class TaskServiceImpl implements TaskRunService {
     public PageInfo<TaskDto> list(Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         List<TaskDto> taskDtos = taskDtoMapper.listAll();
+        taskDtos
+                .forEach(i -> {
+                    if (i.getBytes() != null) {
+                        Map<String, Object> variables = taskService.getVariables(i.getId());
+                        i.setJsonVariable((HashMap) variables.get("variable"));
+                    }
+
+                });
         PageInfo<TaskDto> taskDtoPageInfo = new PageInfo<>(taskDtos);
         return taskDtoPageInfo;
     }

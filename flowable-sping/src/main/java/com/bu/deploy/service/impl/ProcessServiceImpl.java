@@ -30,10 +30,9 @@ public class ProcessServiceImpl implements ProcessService {
 
 
     @Override
-    public void startProcess(String deployId) {
+    public void startProcess(String deployId,Object param01) {
         HashMap<String, Object> param = new HashMap<>();
-        param.put("name", "bhz");
-        param.put("age", "123");
+        param.put("variable", param01);
         ProcessInstance start = runtimeService.createProcessInstanceBuilder()
                 .processDefinitionId(deployId)
                 .variables(param)

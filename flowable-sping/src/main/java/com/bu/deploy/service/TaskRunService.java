@@ -13,7 +13,7 @@ import java.util.List;
 public interface TaskRunService {
     Boolean claim(String id, String name);
 
-    Boolean complete(String id);
+    Boolean complete(String id, String commonContext);
 
     List<TaskDto> list(String id);
 

@@ -1,11 +1,15 @@
 package com.bu.deploy.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.bu.deploy.dto.DeploymentDto;
 import com.bu.deploy.dto.ProcessInstanceDto;
 import com.bu.deploy.service.ProcessService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -21,15 +25,15 @@ public class ProcessController {
     @Autowired
     private ProcessService processService;
 
-    @RequestMapping("/start")
-    public void startProcess(String deployId) {
-        processService.startProcess(deployId);
+    @PostMapping("/start")
+    public void startProcess(@RequestParam String deployId, @RequestBody Object param) {
+        processService.startProcess(deployId, param);
     }
 
 
     @RequestMapping("/list")
     public List<ProcessInstanceDto> listProcess(Integer pageNum, Integer pageSize) {
-        return processService.listProcess(pageNum,pageSize);
+        return processService.listProcess(pageNum, pageSize);
     }
 
 

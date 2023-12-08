@@ -11,7 +11,7 @@ import java.util.List;
  */
 public interface ProcessService {
 
-    void startProcess(String deployId);
+    void startProcess(String deployId,Object param);
 
     List<ProcessInstanceDto> listProcess(Integer pageNum, Integer pageSize);
 }

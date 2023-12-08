@@ -5,6 +5,7 @@ import com.bu.deploy.service.TaskRunService;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -37,8 +38,8 @@ public class TaskController {
      * task complate
      */
     @RequestMapping("/complete")
-    public Boolean complete(String id) {
-        return taskRunService.complete(id);
+    public Boolean complete(@RequestParam("id") String id, @RequestParam(value = "commonContext", required = false) String commonContext) {
+        return taskRunService.complete(id,commonContext);
     }
 
     @RequestMapping("/list")

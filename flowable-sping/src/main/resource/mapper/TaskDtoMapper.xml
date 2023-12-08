@@ -2,8 +2,23 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bu.deploy.dao.TaskDtoMapper">
     <select id="listAll" resultType="com.bu.deploy.dto.TaskDto">
-        select PROC_DEF_ID_ processDefinitionId,ID_ id,NAME_ name,DESCRIPTION_ description,ASSIGNEE_,PROC_INST_ID_ processInstanceId
-        from ACT_RU_TASK order by CREATE_TIME_ desc
+        select t.ID_ id,
+        t.EXECUTION_ID_ executionId,
+        t.PROC_INST_ID_ processInstanceId,
+        t.PROC_DEF_ID_ processDefinitionId,
+        t.NAME_ name,
+        t.DESCRIPTION_ description,
+        t.ASSIGNEE_ assignee,
+        t.OWNER_ owner,
+        t.TENANT_ID_ tenantId,
+        t.REV_ rev,
+        t1.BYTES_ bytes
+        from ACT_RU_TASK t
+        left join (
+        select y.BYTES_,v.PROC_INST_ID_
+        from ACT_RU_VARIABLE v inner join ACT_GE_BYTEARRAY y on v.BYTEARRAY_ID_ = y.ID_
+        ) t1 on t.PROC_INST_ID_ = t1.PROC_INST_ID_
+        order by t.CREATE_TIME_ desc
     </select>
 
     <select id="history" resultType="com.bu.deploy.dto.TaskDto">
