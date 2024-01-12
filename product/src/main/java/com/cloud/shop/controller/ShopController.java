@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author haizhuangbu
@@ -25,15 +24,17 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 @RequestMapping("shop")
 @RestController
-//@NacosPropertySource(dataId = "1", autoRefreshed = true)
+@NacosPropertySource(dataId = "1", autoRefreshed = true)
+//@RefreshScope
 public class ShopController {
 
     @Value("${server.port}")
     private String serverProt;
 
-//    @NacosValue("${nacosName}")
+    @NacosValue("${nacosName}")
     private String nacosName;
-//    @Value("${nacosName}")
+
+    @NacosValue(value = "${nacosName}", autoRefreshed = true)
     private String ncName;
 
     @Autowired
@@ -72,21 +73,10 @@ public class ShopController {
 
     @RequestMapping("search")
     public Object search(@RequestParam("a") String a, @RequestParam("b") String b) {
+        List<String> list = new ArrayList();
         return shopDao.search(a, b);
     }
 
 
-    public static void main(String[] args) {
-        LinkedList<Object> objects = new LinkedList<>();
-
-        objects.add("123");
-        objects.add("1231");
-        objects.add("12311");
-        objects.add("123111");
-        Object pop = objects.pollLast();
-        for (Object object : objects) {
-            System.out.println(object);
-        }
-    }
 
 }

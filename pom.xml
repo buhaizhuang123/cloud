@@ -17,6 +17,7 @@
         <module>config</module>
         <module>flowable-sping</module>
         <module>camunda-spring</module>
+        <module>progrem</module>
     </modules>
     <properties>
         <maven.compiler.source>8</maven.compiler.source>

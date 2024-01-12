@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bu.shop.dao.ShopStoreDao">
+
+    <select id="listOrdersByUserId" resultType="com.bu.shop.dto.ShopStoreDto">
+        select user_id, shop_id, shop_num, order_mark, shop_sts, create_time, modify_time
+        from shop_store
+    </select>
+</mapper>

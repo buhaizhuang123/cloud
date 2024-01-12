@@ -1,5 +1,6 @@
 server:
   port: 9113
+
 flowable:
   database-schema-update: true
   idm:
@@ -9,6 +10,7 @@ flowable:
 
 
 spring:
+
   nacos:
     discovery:
       server-addr: http://localhost:8848

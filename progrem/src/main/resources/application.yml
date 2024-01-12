@@ -1,0 +1,27 @@
+server:
+  port: 8921
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: true
+  mapper-locations: classpath:/mapper/*.xml
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: bhz
+    password: Bhz123456
+    url: jdbc:mysql://localhost:3306/app?serverTimezone=UTC
+  nacos:
+    discovery:
+      server-addr: http://localhost:8848
+  cloud:
+    nacos:
+      metadata:
+        preserved.heart.beat.interval: 1000
+        preserved.heart.beat.timeout: 3000
+        preserved.ip.delete.timeout: 3000
+
+  application:
+    name: program

@@ -13,6 +13,9 @@
       <set>
         <option value="$PROJECT_DIR$/act-app/pom.xml" />
         <option value="$PROJECT_DIR$/activitity/pom.xml" />
+        <option value="$PROJECT_DIR$/app/pom.xml" />
+        <option value="$PROJECT_DIR$/miniProgram/pom.xml" />
+        <option value="$PROJECT_DIR$/miniProgrem/pom.xml" />
       </set>
     </option>
   </component>

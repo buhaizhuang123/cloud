@@ -52,8 +52,7 @@ spring:
         preserved.ip.delete.timeout: 3000
     sentinel:
       transport:
-        port: 8719
-        dashboard: localhost:8211
+        dashboard: 127.0.0.1:8088
   datasource:
     url: jdbc:mysql://localhost:3306/firstDoc?serverTimezone=UTC
     username: bhz

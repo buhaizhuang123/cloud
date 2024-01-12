@@ -1,5 +1,7 @@
 package com.cloud.person.controller;
 
+import com.alibaba.csp.sentinel.annotation.SentinelResource;
+import com.alibaba.csp.sentinel.slots.block.BlockException;
 import com.cloud.person.dto.PersonDto;
 import com.cloud.person.dto.PersonVo;
 import com.cloud.person.service.PsService;
@@ -41,6 +43,7 @@ public class PsController {
     private Logger logger = LoggerFactory.getLogger(PsController.class);
 
     @RequestMapping("list")
+    @SentinelResource(value = "listPsMine", blockHandler = "listAllFallBack", blockHandlerClass = PsController.class)
     public Object listPerson(Page page) throws IOException {
         return psService.listPs(page);
     }
@@ -76,7 +79,7 @@ public class PsController {
 
     @RequestMapping("show")
     public void showExcel(HttpServletResponse response) throws IOException {
-        response.setHeader("Content-Disposition","attachment;filename=123.xls");
+        response.setHeader("Content-Disposition", "attachment;filename=123.xls");
         // 预览
 //        response.setContentType("application/octet-stream");
         // 下载
@@ -93,5 +96,9 @@ public class PsController {
         outputStream.close();
     }
 
+
+    public static Object listAllFallBack(BlockException e) {
+        return null;
+    }
 
 }

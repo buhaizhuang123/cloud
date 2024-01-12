@@ -98,6 +98,11 @@
             <artifactId>hibernate-validator</artifactId>
             <version>4.1.0.Final</version>
         </dependency>
+        <dependency>
+            <groupId>org.openjdk.jol</groupId>
+            <artifactId>jol-core</artifactId>
+            <version>0.11</version>
+        </dependency>
 
     </dependencies>
 </project>

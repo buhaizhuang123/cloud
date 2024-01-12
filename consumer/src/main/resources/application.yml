@@ -45,8 +45,8 @@ spring:
   #        shared-configs: application.yaml
     sentinel:
       transport:
-        port: 8943
-        dashboard: localhost:8211
+        port: 8081
+        dashboard: localhost:8081
   datasource:
     first:
       driver-class-name: com.mysql.cj.jdbc.Driver

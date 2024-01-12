@@ -33,10 +33,12 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.beans.PropertyDescriptor;
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -54,7 +56,6 @@ public class PsServiceImpl implements PsService {
 
     @Override
     public Object listPs(Page page) throws IOException {
-
         RestHighLevelClient restHighLevelClient = EsClient.builder();
         SearchRequest searchRequest = new SearchRequest("p1");
         MatchAllQueryBuilder matchAllQueryBuilder = new MatchAllQueryBuilder();
@@ -113,7 +114,6 @@ public class PsServiceImpl implements PsService {
     }
 
     private List<PersonDto> getResult(SearchResponse response, PersonVo personDto) {
-
         SearchHit[] hits = response.getHits()
                 .getHits();
         if (Objects.nonNull(personDto.getTypes()) && personDto.getTypes().length >= 1) {
@@ -176,6 +176,7 @@ public class PsServiceImpl implements PsService {
 
 
     @Override
+    @Transactional
     public DeleteResponse delToPerson(String id) {
 
         DeleteRequest deleteRequest = new DeleteRequest("person", "_doc", id);
