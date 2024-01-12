@@ -1,5 +1,6 @@
 package com.cloud.usr.service;
 
+import com.cloud.shop.dto.Page;
 import com.cloud.usr.dto.Usr;
 
 import java.util.List;
@@ -11,6 +12,6 @@ import java.util.List;
  */
 public interface UsrService {
 
-    List<Usr> listUsr();
+    List<Usr> listUsr(Page page);
 
 }

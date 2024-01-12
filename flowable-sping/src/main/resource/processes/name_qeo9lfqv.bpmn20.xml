@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:flowable="http://flowable.org/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.flowable.org/processdef">
+  <process id="process_rjv30aov" name="name_qeo9lfqv">
+    <startEvent id="startNode1" name="开始">
+      <outgoing>Flow_1xvelio</outgoing>
+    </startEvent>
+    <sequenceFlow id="Flow_1xvelio" sourceRef="startNode1" targetRef="gz" />
+    <userTask id="gz" flowable:candidateGroups=",9881112">
+      <incoming>Flow_1xvelio</incoming>
+      <outgoing>Flow_0f3k694</outgoing>
+    </userTask>
+    <sequenceFlow id="Flow_0f3k694" sourceRef="gz" targetRef="bnl" />
+    <userTask id="bnl" flowable:candidateGroups=",9881112">
+      <incoming>Flow_0f3k694</incoming>
+      <outgoing>Flow_0tat59c</outgoing>
+    </userTask>
+    <sequenceFlow id="Flow_0tat59c" sourceRef="bnl" targetRef="Event_1cuu90g" />
+    <endEvent id="Event_1cuu90g">
+      <incoming>Flow_0tat59c</incoming>
+      <terminateEventDefinition id="TerminateEventDefinition_1dlnwbu" />
+    </endEvent>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_flow">
+    <bpmndi:BPMNPlane id="BPMNPlane_flow" bpmnElement="process_rjv30aov">
+      <bpmndi:BPMNEdge id="Flow_1xvelio_di" bpmnElement="Flow_1xvelio">
+        <di:waypoint x="65" y="220" />
+        <di:waypoint x="120" y="220" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0f3k694_di" bpmnElement="Flow_0f3k694">
+        <di:waypoint x="220" y="220" />
+        <di:waypoint x="280" y="220" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0tat59c_di" bpmnElement="Flow_0tat59c">
+        <di:waypoint x="380" y="220" />
+        <di:waypoint x="442" y="220" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="BPMNShape_startNode1" bpmnElement="startNode1" bioc:stroke="">
+        <omgdc:Bounds x="35" y="205" width="30" height="30" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="38" y="242" width="22" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_17ffq39_di" bpmnElement="gz">
+        <omgdc:Bounds x="120" y="180" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1ecrg5u_di" bpmnElement="bnl">
+        <omgdc:Bounds x="280" y="180" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0mjnwvi_di" bpmnElement="Event_1cuu90g">
+        <omgdc:Bounds x="442" y="202" width="36" height="36" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

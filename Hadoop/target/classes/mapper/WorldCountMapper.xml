@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cloud.sys.dao.WorldCountMapper">
+
+
+    <select id="findCountByName" resultType="java.lang.Integer">
+        select 1
+        from world_count
+        where name = #{name}
+    </select>
+
+    <update id="updateByName">
+        update world_count
+        set count = #{count}
+        where name = #{name}
+    </update>
+
+    <insert id="insert">
+        insert into world_count (name, count)
+        VALUES (#{name}, #{count})
+    </insert>
+
+
+</mapper>

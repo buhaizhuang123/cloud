@@ -1,5 +1,6 @@
 package com.cloud.usr.dto;
 
+
 import lombok.Data;
 
 /**
@@ -30,4 +31,7 @@ public class Usr {
     private Character userEnable;
 
 
+    private String userAuth;
+
+    private String groupId;
 }

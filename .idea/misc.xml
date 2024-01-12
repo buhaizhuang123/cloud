@@ -5,7 +5,18 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/activity/pom.xml" />
+        <option value="$PROJECT_DIR$/activitity/src/main/resources/archetype-resources/pom.xml" />
       </list>
+    </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/act-app/pom.xml" />
+        <option value="$PROJECT_DIR$/activitity/pom.xml" />
+        <option value="$PROJECT_DIR$/app/pom.xml" />
+        <option value="$PROJECT_DIR$/miniProgram/pom.xml" />
+        <option value="$PROJECT_DIR$/miniProgrem/pom.xml" />
+      </set>
     </option>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="1.8" project-jdk-type="JavaSDK">

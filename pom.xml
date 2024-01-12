@@ -11,11 +11,32 @@
     <modules>
         <module>consumer</module>
         <module>product</module>
+        <module>Hadoop</module>
+        <module>provider</module>
+        <module>Remote</module>
+        <module>config</module>
+        <module>flowable-sping</module>
+        <module>camunda-spring</module>
+        <module>progrem</module>
     </modules>
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
+        <es.verson>6.7.2</es.verson>
     </properties>
+    <dependencies>
+        <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib</artifactId>
+            <version>3.3.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.24</version>
+        </dependency>
+
+    </dependencies>
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -53,8 +74,34 @@
                 <artifactId>lombok</artifactId>
                 <version>1.18.16</version>
             </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-devtools</artifactId>
+                <version>2.1.1.RELEASE</version>
+            </dependency>
+            <dependency>
+                <groupId>org.camunda.bpm</groupId>
+                <artifactId>camunda-bom</artifactId>
+                <version>7.15.0</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>2.9.2</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger-ui</artifactId>
+                <version>2.9.2</version>
+            </dependency>
+
+
         </dependencies>
     </dependencyManagement>
+
+
 
 
 </project>

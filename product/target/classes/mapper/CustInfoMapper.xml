@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cloud.cust.dao.CustInfoMapper">
+    <resultMap id="custInfoMap" type="com.cloud.limit.dto.CreditLimit">
+        <result property="applSeq" column="appl_seq"></result>
+        <association property="personalInfo" javaType="com.cloud.limit.dto.PersonalInfo">
+            <result property="custName" column="cust_name"></result>
+            <result property="mobilePhone" column="mobile_phone"></result>
+            <result property="idNo" column="id_no"></result>
+        </association>
+        <!--        <association property="personalInfo" javaType="com.cloud.limit.dto.SpouseInfo">-->
+        <!--            <result property="custName" column="cust_name"></result>-->
+        <!--            <result property="mobilePhone" column="mobile_phone"></result>-->
+        <!--            <result property="idNo" column="id_no"></result>-->
+        <!--        </association>-->
+    </resultMap>
+
+
+    <insert id="saveLimitApplyCustInfo" parameterType="com.cloud.limit.dto.CreditLimit">
+        insert into cust_info (appl_seq, cust_name, id_no, mobile_phone
+        <if test="personalInfo.isMarried != null and personalInfo.isMarried != ''">
+            , is_married
+        </if>
+        , unit_name, unit_address,
+        unit_mobile_phone, occu_typ, occu_level)
+        VALUES (#{applSeq},#{personalInfo.custName},#{personalInfo.idNo},#{personalInfo.mobilePhone}
+        <if test="personalInfo.isMarried != null and personalInfo.isMarried != ''">
+            ,#{personalInfo.is_married}
+        </if>
+        ,#{unit.unitName},#{unit.unitAddress},#{unit.unitMobilePhone},#{occupationInfo.occuTyp}
+        ,#{occupationInfo.occuLevel}
+        )
+        <if test="contactInfo.custName != null and contactInfo.idNo != null">
+            ,(
+            #{applSeq},#{contactInfo.custName},#{contactInfo.idNo},#{contactInfo.mobilePhone}
+            <if test="personalInfo.isMarried != null and personalInfo.isMarried != ''">
+                ,null
+            </if>
+            ,null,null,null,null,null
+            )
+        </if>
+    </insert>
+    <select id="findCreditLimitByApplSeq" resultMap="custInfoMap">
+
+        select info.cust_name,
+               info.id_no,
+               info.mobile_phone,
+               si.cust_name,
+               si.id_no,
+               si.mobile_phone,
+               info.appl_seq applSeq
+        from cust_info info
+        left join spouse_info si on info.appl_seq = si.appl_seq
+        where info.appl_seq = #{applSeq} limit 1
+    </select>
+</mapper>

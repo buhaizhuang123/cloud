@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:flowable="http://flowable.org/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.flowable.org/processdef">
+  <process id="business01" name="业务审批流程">
+    <documentation>业务审批流程</documentation>
+    <startEvent id="start01" name="开始">
+      <outgoing>Flow_06p19b8</outgoing>
+    </startEvent>
+    <sequenceFlow id="Flow_06p19b8" sourceRef="start01" targetRef="node1" />
+    <userTask id="node1" name="业务员" flowable:assignee="bhz">
+      <documentation>业务员</documentation>
+      <incoming>Flow_06p19b8</incoming>
+      <outgoing>Flow_0s6jdru</outgoing>
+    </userTask>
+    <sequenceFlow id="Flow_0s6jdru" sourceRef="node1" targetRef="node2" />
+    <userTask id="node2" name="产品经理" flowable:assignee="ZS">
+      <documentation>产品经理</documentation>
+      <incoming>Flow_0s6jdru</incoming>
+      <outgoing>Flow_01xwjei</outgoing>
+    </userTask>
+    <sequenceFlow id="Flow_01xwjei" sourceRef="node2" targetRef="node3" />
+    <userTask id="node3" name="审批员" flowable:assignee="LJJ">
+      <documentation>审批员</documentation>
+      <incoming>Flow_01xwjei</incoming>
+      <outgoing>Flow_0lg9477</outgoing>
+    </userTask>
+    <endEvent id="end" name="结束">
+      <documentation>结束</documentation>
+      <incoming>Flow_0lg9477</incoming>
+    </endEvent>
+    <sequenceFlow id="Flow_0lg9477" sourceRef="node3" targetRef="end" />
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_flow">
+    <bpmndi:BPMNPlane id="BPMNPlane_flow" bpmnElement="business01">
+      <bpmndi:BPMNEdge id="Flow_06p19b8_di" bpmnElement="Flow_06p19b8">
+        <di:waypoint x="5" y="150" />
+        <di:waypoint x="60" y="150" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0s6jdru_di" bpmnElement="Flow_0s6jdru">
+        <di:waypoint x="160" y="150" />
+        <di:waypoint x="220" y="150" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_01xwjei_di" bpmnElement="Flow_01xwjei">
+        <di:waypoint x="320" y="150" />
+        <di:waypoint x="380" y="150" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0lg9477_di" bpmnElement="Flow_0lg9477">
+        <di:waypoint x="480" y="150" />
+        <di:waypoint x="542" y="150" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="BPMNShape_startNode1" bpmnElement="start01" bioc:stroke="">
+        <omgdc:Bounds x="-25" y="135" width="30" height="30" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="-22" y="172" width="22" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0x5bk9b_di" bpmnElement="node1">
+        <omgdc:Bounds x="60" y="110" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_17qzkta_di" bpmnElement="node2">
+        <omgdc:Bounds x="220" y="110" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1m9023r_di" bpmnElement="node3">
+        <omgdc:Bounds x="380" y="110" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1oov7fc_di" bpmnElement="end">
+        <omgdc:Bounds x="542" y="132" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="515" y="175" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

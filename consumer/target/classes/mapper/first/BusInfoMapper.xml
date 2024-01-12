@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cloud.batch.dao.BusInfoMapper">
+    <insert id="insertOne" parameterType="com.cloud.batch.dto.BusInfo">
+        insert into bus_info
+        values (null, #{busClass}, #{busSts})
+    </insert>
+    <update id="updateSts" parameterType="com.cloud.batch.dto.BusInfo">
+        update bus_info
+        set bus_sts = #{busSts}
+        where id = #{id}
+    </update>
+
+    <select id="findList" resultType="com.cloud.batch.dto.BusInfo">
+        select id id, bus_class busClass, bus_sts busSts
+        from bus_info
+        <where>
+            <if test="id != null and id != ''">
+                id = #{id}
+            </if>
+            <if test="busClass != null and busClass != ''">
+                bus_class = #{busClass}
+            </if>
+            <if test="busSts != null and busSts != ''">
+                bus_sts = #{busSts}
+            </if>
+        </where>
+    </select>
+    <select id="findOne" resultType="com.cloud.batch.dto.BusInfo">
+        select id id, bus_class busClass, bus_sts busSts
+        from bus_info
+        <where>
+            <if test="busSts != null and busSts != ''">
+                bus_sts = #{busSts}
+            </if>
+            order by id
+            limit 1
+        </where>
+    </select>
+</mapper>

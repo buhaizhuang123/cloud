@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cloud.dict.mapper.DictMapper">
+
+    <select id="searchAll" resultType="com.cloud.dict.dto.Dict">
+        select dict_id dictId, dict_type dictType, dict_name dictName, dict_value dictValue, create_time createTime, is_del isDel
+        from dict
+        order by create_time desc
+    </select>
+</mapper>

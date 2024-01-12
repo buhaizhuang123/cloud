@@ -1,9 +1,10 @@
 package com.cloud.sys.service;
 
+import com.alibaba.fastjson.JSONObject;
+import com.cloud.common.Page;
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -15,14 +16,32 @@ import java.util.List;
 @FeignClient(name = "product")
 public interface ProductService {
 
-    @RequestMapping(value = "/shop/show",method = RequestMethod.GET)
+    @RequestMapping(value = "/shop/show", method = RequestMethod.GET)
     String show();
 
-    @RequestMapping("/shop/list")
-    List<Object> listShops();
+    @PostMapping("/shop/list")
+    JSONObject listShops(@RequestBody RowBounds rowBounds);
 
 
-    @GetMapping("/usr/list")
-    List listUsr();
+    @PostMapping("/usr/list")
+    List listUsr(@RequestBody Page page);
+
+    /**
+     * 发送数据到全部
+     */
+    @RequestMapping(value = "connect/sendAll", method = RequestMethod.GET)
+    String sendAll(@RequestParam("message") String message);
+
+    @RequestMapping("/ps/search")
+    Object searchPs(Object object);
+
+    @RequestMapping("/ps/list")
+    Object listPs(Page page);
+
+    @RequestMapping(value = "limit/query", method = RequestMethod.POST)
+    Object findLimit(@RequestBody(required = false) Object o);
+
+    @RequestMapping(value = "loanRever/list",method = RequestMethod.POST)
+    List<Object> list(@RequestBody JSONObject loan, @RequestParam("pageSize") Integer pageSize, @RequestParam("pageNum") Integer pageNum);
 
 }

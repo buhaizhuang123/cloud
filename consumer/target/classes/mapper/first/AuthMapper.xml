@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cloud.sys.dao.AuthMapper">
+
+
+    <select id="loadUserAuthorities" resultType="org.springframework.security.core.GrantedAuthority">
+        select usr_auth_id, auth_role, user_name
+        from S_AUTH where USER_NAME = #{userName}
+    </select>
+</mapper>

@@ -1,12 +1,33 @@
 package com.cloud.common;
 
+import com.cloud.config.filter.CkCodeAuthenticationFilter;
+import com.cloud.config.filter.InitialAuthenticationFilter;
+import com.cloud.config.filter.JwtAuthenticationFilter;
+import com.cloud.config.handler.CustAuthFailHandler;
+import com.cloud.config.handler.CustAuthSuccHandler;
+import com.cloud.config.provider.OptAuthProvider;
+import com.cloud.config.provider.UsernamePasswordAuthProvider;
+import com.cloud.sys.dto.Person;
+import com.cloud.sys.dto.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.authentication.configurers.provisioning.InMemoryUserDetailsManagerConfigurer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.stereotype.Component;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.sql.DataSource;
+import java.util.Arrays;
 
 
 /**
@@ -14,15 +35,31 @@ import javax.sql.DataSource;
  * @date 2022/4/28 09:29
  * @mark WebConfig
  */
-@Component
-public class WebConfig extends WebSecurityConfigurerAdapter {
+@Configuration
+public class WebConfig extends WebSecurityConfigurerAdapter implements WebMvcConfigurer {
 
     @Autowired
     private DataSource dataSource;
 
+    @Autowired
+    private OptAuthProvider optAuthProvider;
+    @Autowired
+    private UsernamePasswordAuthProvider usernamePasswordAuthProvider;
+
+    @Autowired
+    private CustAuthSuccHandler authenticationSuccessHandler;
+    @Autowired
+    private CustAuthFailHandler authenticationFailureHandler;
+    @Autowired
+    private InitialAuthenticationFilter initialAuthenticationFilter;
+    @Autowired
+    private JwtAuthenticationFilter jwtAuthenticationFilter;
+    @Autowired
+    private CkCodeAuthenticationFilter ckCodeAuthenticationFilter;
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-
+        // 数据库实现
         auth.jdbcAuthentication()
                 .dataSource(dataSource)
                 .usersByUsernameQuery("select USER_NAME,USER_PASS,USER_ENABLE\n" +
@@ -32,21 +69,45 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
                         "from S_AUTH where S_AUTH.USER_NAME = ?")
                 .passwordEncoder(new MyPasswordEncoder())
                 .rolePrefix("ADMIN");
+        auth.authenticationProvider(optAuthProvider)
+                .authenticationProvider(usernamePasswordAuthProvider);
 
-//
-//        auth.inMemoryAuthentication()
-//                // 设置加密解密方式
-//                .passwordEncoder(new MyPasswordEncoder())
-//                // 用户名称
-//                .withUser("spring")
-//                // 用户密码
-//                .password("password")
-//                // 用户角色
-//                .roles("USER");
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        super.configure(http);
+//        http.oauth2Client();
+
+
+        // 表单验证
+        http.csrf().disable().authorizeRequests()
+                .mvcMatchers("image/**", "/error", "/file/**","/login")
+                .permitAll()
+                .anyRequest()
+                .authenticated()
+                .and()
+                .addFilterBefore(ckCodeAuthenticationFilter, BasicAuthenticationFilter.class)
+                .addFilterAt(initialAuthenticationFilter, BasicAuthenticationFilter.class)
+                .addFilterAfter(jwtAuthenticationFilter, BasicAuthenticationFilter.class)
+                .formLogin()
+                .successHandler(authenticationSuccessHandler)
+                .failureHandler(authenticationFailureHandler);
+    }
+
+
+    @Override
+    @Bean
+    public AuthenticationManager authenticationManager() throws Exception {
+        return super.authenticationManager();
+    }
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOrigins("*")
+                .allowCredentials(true)
+                .allowedMethods("GET","POST")
+                .allowedHeaders("*")
+                .maxAge(3600);
     }
 }

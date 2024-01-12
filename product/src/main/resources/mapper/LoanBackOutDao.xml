@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cloud.loanAfter.LoanRever.dao.LoanBackOutDao">
+
+    <select id="list" resultType="com.cloud.loanAfter.LoanRever.dto.LoanRever">
+        select id, CONT_NO, CUST_NAME, id_no, loan_type, loan_date, loan_term, loan_sts, is_rever
+        from LOAN_BACKOUT
+        <where>
+            <trim prefixOverrides="and">
+                <if test="custName != null and custName != ''">
+                    and CUST_NAME = #{custName}
+                </if>
+            </trim>
+            <trim  prefixOverrides="and">
+                <if test="idNo != null and idNo != ''">
+                   and ID_NO = #{idNo}
+                </if>
+            </trim>
+            <trim  prefixOverrides="and">
+                <if test="contNo != null and contNo != ''">
+                   and CONT_NO = #{contNo}
+                </if>
+            </trim>
+        </where>
+    </select>
+</mapper>

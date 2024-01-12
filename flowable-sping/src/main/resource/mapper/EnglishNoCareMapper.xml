@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bu.fourLevel.dao.EnglishNoCareMapper">
+    <insert id="addEnglishNoCare" parameterType="com.bu.fourLevel.dto.EnglishNoCareDto">
+        insert into ENGLISH_NO_CARE_HIS (english_name) values (
+        #{englishName}
+        )
+    </insert>
+    <delete id="deleteEnglishNoCare">
+        delete
+        from ENGLISH_NO_CARE_HIS
+        where english_name = #{englishName}
+    </delete>
+    <select id="listEnglish" resultType="com.bu.fourLevel.dto.FourLevelEnglishDto">
+        select EFL.english_name,EFL.chinese_name,EFL.phonetic_symbol
+        from ENGLISH_NO_CARE_HIS h
+        left join Eng_Four_Lever EFL on h.english_name = EFL.english_name
+    </select>
+</mapper>

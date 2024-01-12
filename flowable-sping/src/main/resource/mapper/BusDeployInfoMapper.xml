@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bu.deploy.dao.BusDeployInfoMapper">
+
+
+    <insert id="insert" parameterType="com.bu.deploy.dto.BusDeployInfoDto">
+
+        insert into bus_deploy_info (deploy_name, bus_name, deploy_status, router_path)
+        value (#{deployName},#{busName},#{deployStatus},#{routerPath})
+
+    </insert>
+    <select id="listBusDeployInfo" resultType="com.bu.deploy.dto.BusDeployInfoDto">
+
+        select id, deploy_name, bus_name, deploy_status, router_path, create_time, modify_time
+        from bus_deploy_info
+        <where>
+            <trim prefixOverrides="and">
+                <if test="deployInfo.deployName != null and deployInfo.deployName != ''">
+                    and deploy_name = #{deployInfo.deployName}
+                </if>
+                <if test="deployInfo.busName != null and deployInfo.busName != ''">
+                    and bus_name = #{deployInfo.busName}
+                </if>
+
+            </trim>
+        </where>
+        order by modify_time desc
+    </select>
+
+    <select id="findBusDeployInfoByName" resultType="com.bu.deploy.dto.BusDeployInfoDto">
+
+        select id, deploy_name, bus_name, deploy_status, router_path, create_time, modify_time
+        from bus_deploy_info
+        <where>
+            <trim prefixOverrides="and">
+                <if test="busName != null and busName != ''">
+                    and bus_name = #{busName}
+                </if>
+
+            </trim>
+        </where>
+    </select>
+</mapper>

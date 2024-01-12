@@ -1,0 +1,53 @@
+server:
+  port: 8915
+spring:
+  resources:
+    static-locations: classpath:/static
+  mvc:
+    view:
+      suffix: .html
+      prefix: /
+  application:
+    name: provider
+  cloud:
+    nacos:
+      discovery:
+        server-addr: http://localhost:8848
+#      config:
+#        #       配置服务地址
+#        server-addr: http://localhost:8848
+#        #       配置服务的dataId前缀
+#        prefix: 1
+#    sentinel:
+#      transport:
+#        port: 8999
+#        dashboard: localhost:8211
+  datasource:
+    url: jdbc:mysql://localhost:3306/firstDoc?serverTimezone=UTC
+    username: bhz
+    password: Bhz123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations: classpath:/mapper/*.xml
+#nacos:
+#  config:
+#    server-addr: 127.0.0.1:8848
+wx:
+  pay:
+    appid: 123 # 公众账号id
+    mchid: 11111222 # 商户号id
+    key: test #商户号的支付key
+    keyPath:  test #微信支付证书（退款、关闭订单 时需要）
+    notifyUrl: /order/ask #支付通知地址（必须是外网可以访问的地址）
+    refundUrl: test #退款通知地址（必须是外网可以访问的地址）
+
+alipay:
+  url: https://openapi.alipaydev.com/gateway.do
+  appid: 2021000122680648
+  format: JSON
+  charset: UTF-8
+  signType: RSA2
+  alipayPublicKey: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAjfTt5ul4FeOBWbsm0YVfNQ67XOVmyrsM3ns980MF1S+207kOklPK4n2kiLk1B3Qb5mt34MQLnT7OZckY6Tn8UtRXkNKI9SueKQcLjhNjegOeBK229WD14zzg/gLWKoZY78lb6kaYjSOLjFiFW5kB3QGNqH12jkloTwxLUpICqIJHBwQQK9q/cTuOnozvTjsy+7il113DK7l3fUgbJku1TCEdX5+YMChz2zTXWonnzrXvH9UdIaJUkSOC55R+IIhgAKTLgWQ42N9dNE5Phn2vIqf7vYJccR5JPzhtQ7diSfLnjvfi3OevPWQpuoUboZ1XJronCcFA29Wiqh4cmeWH5QIDAQAB
+  alipayPrivateKey: MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDCP1bJP2Yzz2afw2DPxkvdnLIF+F8hNTPyp5AYJHK/evfl9ErceM0cJt9zf/MEOayXstLN8xyZaGlb3BebAVsbunbT3FerrovfQOtt3rV9O3m74mRZ6bznBIgUYRnQoAGTFz67qRf0LfJ0p5/DmFmTy8b6zjnAes+Atgq+at3ecM30Wkc+pK53dfW3yv/KIyXmsYXZRUV8f85DNENcE+zAVHiUrqzzG893ARPGImvJiJFgUBs8CREpLxd9mHkFi4pfgOkg5b7BAufRrppX2CV6srurw+Nl+ywOfiVCSJx5fvUsRx7R/7Fq6j61qZrBx/yRBhHIqLDdbd9lyV9D1TfvAgMBAAECggEAT4T4dUh0AW+9Vlf4cPZ/pkh4hIMqBoEuM/8uuQNqykJ/6253mwwFA6pSPYk6phcqNavqKo+EvLSGtSlDrJwAfTh3XsHMTicVcZ61AnRyncLUUfsbE8fhIj2zq4wYslRecKXKc66EdNy+bc0VVVAwE5YPbiswb0CXY9yiR1OeYmnaRbKaa8duJUnEX/teqaZfoYfzelF6zO92X1br/Z3q1mZmM3DoQaxqf6oYFpnaSsMKS3QYJnOyQ/gEooxOOdBoDfG2QlposlfJa97zovbQaFgp2tHpm9igFuFI6BL7W8r/D549BM1yyGoSu5nuOHnDy3eDEe/a/v3HAsKA5tzVmQKBgQDz7hOxbqpT5jxPlnO5F+eZpNWfpTHpXIsBDNl/1dXfSpTMAf0KsNnWpoIMYjD9uVpFuxUrzH5pelSYuLUb7tfkpEQ2itZFNNsf/Eo7+MpFfQs5JBYVnQ/pww3NWH7D26Lj0olm6C+ktu5tA/xpuCcOqpjidUxQh5vRd8FbkGUiawKBgQDL2+uciSs3+JMRxmPMbQs5lkfAW40Jhqwlg9xW/VEae0zDwHmWZvf0I1ywnA9EvajBgJ+sTZo9WeO8TKuOHSfUu0SYq3Jxa448AAWTDZJNuxqEREvQWCjys2T4s1pYQs6sHVGfHQ7PjNz6bnxPXhMf1KqD4byH409oETA3v6KJjQKBgQDIX/qHVzvNfaRvUEyxcCSMvq3I3X95jc6Vx0NnUnXEXdSLHNsLDCl1vQO5PnO2CKtR+pMyjmINLTMO3TPQxUtNg26RS00mPnv981Xbm8w0drpgbvdBO+rVgKf21coUA3j0In9CLFruuGJ05MBU67QRxSufYvGUeUETOYd5Os0JDwKBgQDIm8Yj6KfrEGZJm50h0jy1krlRBcaolSpaUIRH5kglcyh7ibEc3H8sdJAGC8zKrIigwt5eRI9/yDFfX2ODGhXUNeSvCCg6jMkPKkZSC4zpiTHy7vJcOCUzkG3Qf05shHG01bU4ivPEMq5Skt8piz3umOyjk0RfxMSjeCam9aIREQKBgCsL7UHuH/SzhKxIBlySHIMXdCk8pgyFHv5QbRgX1yireH41OQVNZoxmpesYZ8kcQLnft4bA70iP55jZr9LlhQz6IXBLqVxv0aRhEk/idCsT8EWFDhojUvPkDhOcnOPr45lnT1OTpBno+AqbzelUDsrDRvzILBqDzZ3Q75p1SZiD

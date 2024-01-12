@@ -1,0 +1,35 @@
+server:
+  port: 9113
+
+flowable:
+  database-schema-update: true
+  idm:
+    enabled: true
+  async-executor-activate: false
+
+
+
+spring:
+
+  nacos:
+    discovery:
+      server-addr: http://localhost:8848
+  cloud:
+    nacos:
+      metadata:
+        preserved.heart.beat.interval: 1000
+        preserved.heart.beat.timeout: 3000
+        preserved.ip.delete.timeout: 3000
+  main:
+    allow-bean-definition-overriding: true
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/flowable?serverTimezone=Asia/Shanghai&nullCatalogMeansCurrent=true
+    password: Bhz123456
+    username: bhz
+  application:
+    name: flowable
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations: classpath:/mapper/*.xml

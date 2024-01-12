@@ -1,11 +1,20 @@
 package com.cloud.sys.controller;
 
+import com.alibaba.fastjson.JSONObject;
+import com.cloud.common.Page;
+import com.cloud.common.Result;
+import com.cloud.sys.dao.UserMapper;
+import com.cloud.sys.dto.User;
 import com.cloud.sys.service.ProductService;
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
+import java.io.File;
 import java.util.List;
 
 /**
@@ -17,22 +26,42 @@ import java.util.List;
 @RestController
 public class SysController {
 
-    @Autowired
+    @Resource
     private ProductService productService;
+    @Autowired
+    private UserMapper userMapper;
 
-    @RequestMapping(value = "get",method = RequestMethod.GET)
-    public String tsSys(){
+    @RequestMapping(value = "get", method = RequestMethod.GET)
+    public String tsSys() {
         return productService.show();
     }
 
-    @RequestMapping("list")
-    public List<Object> listShops(){
-        return productService.listShops();
+    @PostMapping("list")
+    public JSONObject listShops(@RequestBody Page page) {
+        RowBounds rowBounds = new RowBounds(page.getPageNum(), page.getPageSize());
+        return productService.listShops(rowBounds);
     }
 
     @RequestMapping("str")
-    public String retStr(){
-        return "123";
+    public Authentication retStr() {
+        SecurityContext securityContext = SecurityContextHolder.getContext();
+        Authentication authentication = securityContext.getAuthentication();
+        return authentication;
+    }
+
+    @RequestMapping("listUsr")
+    public Result findUser(Page page) {
+        RowBounds rowBounds = new RowBounds(page.getPageNum(), page.getPageSize());
+        List<User> user = userMapper.findUser(rowBounds);
+        Result<List<User>> userResult = new Result<>();
+        userResult.success(user);
+        return userResult;
+    }
+
+    @RequestMapping(value = "listRevert",method = RequestMethod.POST)
+    public List<Object> list(@RequestBody JSONObject loan, @RequestParam("pageSize") Integer pageSize, @RequestParam("pageNum") Integer pageNum){
+        List<Object> list = productService.list(loan, pageSize, pageNum);
+        return list;
     }
 
 }

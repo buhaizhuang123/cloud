@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bu.deploy.dao.DeploymentDao">
+
+    <select id="listDeployment" resultType="com.bu.deploy.dto.DeploymentDto">
+        select p.ID_               id,
+        d.NAME_             name,
+        d.CATEGORY_         category,
+        d.TENANT_ID_        tenantId,
+        d.DEPLOY_TIME_      deploymentTime,
+        d.KEY_              'key',
+        p.DEPLOYMENT_ID_    deployId,
+        p.NAME_             xmlName,
+        p.RESOURCE_NAME_    fileName,
+        p.SUSPENSION_STATE_ state
+        from ACT_RE_DEPLOYMENT d
+        left join ACT_RE_PROCDEF p
+        on d.ID_ = p.DEPLOYMENT_ID_
+        order by d.DEPLOY_TIME_ desc
+    </select>
+</mapper>

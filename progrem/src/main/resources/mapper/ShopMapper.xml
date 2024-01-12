@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bu.shop.dao.ShopDao">
+
+    <!--  展示所有商品信息  -->
+    <select id="listShop" resultType="com.bu.shop.dto.ShopDto">
+        select shop_name, background_color,img_url
+        from shop
+    </select>
+</mapper>
