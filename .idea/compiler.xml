@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
+    <excludeFromCompile>
+      <directory url="file://$PROJECT_DIR$/activitity/src/main/resources/archetype-resources" includeSubdirectories="true" />
+    </excludeFromCompile>
     <annotationProcessing>
       <profile default="true" name="Default" enabled="true" />
       <profile name="Maven default annotation processors profile" enabled="true">
@@ -11,6 +14,14 @@
         <module name="product" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="camunda-spring" target="1.8" />
+      <module name="config" target="1.8" />
+      <module name="flowable-sping" target="1.8" />
+      <module name="Hadoop" target="1.8" />
+      <module name="provider" target="1.8" />
+      <module name="Remote" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
