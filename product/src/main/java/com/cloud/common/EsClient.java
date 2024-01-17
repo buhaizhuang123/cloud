@@ -25,7 +25,7 @@ public class EsClient {
         return restHighLevelClient;
     }
 
-    public static String colse() {
+    public static String close() {
         try {
             restHighLevelClient.close();
         } catch (IOException e) {
