@@ -1,6 +1,8 @@
 package com.cloud.person.dto;
 
 import lombok.Data;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.elasticsearch.annotations.Document;
 
 import java.math.BigDecimal;
 
@@ -10,13 +12,15 @@ import java.math.BigDecimal;
  * @mark ShopInfoDto
  */
 @Data
+@Document(indexName = "shop",type = "_doc")
 public class ShopInfoDto {
 
+    @Id
     private String id;
 
     private String shopName;
 
-    private BigDecimal price;
+    private Long price;
 
     private String sts;
 

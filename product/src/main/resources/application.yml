@@ -4,6 +4,9 @@ spring:
 
   resources:
     static-locations: classpath:/static
+  elasticsearch:
+    rest:
+      uris: localhost:9200
   mvc:
     view:
       suffix: .html

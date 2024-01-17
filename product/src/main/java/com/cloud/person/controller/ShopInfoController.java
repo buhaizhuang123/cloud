@@ -4,10 +4,13 @@ import com.cloud.common.vo.ResultVo;
 import com.cloud.person.dto.ShopInfoDto;
 import com.cloud.person.service.ShopInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * @author haizhuangbu
@@ -25,6 +28,13 @@ public class ShopInfoController {
     public ResultVo<String> addShopInfo(@RequestBody ShopInfoDto shopInfoDto) {
         return shopService.addShopInfo(shopInfoDto);
     }
+
+
+    @RequestMapping("/listShop")
+    public ResultVo<Page<ShopInfoDto>> listShop(Integer pageNum, Integer pageSize) {
+        return shopService.listShop(pageNum,pageSize);
+    }
+
 
 
 }
