@@ -36,8 +36,6 @@ public class PsController {
     @Autowired
     private PsService psService;
 
-    @Autowired
-    private ApplicationContext applicationContext;
 
 
     private Logger logger = LoggerFactory.getLogger(PsController.class);
