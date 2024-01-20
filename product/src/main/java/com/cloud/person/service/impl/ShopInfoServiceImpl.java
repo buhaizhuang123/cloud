@@ -1,25 +1,20 @@
 package com.cloud.person.service.impl;
 
-import com.alibaba.fastjson.JSONObject;
-import com.cloud.common.EsClient;
 import com.cloud.common.vo.ResultVo;
 import com.cloud.person.dao.ShopInfoRepository;
 import com.cloud.person.dto.ShopInfoDto;
 import com.cloud.person.service.ShopInfoService;
-import org.elasticsearch.action.index.IndexRequest;
-import org.elasticsearch.action.index.IndexResponse;
-import org.elasticsearch.client.RequestOptions;
-import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.search.sort.FieldSortBuilder;
+import org.elasticsearch.search.sort.SortBuilders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.elasticsearch.core.query.NativeSearchQuery;
+import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.data.elasticsearch.core.query.Query;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author haizhuangbu
@@ -50,6 +45,12 @@ public class ShopInfoServiceImpl implements ShopInfoService {
     @Override
     public ResultVo<Page<ShopInfoDto>> listShop(Integer pageNum, Integer pageSize) {
         PageRequest page = PageRequest.of(pageNum, pageSize);
-        return ResultVo.success(shopInfoRepository.findAll(page));
+        FieldSortBuilder sort
+                = SortBuilders.fieldSort("num");
+        NativeSearchQuery query = new NativeSearchQueryBuilder()
+                .withSort(sort)
+                .withPageable(page).build();
+        Page<ShopInfoDto> search = shopInfoRepository.search(query);
+        return ResultVo.success(search);
     }
 }

@@ -24,17 +24,24 @@ public class ShopInfoController {
     @Autowired
     private ShopInfoService shopService;
 
+    /**
+     * @param shopInfoDto 商品信息
+     * @return 添加商品是否成功
+     */
     @RequestMapping(value = "/addShop", method = RequestMethod.POST)
     public ResultVo<String> addShopInfo(@RequestBody ShopInfoDto shopInfoDto) {
         return shopService.addShopInfo(shopInfoDto);
     }
 
-
+    /**
+     * @param pageNum  页码
+     * @param pageSize 页面大小
+     * @return 分页展示商品信息
+     */
     @RequestMapping("/listShop")
     public ResultVo<Page<ShopInfoDto>> listShop(Integer pageNum, Integer pageSize) {
-        return shopService.listShop(pageNum,pageSize);
+        return shopService.listShop(pageNum, pageSize);
     }
-
 
 
 }
