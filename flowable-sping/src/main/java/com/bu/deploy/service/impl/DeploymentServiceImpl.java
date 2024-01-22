@@ -50,6 +50,7 @@ public class DeploymentServiceImpl implements DeploymentService {
                 .category(processName)
                 .deploymentProperty("name", processName)
                 .deploymentProperty("path", processPath)
+                // 工作流文件位置
                 .addClasspathResource("processes/" + processPath).deploy();
     }
 
