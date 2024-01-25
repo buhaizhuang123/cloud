@@ -89,10 +89,6 @@ public class TsOne {
     @Test
     public void tsDate() throws ParseException {
 
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date parse = simpleDateFormat.parse("2023-01-0");
-        String format = simpleDateFormat.format(parse);
-        System.out.println("format = " + format);
 
     }
 
