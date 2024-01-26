@@ -1,10 +1,15 @@
 package graphArithmetic;
 
+import lombok.Data;
+
+import java.util.Arrays;
+
 /**
  * @author haizhuangbu
  * @date 2024/1/25 15:54
  * @mark Graph
  */
+@Data
 public class Graph {
 
     // 顶点
@@ -24,6 +29,5 @@ public class Graph {
         vertex[end] = 1;
         edges[start][end] = weight;
     }
-
 
 }
