@@ -18,3 +18,8 @@ create table shop_store
 );
 -- 添加图片地址
 alter table shop add img_url varchar(4000);
+
+create table s_timer (
+                         id varchar(24),
+                         name varchar(36)
+)

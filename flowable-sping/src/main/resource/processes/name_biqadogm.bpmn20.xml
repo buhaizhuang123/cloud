@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.flowable.org/processdef">
+  <process id="process_5djobtdm" name="name_biqadogm">
+    <startEvent id="startNode1" name="开始">
+      <outgoing>Flow_1sj6i8u</outgoing>
+    </startEvent>
+    <task id="Activity_0ko6pyp">
+      <incoming>Flow_1sj6i8u</incoming>
+    </task>
+    <sequenceFlow id="Flow_1sj6i8u" sourceRef="startNode1" targetRef="Activity_0ko6pyp" />
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_flow">
+    <bpmndi:BPMNPlane id="BPMNPlane_flow" bpmnElement="process_5djobtdm">
+      <bpmndi:BPMNEdge id="Flow_1sj6i8u_di" bpmnElement="Flow_1sj6i8u">
+        <di:waypoint x="45" y="50" />
+        <di:waypoint x="100" y="50" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="BPMNShape_startNode1" bpmnElement="startNode1" bioc:stroke="">
+        <omgdc:Bounds x="15" y="35" width="30" height="30" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="18" y="72" width="22" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0ko6pyp_di" bpmnElement="Activity_0ko6pyp">
+        <omgdc:Bounds x="100" y="10" width="100" height="80" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

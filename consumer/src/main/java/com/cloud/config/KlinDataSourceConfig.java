@@ -33,6 +33,7 @@ public class KlinDataSourceConfig {
     SqlSessionFactory klinSqlSessionFactory(@Qualifier("klin") DataSource dataSource) throws Exception {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(dataSource);
+        // 指定多数据源 mapper 文件扫描路径,类似yml文件中 mapper-locations: classpath:/mapper/*.xml
         sqlSessionFactoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath*:/mapper/klin/*.xml"));
         return sqlSessionFactoryBean.getObject();
     }
