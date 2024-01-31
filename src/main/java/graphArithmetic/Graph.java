@@ -25,8 +25,6 @@ public class Graph {
     }
 
     public void addEdge(int start, int end, int weight) {
-        vertex[start] = 1;
-        vertex[end] = 1;
         edges[start][end] = weight;
     }
 

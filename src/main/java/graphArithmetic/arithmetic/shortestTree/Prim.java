@@ -1,4 +1,4 @@
-package graphArithmetic.arithmetic;
+package graphArithmetic.arithmetic.shortestTree;
 
 import graphArithmetic.Graph;
 

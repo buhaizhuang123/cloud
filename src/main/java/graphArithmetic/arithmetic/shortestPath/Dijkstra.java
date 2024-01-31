@@ -1,4 +1,4 @@
-package graphArithmetic.arithmetic;
+package graphArithmetic.arithmetic.shortestPath;
 
 import graphArithmetic.Graph;
 
