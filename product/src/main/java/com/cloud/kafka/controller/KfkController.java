@@ -28,9 +28,10 @@ public class KfkController {
     }
 
     @RequestMapping("/sendEvent")
-    public void sendEvent() {
-        KafkaMessage xxxxx = new KafkaMessage("xxxxx");
-        SpringBeanUtils.pushEvent(xxxxx);
+    public String sendEvent() {
+        KafkaMessage info = new KafkaMessage("我是新的点击事件");
+        SpringBeanUtils.pushEvent(info);
+        return "success";
     }
 
 }

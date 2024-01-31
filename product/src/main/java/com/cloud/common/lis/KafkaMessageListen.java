@@ -3,6 +3,7 @@ package com.cloud.common.lis;
 import com.cloud.common.vo.KafkaMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 /**
