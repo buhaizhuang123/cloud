@@ -1,14 +1,21 @@
 package com.bu.fourLevel.service.impl;
 
 import com.bu.fourLevel.dao.FourLevelEnglishMapper;
+import com.bu.fourLevel.dto.EnglishNoCareDto;
 import com.bu.fourLevel.dto.FourLevelEnglishDto;
 import com.bu.fourLevel.service.FourLevelEnglishService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.hibernate.validator.HibernateValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author haizhuangbu
@@ -28,6 +35,5 @@ public class FourLevelEnglishServiceImpl implements FourLevelEnglishService {
         List<FourLevelEnglishDto> list = fourLevelEnglishMapper.list();
         return new PageInfo<>(list);
     }
-
 
 }

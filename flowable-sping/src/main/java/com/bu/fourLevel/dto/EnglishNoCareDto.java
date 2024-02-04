@@ -1,6 +1,9 @@
 package com.bu.fourLevel.dto;
 
+import com.bu.fourLevel.inter.NotIsZs;
 import lombok.Data;
+import org.hibernate.validator.constraints.NotBlank;
+
 
 /**
  * @author haizhuangbu
@@ -10,6 +13,8 @@ import lombok.Data;
 @Data
 public class EnglishNoCareDto {
 
+    @NotBlank(message = "englishName 不能为空")
+    @NotIsZs(message = "englishName 不能为 ZS")
     private String englishName;
 
 }
