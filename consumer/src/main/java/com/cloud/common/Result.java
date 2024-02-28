@@ -1,7 +1,10 @@
 package com.cloud.common;
 
+import com.alibaba.fastjson.JSONObject;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
+
+import java.util.List;
 
 /**
  * @author haizhuangbu
@@ -30,4 +33,20 @@ public class Result<T> {
         this.data = data;
         return this;
     }
+
+    public static void main(String[] args) {
+
+
+        String json = "[1,2,3";
+
+        try {
+            List<Integer> integers = JSONObject.parseArray(json, Integer.class);
+        } catch (Exception e) {
+            System.out.println("format error");
+            System.out.println(e.getMessage());
+        }
+        System.out.println(json);
+
+    }
+
 }
