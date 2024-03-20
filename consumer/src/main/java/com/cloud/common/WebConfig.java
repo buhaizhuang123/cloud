@@ -10,6 +10,7 @@ import com.cloud.config.provider.UsernamePasswordAuthProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -72,8 +73,11 @@ public class WebConfig extends WebSecurityConfigurerAdapter implements WebMvcCon
 
         // 表单验证
         http.csrf().disable().authorizeRequests()
-                .mvcMatchers("image/**", "/error", "/file/**","/login")
+                .mvcMatchers("image/**", "/error", "/file/**", "/login")
                 .permitAll()
+                // 删除功能 只有具备删除权限的用户才能操作
+//                .mvcMatchers("/^del*")
+//                .hasAnyAuthority("hasAuthority('delete')")
                 .anyRequest()
                 .authenticated()
                 .and()
@@ -83,6 +87,15 @@ public class WebConfig extends WebSecurityConfigurerAdapter implements WebMvcCon
                 .formLogin()
                 .successHandler(authenticationSuccessHandler)
                 .failureHandler(authenticationFailureHandler);
+
+        // 默认表单验证 返回信息封装
+        http.httpBasic((c) -> {
+            c.authenticationEntryPoint((request, response, err) -> {
+                response.setHeader("message", "I am Error");
+                response.sendError(HttpStatus.UNAUTHORIZED.value());
+            });
+        });
+
     }
 
 
@@ -97,7 +110,7 @@ public class WebConfig extends WebSecurityConfigurerAdapter implements WebMvcCon
         registry.addMapping("/**")
                 .allowedOrigins("*")
                 .allowCredentials(true)
-                .allowedMethods("GET","POST")
+                .allowedMethods("GET", "POST")
                 .allowedHeaders("*")
                 .maxAge(3600);
     }

@@ -1,9 +1,20 @@
 package com;
 
+import com.cloud.ProductApp;
 import lombok.extern.slf4j.Slf4j;
 import org.activiti.engine.*;
 import org.activiti.engine.task.Task;
+import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import java.util.List;
 
 /**
@@ -12,7 +23,24 @@ import java.util.List;
  * @mark ActiTs
  */
 @Slf4j
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringBootTest
 public class ActiTs {
+
+    @Autowired
+    private JavaMailSender javaMailSender;
+
+
+    @Test
+    public void sendMail() throws MessagingException {
+        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+        MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage);
+        mimeMessageHelper.setFrom("buhaizhuang123@163.com");
+        mimeMessageHelper.setSubject("大优惠");
+        mimeMessageHelper.setText("特大优惠、测试");
+        mimeMessageHelper.setTo("");
+        javaMailSender.send(mimeMessage);
+    }
 
 
     // repositoryService
