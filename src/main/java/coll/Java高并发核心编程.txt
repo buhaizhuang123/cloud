@@ -1,0 +1,103 @@
+进程:
+    概念: 系统调度的最小单位
+
+
+线程:
+    概念: CPU调度的最小单位、进程代码段的一次顺序执行
+    创建方式:
+       thread 继承
+       runnable 实现
+       callable 实现、具备返回值
+       threadPool
+            executors
+                newSingleThreadPool 单线程
+                newFixedThreadPool 固定线程
+                newCacheThreadPool 可缓存线程
+                newScheduledThreadPool 调度线程池
+            threadPool
+                new ThreadPoolExecutors(coreSize,maxSize,keepAliveTime,timeUtil,blockingQueue,threadFactory,rejectHandler)
+                coreSize: 核心线程数
+                maxSize : 最大线程数
+                keepAliveTime : 存活时间
+                timeUtil: 时间单位
+                blockingQueue : 阻塞队列
+                    ArrayBlockingQueue : 数组阻塞队列,有界
+                    LinkedBlockingQueue : 默认无界、链表队列、吞吐量高与数组队列
+                    PrioryQueue : 优先级队列
+                    DelayQueue : 调度队列
+                    SynchronousQueue : 同步队列
+                threadFactory : 线程信息
+                rejectHandler : 拒绝策略
+                    aboard 异常抛弃策略
+                    discard 丢弃策略
+                    discardOld 丢弃最老策略
+                    cellsRuns 提交线程执行策略
+                    自定义策略
+
+    生命周期:
+        new 新建
+        runnable 就绪
+        running 运行
+        block 阻塞
+        waiting 等待
+        des 销毁
+
+threadLocal
+    定义 : 共享变量、线程私有化
+    使用场景:
+        跨函数参数传递
+        变量参数私有
+    结构:
+        key : threadLocal 、 value  本地值
+    线程间通信:
+        wait
+            synchronized 方法中使用 wait、放弃对象监视器锁、加入 waitSet 队列、等待其他线程调用 notify 或 notifyAll 方法
+            线程状态切换为 waiting 阻塞状态
+        notify:
+            notify 唤醒 waitSet 中第一个对象、notifyAll 唤醒 waitSet 所有对象 到entryList 中、具备获取监视器锁的资格、
+            线程状态由 waiting 切换为 block状态 、 线程获取到监视器锁 、具备重新执行的资格、
+
+进程线程区别:
+    1. 线程是进程代码段的一次顺序执行
+    2. 线程 是 基于 高并发场景衍生出来的、利用CPU的高性能
+    3. 进程是系统资源调度的最小单位、线程是CPU资源调度的最小单位
+    4. 进程之间 是相互独立的、线程是资源共享的 堆内存、系统资源、方法区
+    5. 切换速度: 线程上下文切换高于进程上下文切换
+
+
+内置锁:
+    i++ 为什么不是线程安全的
+    内存取值、寄存器运算、内存赋值
+        程序运行无法保证 操作值与内存值是否一致、导致值不一致
+
+    锁类型:
+        实例锁、类锁
+    锁状态:
+        无锁
+            对象头标记: 偏向锁 0,锁状态 01
+        偏向锁
+            对象头标记 : 偏向锁 1 ,锁状态 01
+                无锁竞争的情况
+
+            锁撤销
+                1. 在一个安全点停止线程
+                2. 修复锁记录的mark word、清除线程id
+                3. 将当前锁升级为轻量级锁
+                4. 唤醒当前线程
+            锁膨胀
+
+        轻量级锁
+            对象头标记: 锁状态 00
+                有锁竞争、但是自旋成功
+        重量级锁
+            对象头标记 : 锁状态 10
+                自旋失败、升级为重量级锁、阻塞其他执行
+            监视器
+                cxq 所有线程优先进入 cxq 队列
+                entryList cxq中成为候选资源的 进入entryList
+                waitSet 调用wait 方法进入、waitSet
+                owner 指向获取锁的线程
+
+
+
+

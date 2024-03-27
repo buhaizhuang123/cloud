@@ -20,12 +20,12 @@ public class EsClient {
      */
     public static RestHighLevelClient builder() {
         if (Objects.isNull(restHighLevelClient)) {
-            restHighLevelClient = new RestHighLevelClient(RestClient.builder(new HttpHost("127.0.0.1", 9200)));
+            restHighLevelClient = new RestHighLevelClient(RestClient.builder(new HttpHost("localhost", 9200)));
         }
         return restHighLevelClient;
     }
 
-    public static String colse() {
+    public static String close() {
         try {
             restHighLevelClient.close();
         } catch (IOException e) {

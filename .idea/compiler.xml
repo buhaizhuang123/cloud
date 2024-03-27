@@ -12,7 +12,6 @@
         <outputRelativeToContentRoot value="true" />
         <module name="camunda-spring" />
         <module name="product" />
-        <module name="untitled" />
         <module name="provider" />
         <module name="Hadoop" />
         <module name="flowable-sping" />
@@ -22,16 +21,5 @@
         <module name="progrem" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="app" target="1.8" />
-      <module name="appMiniProgrem" target="1.8" />
-      <module name="miniProgram" target="1.8" />
-      <module name="miniProgrem" target="1.8" />
-    </bytecodeTargetLevel>
-  </component>
-  <component name="JavacSettings">
-    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="consumer" options="" />
-    </option>
   </component>
 </project>

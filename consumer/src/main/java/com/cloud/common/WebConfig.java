@@ -7,27 +7,19 @@ import com.cloud.config.handler.CustAuthFailHandler;
 import com.cloud.config.handler.CustAuthSuccHandler;
 import com.cloud.config.provider.OptAuthProvider;
 import com.cloud.config.provider.UsernamePasswordAuthProvider;
-import com.cloud.sys.dto.Person;
-import com.cloud.sys.dto.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.authentication.configurers.provisioning.InMemoryUserDetailsManagerConfigurer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.sql.DataSource;
-import java.util.Arrays;
 
 
 /**
@@ -81,8 +73,11 @@ public class WebConfig extends WebSecurityConfigurerAdapter implements WebMvcCon
 
         // 表单验证
         http.csrf().disable().authorizeRequests()
-                .mvcMatchers("image/**", "/error", "/file/**","/login")
+                .mvcMatchers("image/**", "/error", "/file/**", "/login")
                 .permitAll()
+                // 删除功能 只有具备删除权限的用户才能操作
+//                .mvcMatchers("/^del*")
+//                .hasAnyAuthority("hasAuthority('delete')")
                 .anyRequest()
                 .authenticated()
                 .and()
@@ -92,6 +87,15 @@ public class WebConfig extends WebSecurityConfigurerAdapter implements WebMvcCon
                 .formLogin()
                 .successHandler(authenticationSuccessHandler)
                 .failureHandler(authenticationFailureHandler);
+
+        // 默认表单验证 返回信息封装
+        http.httpBasic((c) -> {
+            c.authenticationEntryPoint((request, response, err) -> {
+                response.setHeader("message", "I am Error");
+                response.sendError(HttpStatus.UNAUTHORIZED.value());
+            });
+        });
+
     }
 
 
@@ -106,7 +110,7 @@ public class WebConfig extends WebSecurityConfigurerAdapter implements WebMvcCon
         registry.addMapping("/**")
                 .allowedOrigins("*")
                 .allowCredentials(true)
-                .allowedMethods("GET","POST")
+                .allowedMethods("GET", "POST")
                 .allowedHeaders("*")
                 .maxAge(3600);
     }

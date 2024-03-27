@@ -13,12 +13,15 @@ import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
 import org.redisson.codec.JsonJacksonCodec;
 import org.redisson.config.Config;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.netflix.hystrix.EnableHystrix;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,9 +37,10 @@ import java.sql.DriverManager;
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableFeignClients
-@MapperScan(basePackages = {"com.cloud.sys.dao","com.cloud.person.dao","com.cloud.batch.dao"})
+@MapperScan(basePackages = {"com.cloud.sys.dao", "com.cloud.person.dao", "com.cloud.batch.dao"})
 //@EnableHystrix
 @EnableTransactionManagement
+@EnableAsync
 public class ConsumerApp {
 
     public static void main(String[] args) {
@@ -63,12 +67,18 @@ public class ConsumerApp {
 //    }
 
     @Bean
-    public RedissonClient redisson(){
+    public RedissonClient redisson() {
         Config config = new Config();
         config.useSingleServer()
                 .setAddress("redis://localhost:6379");
         config.setCodec(new JsonJacksonCodec());
         return Redisson.create(config);
+    }
+
+
+    @Bean
+    public InitializingBean initializingBean() {
+        return () -> SecurityContextHolder.setStrategyName(SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);
     }
 
 

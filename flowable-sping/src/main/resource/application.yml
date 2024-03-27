@@ -2,6 +2,7 @@ server:
   port: 9113
 
 flowable:
+#  是否主动更新创建flowable关联表
   database-schema-update: true
   idm:
     enabled: true

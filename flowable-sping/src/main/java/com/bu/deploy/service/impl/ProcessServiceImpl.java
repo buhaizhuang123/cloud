@@ -36,6 +36,7 @@ public class ProcessServiceImpl implements ProcessService {
         ProcessInstance start = runtimeService.createProcessInstanceBuilder()
                 .processDefinitionId(deployId)
                 .variables(param)
+                // 节点执行人
                 .tenantId("bhz")
                 .name("启动了")
                 .start();

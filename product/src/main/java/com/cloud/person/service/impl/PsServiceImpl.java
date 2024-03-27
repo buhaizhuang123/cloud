@@ -73,6 +73,7 @@ public class PsServiceImpl implements PsService {
             Map<String, Object> sourceAsMap = documentFields.getSourceAsMap();
             objects.add(sourceAsMap);
         }
+//        EsClient.close();
         return objects;
     }
 
@@ -108,7 +109,7 @@ public class PsServiceImpl implements PsService {
 
         searchRequest.source(searchSourceBuilder);
         SearchResponse response = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
-
+//        EsClient.close();
         return getResult(response, personDto);
 
     }
@@ -171,6 +172,7 @@ public class PsServiceImpl implements PsService {
         index.source(jsonObject);
         IndexResponse response = restHighLevelClient.index(index, RequestOptions.DEFAULT);
         DocWriteResponse.Result result = response.getResult();
+//        EsClient.close();
         return result;
     }
 
@@ -188,6 +190,7 @@ public class PsServiceImpl implements PsService {
         } catch (IOException e) {
             e.printStackTrace();
         }
+//        EsClient.close();
         return null;
     }
 

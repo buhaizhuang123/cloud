@@ -40,11 +40,26 @@ public class UsrController {
     }
 
 
+    @RequestMapping("/sendUsr")
+    public String sendUsr(String msg) {
+        InfoUtils.send("usr", msg);
+        return "发送短信成功";
+    }
+
+
     @RequestMapping("info")
     public String getRt() {
         String info = InfoUtils.pull("usr");
         return info;
     }
+
+
+    @RequestMapping("info1")
+    public String getRt1() {
+        String info = InfoUtils.pullOther("usr", "demo");
+        return info;
+    }
+
 
     @RequestMapping(value = "/addUser", method = RequestMethod.POST)
     public String addUser(@RequestBody User user) {

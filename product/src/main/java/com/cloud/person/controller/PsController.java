@@ -5,6 +5,7 @@ import com.alibaba.csp.sentinel.slots.block.BlockException;
 import com.cloud.person.dto.PersonDto;
 import com.cloud.person.dto.PersonVo;
 import com.cloud.person.service.PsService;
+import com.cloud.person.service.S1Service;
 import com.cloud.shop.dto.Page;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
@@ -36,9 +37,9 @@ public class PsController {
     @Autowired
     private PsService psService;
 
-    @Autowired
-    private ApplicationContext applicationContext;
 
+    @Autowired
+    private S1Service s1Service;
 
     private Logger logger = LoggerFactory.getLogger(PsController.class);
 
@@ -99,6 +100,12 @@ public class PsController {
 
     public static Object listAllFallBack(BlockException e) {
         return null;
+    }
+
+
+    @RequestMapping("/insert")
+    public void insert(String data) {
+        s1Service.insert(data);
     }
 
 }

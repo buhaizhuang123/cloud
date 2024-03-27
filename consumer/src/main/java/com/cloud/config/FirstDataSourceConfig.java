@@ -20,6 +20,7 @@ import javax.sql.DataSource;
  * @mark DataSourceConfig
  */
 @Configuration
+// 扫描接口路径
 @MapperScan(value = {"com/cloud/sys/dao", "com/cloud/person/dao", "com/cloud/batch/dao"}, sqlSessionFactoryRef = "firstSqlSessionFactory")
 public class FirstDataSourceConfig {
 
@@ -34,6 +35,7 @@ public class FirstDataSourceConfig {
     SqlSessionFactory firstSqlSessionFactory(@Qualifier("first") DataSource dataSource) throws Exception {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(dataSource);
+        // 指定多数据源 mapper 文件扫描路径,类似yml文件中 mapper-locations: classpath:/mapper/*.xml
         sqlSessionFactoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath*:/mapper/first/*.xml"));
         return sqlSessionFactoryBean.getObject();
     }

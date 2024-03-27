@@ -1,5 +1,7 @@
 package com.cloud.kafka.controller;
 
+import com.cloud.common.vo.KafkaMessage;
+import com.cloud.config.SpringBeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @date 2022/5/29 13:08
  * @mark KfkController
  */
-@RequestMapping("kfk")
+@RequestMapping("/kfk")
 @RestController
 public class KfkController {
 
@@ -23,6 +25,13 @@ public class KfkController {
     public String send(@RequestParam("info") String info) {
         kafkaTemplate.send("usr", info);
         return "消息发送成功";
+    }
+
+    @RequestMapping("/sendEvent")
+    public String sendEvent() {
+        KafkaMessage info = new KafkaMessage("我是新的点击事件");
+        SpringBeanUtils.pushEvent(info);
+        return "success";
     }
 
 }

@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/cloud.iml" filepath="$PROJECT_DIR$/cloud.iml" />
-      <module fileurl="file://$PROJECT_DIR$/flowable-sping.iml" filepath="$PROJECT_DIR$/flowable-sping.iml" />
+      <module fileurl="file://$PROJECT_DIR$/flowable-sping/flowable-sping.iml" filepath="$PROJECT_DIR$/flowable-sping/flowable-sping.iml" />
     </modules>
   </component>
 </project>

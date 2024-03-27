@@ -3,11 +3,15 @@ package com.bu.common.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.bu.common.po.ResultPo;
 import com.bu.common.service.ShowService;
+import com.bu.fourLevel.dao.EngFourLevelRepository;
+import com.bu.fourLevel.dto.EngFourLeverDto;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import javax.annotation.Resource;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -67,8 +71,8 @@ public class ShowController {
      * @return 启动流程实例
      */
     @PostMapping("startProcess")
-    public JSONObject startProcess(@RequestParam String processId, @RequestBody(required = false) Map<String,Object> map) {
-        return showService.startProcess(processId,map);
+    public JSONObject startProcess(@RequestParam String processId, @RequestBody(required = false) Map<String, Object> map) {
+        return showService.startProcess(processId, map);
     }
 
     @GetMapping("queryProcess")
@@ -143,8 +147,8 @@ public class ShowController {
     }
 
     @PostMapping("waitTask")
-    public ResultPo waitTask(@RequestParam String userId,@RequestBody RowBounds rowBounds) {
-        return showService.queryUserTodoTasks(userId,rowBounds);
+    public ResultPo waitTask(@RequestParam String userId, @RequestBody RowBounds rowBounds) {
+        return showService.queryUserTodoTasks(userId, rowBounds);
     }
 
     @GetMapping("finished")
@@ -168,9 +172,16 @@ public class ShowController {
     }
 
     @PostMapping("/queryHistoryProcess")
-    public ResultPo queryHistoryProcess(String processId){
+    public ResultPo queryHistoryProcess(String processId) {
         return showService.queryHistoryProcess(processId);
     }
 
+    @Resource
+    private EngFourLevelRepository fourLevelRepository;
+
+    @RequestMapping("/listAll")
+    public List<EngFourLeverDto> listAll() {
+        return fourLevelRepository.findAll();
+    }
 
 }

@@ -4,10 +4,25 @@ spring:
 
   resources:
     static-locations: classpath:/static
+  elasticsearch:
+    rest:
+      uris: localhost:9200
   mvc:
     view:
       suffix: .html
       prefix: /
+  mail:
+    host: smtp.163.com
+    username: buhaizhuang123@163.com
+    password: XZSTPWKKDUXEVXZP
+    default-encoding: UTF-8
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
   kafka:
     bootstrap-servers: 10.192.85.102:9092
     producer: # producer 生产者
