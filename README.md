@@ -14,3 +14,5 @@
 
 ## 算法
 <img width="977" alt="截屏2024-03-26 14 35 37" src="https://github.com/buhaizhuang123/cloud/assets/95667080/63085784-9b5d-4184-a628-080224c2209c">
+
+## spring 事务传递
